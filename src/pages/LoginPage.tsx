@@ -37,13 +37,13 @@ const TextButton = ({ title, textcolor, bgcolor }: { title: string; textcolor: s
 const Text = ({ content }: { content: string }) => {
   return (
     <div className="flex justify-center">
-      <div className="text-[#D33434] font-medium">{content}</div>
+      <div className="text-[#D33434] font-medium text-[13px]">{content}</div>
     </div>
   );
 };
 function LoginPage() {
   return (
-    <div className="flex w-full h-full justify-center">
+    <div className="flex w-full h-full justify-center font-noto">
       <div className="w-96 h-full bg-crimson-red flex flex-col">
         <div className="h-20 text-white pt-[31px] pb-[30px] pl-4">
           <Reservation width="60" height="23" />
@@ -52,8 +52,8 @@ function LoginPage() {
         <div className="bg-white h-screen rounded-t-3xl">
           <div className="flex justify-start pt-[75px] pb-[33px] pl-[49.12px]">
             <div className="font-bold text-4xl">로그인</div>
-            <div className="text-xs flex items-end pl-[7.87px]">
-              <div>공지사항 쿠독 시작하기</div>
+            <div className="text-xs font-medium flex items-end pl-[7.87px] text-[#7E7E7E]">
+              <div className="drop-shadow-3xl">공지사항 쿠독 시작하기</div>
             </div>
           </div>
           <TextField bg="[url('~/src/assets/mail.svg')]" type="text" name="이메일" placeholder="이메일" />
