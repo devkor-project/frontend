@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent as Reservation } from '../assets/logo.svg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // 단순 text만 달라지는 고정 textbox component
 const Text = ({ content }: { content: string }) => {
@@ -13,7 +14,7 @@ const Text = ({ content }: { content: string }) => {
 function LoginPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
+  const navigate = useNavigate();
   const login = () => {
     axios
       .post('https:/www.kudog.email/auth/login', {
@@ -23,15 +24,15 @@ function LoginPage() {
       .then(res => {
         if (res.status === 200) {
           console.log(res);
-
-          alert('Login success');
           //로컬 저장소에 token 값들 저장
           window.localStorage.setItem('accessToken', res.data.data.accessToken);
           window.localStorage.setItem('refreshToken', res.data.data.refreshToken);
+
+          navigate('../');
         }
       })
       .catch(err => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
   return (
