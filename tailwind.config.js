@@ -4,6 +4,9 @@ module.exports = {
   content: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    backgroundPosition: {
+      'left-4': '28px',
+    },
     fontFamily: {
       noto: ['Noto Sans KR'],
     },

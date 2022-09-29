@@ -51,7 +51,7 @@ function LoginPage() {
           <div className="flex justify-center">
             <input
               id="email"
-              className={`bg-[url('~/src/assets/mail.svg')] bg-no-repeat bg-[left-20px] outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}
+              className={`bg-[url('~/src/assets/mail.svg')] bg-no-repeat bg-left-4 outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}
               type="text"
               name="이메일"
               onChange={e => {
@@ -60,10 +60,11 @@ function LoginPage() {
               placeholder="이메일"
             />
           </div>
+          <div className="pb-[10px]"></div>
           <div className="flex justify-center">
             <input
               id="password"
-              className={`bg-[url('~/src/assets/lock.svg')] bg-no-repeat bg-[left] outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}
+              className={`bg-[url('~/src/assets/lock.svg')] bg-no-repeat bg-left-4 outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}
               type="password"
               name="비밀번호"
               onChange={e => {
