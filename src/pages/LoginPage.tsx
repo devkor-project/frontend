@@ -12,9 +12,20 @@ const Text = ({ content }: { content: string }) => {
   );
 };
 function LoginPage() {
+  // TODO email, password를 한개의 객체로 state처리하기.
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
+  // enter 입력시 login 함수 실행
+  const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      login();
+    }
+  };
+  // axios post로 email, password 보내고 결과를 바탕으로 "/" 리다이렉트
+  // 로그인 실패 메시지 출력
+  // TODO 로그인 처리 여부에 따라 경고 messaage 출력
+  // TODO axios Post 시에 password hashing
   const login = () => {
     axios
       .post('https:/www.kudog.email/auth/login', {
@@ -33,6 +44,7 @@ function LoginPage() {
       })
       .catch(err => {
         console.log(err);
+        alert('로그인에 실패하였습니다.\n 다시 시도해 주세요');
       });
   };
   return (
@@ -71,6 +83,7 @@ function LoginPage() {
               onChange={e => {
                 setPassword(e.target.value);
               }}
+              onKeyUp={handleOnKeyPress}
               placeholder="비밀번호"
             />
           </div>
