@@ -26,6 +26,7 @@ function LoginPage() {
   // 로그인 실패 메시지 출력
   // TODO 로그인 처리 여부에 따라 경고 messaage 출력
   // TODO axios Post 시에 password hashing
+  // TODO 모바일과 데스크탑 분리하기 (모바일환경에서는 기본 base가 full, desktop은 375px)
   const login = () => {
     axios
       .post('https:/www.kudog.email/auth/login', {
@@ -48,8 +49,8 @@ function LoginPage() {
       });
   };
   return (
-    <div className="flex w-full h-full justify-center font-noto">
-      <div className="w-96 h-full bg-crimson-red flex flex-col">
+    <div className="flex w-405px h-full justify-center font-noto">
+      <div className="h-full bg-crimson-red flex flex-col">
         <div className="h-20 text-white pt-[31px] pb-[30px] pl-4">
           <Reservation width="60" height="23" />
         </div>
