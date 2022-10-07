@@ -197,7 +197,7 @@ function MainPage() {
                 key={idx}
                 title={cat.title}
                 isSelected={cat.id === category}
-                onClick={() => changeCategory(cat.id)}
+                changeCategory={() => changeCategory(cat.id)}
               />
             );
           })}
