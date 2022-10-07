@@ -55,7 +55,7 @@ function LoginPage() {
           <Reservation width="60" height="23" />
         </div>
 
-        <div className="bg-white h-screen rounded-t-3xl flex align-center flex-col">
+        <div className="bg-white h-screen rounded-t-3xl flex align-center flex-col grow">
           <div className="flex justify-start pt-[75px] pb-[33px] pl-[49.12px]">
             <div className="font-bold text-4xl">로그인</div>
             <div className="text-xs font-medium flex items-end pl-[7.87px] text-[#7E7E7E]">
@@ -75,7 +75,7 @@ function LoginPage() {
             />
           </div>
           <div className="pb-[10px]"></div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mx-[24px]">
             <input
               id="password"
               className={`bg-[url('~/src/assets/lock.svg')] bg-no-repeat bg-left-4 outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}

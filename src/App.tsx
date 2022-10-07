@@ -23,11 +23,16 @@ function App() {
   }, []);
   // Width를 기반으로 왼쪽에 메인 로고를 띄울지 말지 결정
   if (width < 810) {
-    return <RouterProvider router={router} />;
+    return (
+      <div className="w-full h-full flex justify-center">
+        <RouterProvider router={router} />
+      </div>
+    );
   } else
     return (
-      <div className="flex justify-center">
-        <MainLogo />
+      <div className="flex justify-center w-full h-full">
+        <MainLogo width="400px" height="688px" />
+
         <RouterProvider router={router} />
       </div>
     );
