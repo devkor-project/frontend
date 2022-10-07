@@ -14,13 +14,17 @@ const NoticeItem = ({
   bookmark: () => void;
 }) => {
   return (
-    <div className="w-full px-[24px] h-[71px] flex flex-row" onClick={bookmark}>
+    <div className="w-full px-[24px] h-[71px] flex flex-row">
       <div>
         <div className="text-black font-[700] text-[16px] leading-[23.17px]">{title}</div>
         <div className="text-[#7E7E7E] font-[400] text-[10px] leading-[14.48px]">{date}</div>
       </div>
-      <div className="pl-[26px] pt-[4px]" onClick={bookmark}>
-        {isBookmarked ? <IsBookmarked width="16" height="20" /> : <IsNotBookmarked width="16" height="20" />}
+      <div className="pl-[26px] pt-[4px]">
+        {isBookmarked ? (
+          <IsBookmarked width="16" height="20" onClick={bookmark} />
+        ) : (
+          <IsNotBookmarked width="16" height="20" onClick={bookmark} />
+        )}
       </div>
     </div>
   );
