@@ -9,54 +9,56 @@ import { ReactComponent as ActivateReservation2 } from '../assets/activated_bott
 import { ReactComponent as ActivateReservation3 } from '../assets/activated_bottomItem3.svg';
 import { ReactComponent as ActivateReservation4 } from '../assets/activated_bottomItem4.svg';
 import { ReactComponent as ActivateReservation5 } from '../assets/activated_bottomItem5.svg';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function BottomNavigationBar() {
-  const [tab, setTab] = useState(3);
+  const location = useLocation();
+  const navigate = useNavigate();
   return (
-    <div className="fixed bottom-0 w-full flex justify-center">
-      <div className="w-[405px] grid grid-cols-5 gap-2 pb-[20px]">
-        {tab === 1 ? (
+    <div className="absolute bottom-0 flex justify-center bg-white">
+      <div className="w-[405px] grid grid-cols-5 gap-2">
+        {location.pathname === '/mail' ? (
           <ActivateReservation1 />
         ) : (
           <Reservation1
             onClick={() => {
-              setTab(1);
+              navigate('/mail');
             }}
           />
         )}
-        {tab === 2 ? (
+        {location.pathname === '/hot' ? (
           <ActivateReservation2 />
         ) : (
           <Reservation2
             onClick={() => {
-              setTab(2);
+              navigate('/hot');
             }}
           />
         )}
-        {tab === 3 ? (
+        {location.pathname === '/' ? (
           <ActivateReservation3 />
         ) : (
           <Reservation3
             onClick={() => {
-              setTab(3);
+              navigate('/');
             }}
           />
         )}
-        {tab === 4 ? (
+        {location.pathname === '/bookmark' ? (
           <ActivateReservation4 />
         ) : (
           <Reservation4
             onClick={() => {
-              setTab(4);
+              navigate('/bookmark');
             }}
           />
         )}
-        {tab === 5 ? (
+        {location.pathname === '/mypage' ? (
           <ActivateReservation5 />
         ) : (
           <Reservation5
             onClick={() => {
-              setTab(5);
+              navigate('/mypage');
             }}
           />
         )}
