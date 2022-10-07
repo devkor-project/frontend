@@ -26,6 +26,7 @@ function LoginPage() {
   // 로그인 실패 메시지 출력
   // TODO 로그인 처리 여부에 따라 경고 messaage 출력
   // TODO axios Post 시에 password hashing
+  // TODO 모바일과 데스크탑 분리하기 (모바일환경에서는 기본 base가 full, desktop은 375px)
   const login = () => {
     axios
       .post('https:/www.kudog.email/auth/login', {
@@ -48,13 +49,13 @@ function LoginPage() {
       });
   };
   return (
-    <div className="flex w-full h-full justify-center font-noto">
-      <div className="w-96 h-full bg-crimson-red flex flex-col">
+    <div className="flex w-405px h-full justify-center font-noto">
+      <div className="h-full bg-crimson-red flex flex-col">
         <div className="h-20 text-white pt-[31px] pb-[30px] pl-4">
           <Reservation width="60" height="23" />
         </div>
 
-        <div className="bg-white h-screen rounded-t-3xl flex align-center flex-col">
+        <div className="bg-white h-screen rounded-t-3xl flex align-center flex-col grow">
           <div className="flex justify-start pt-[75px] pb-[33px] pl-[49.12px]">
             <div className="font-bold text-4xl">로그인</div>
             <div className="text-xs font-medium flex items-end pl-[7.87px] text-[#7E7E7E]">
@@ -74,7 +75,7 @@ function LoginPage() {
             />
           </div>
           <div className="pb-[10px]"></div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mx-[24px]">
             <input
               id="password"
               className={`bg-[url('~/src/assets/lock.svg')] bg-no-repeat bg-left-4 outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}
