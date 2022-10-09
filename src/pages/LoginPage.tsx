@@ -49,8 +49,8 @@ function LoginPage() {
       });
   };
   return (
-    <div className="flex w-405px h-full justify-center font-noto">
-      <div className="h-full bg-crimson-red flex flex-col">
+    <div className="flex w-full h-full justify-center font-noto">
+      <div className="w-full h-full bg-crimson-red flex flex-col">
         <div className="h-20 text-white pt-[31px] pb-[30px] pl-4">
           <Reservation width="60" height="23" />
         </div>
