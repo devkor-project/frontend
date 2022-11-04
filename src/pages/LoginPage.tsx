@@ -7,8 +7,11 @@ import { postLoginAPI } from '../utils/api_login';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 import styled from 'styled-components';
 import Blank from '../components/Blank';
-import NotoText from '../components/Text/NotoText';
 import LoginHeaderContainer from '../container/login/LoginHeaderContainer';
+import TextButton from '../components/Button/TextButton';
+import { ReactComponent as Mail_Icon } from '../assets/icon/mail.svg';
+import { ReactComponent as Lock_Icon } from '../assets/icon/lock.svg';
+import IconTextInput from '../components/Input/IconTextInput';
 
 function LoginPage() {
   // TODO email, password를 한개의 객체로 state처리하기.
@@ -61,6 +64,47 @@ function LoginPage() {
       </LogoPageStyled>
       <InputPageStyled>
         <LoginHeaderContainer title={'로그인'} subtitle={'공지사항 구독 시작하기'}></LoginHeaderContainer>
+        <Blank height={getHeightPixel(20)} />
+
+        <IconTextInput
+          width={getWidthPixel(238)}
+          height={getHeightPixel(47)}
+          setFunc={setEmail}
+          fontSize={getPixelToPixel(13)}
+          placeHolder={'이메일을 입력하세요'}
+          icon={<MailIconStyled />}
+          type="email"
+        />
+        <Blank height={getHeightPixel(20)} />
+        <IconTextInput
+          width={getWidthPixel(357)}
+          height={getHeightPixel(47)}
+          setFunc={setPassword}
+          fontSize={getPixelToPixel(13)}
+          placeHolder={'비밀번호를 입력하세요'}
+          icon={<LockIconStyled />}
+          type={'password'}
+        />
+        <Blank height={getHeightPixel(20)} />
+        <TextButton
+          text="로그인"
+          backgroundColor={palette.crimson}
+          fontColor={palette.white}
+          width={getWidthPixel(357)}
+          height={getHeightPixel(47)}
+          borderColor={palette.crimson}
+          onClick={() => postLoginAPI({ email, password })}
+        />
+        <Blank />
+        <TextButton
+          text="회원가입"
+          backgroundColor={palette.white}
+          fontColor={palette.crimson}
+          width={getWidthPixel(357)}
+          height={getHeightPixel(47)}
+          borderColor={palette.crimson}
+          onClick={() => navigate('../signup')}
+        />
       </InputPageStyled>
     </PageStyled>
   );
@@ -163,4 +207,14 @@ const LogoStyled = styled(LogoIcon)`
   width: ${getPixelToPixel(60)};
   height: ${getPixelToPixel(23)};
   margin-left: ${getPixelToPixel(26)};
+`;
+
+const MailIconStyled = styled(Mail_Icon)`
+  width: ${getWidthPixel(14)};
+  height: ${getHeightPixel(14)};
+`;
+
+const LockIconStyled = styled(Lock_Icon)`
+  width: ${getWidthPixel(14)};
+  height: ${getHeightPixel(14)};
 `;

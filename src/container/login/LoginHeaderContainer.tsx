@@ -1,8 +1,6 @@
 import React from 'react';
 import NotoText from '../../components/Text/NotoText';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
-
-import { ReactComponent as BackIcon } from '../../assets/button/left_arrow.svg';
 import styled from 'styled-components';
 import { palette } from '../../constants/palette';
 import Blank from '../../components/Blank';
@@ -14,8 +12,8 @@ function LoginHeaderContainer({ title, subtitle }: { title: string; subtitle: st
         {title}
       </NotoText>
       <Blank width={getWidthPixel(7.88)} />
-      <div className="flex items-end">
-        <NotoText fontSize={getPixelToPixel(12)} fontWeight={'500'} fontColor={palette.black}>
+      <div className="flex items-end drop-shadow-3xl mb-[5px]">
+        <NotoText fontSize={getPixelToPixel(12)} fontWeight={'700'} fontColor={palette.gray_02}>
           {subtitle}
         </NotoText>
       </div>
@@ -26,24 +24,10 @@ function LoginHeaderContainer({ title, subtitle }: { title: string; subtitle: st
 const ContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
+  justify: start;
   width: 100%;
   margin-top: ${getHeightPixel(75)};
   margin-left: ${getWidthPixel(49.13)};
-`;
-
-const ButtonStyled = styled.button`
-  display: flex;
-  width: ${getPixelToPixel(44)};
-  height: ${getPixelToPixel(44)};
-  align-items: center;
-  justify-content: center;
-`;
-
-const BackStyled = styled(BackIcon)`
-  width: ${getWidthPixel(14)};
-  height: ${getWidthPixel(14)};
-  margin-left: ${getWidthPixel(10)};
-  margin-right: ${getWidthPixel(10)};
 `;
 
 export default LoginHeaderContainer;
