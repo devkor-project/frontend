@@ -8,20 +8,24 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/respons
 import styled from 'styled-components';
 import Blank from '../components/Blank';
 import LoginHeaderContainer from '../container/login/LoginHeaderContainer';
-import TextButton from '../components/Button/TextButton';
+import { BASE__URL } from '../constants';
 import { ReactComponent as Mail_Icon } from '../assets/icon/mail.svg';
 import { ReactComponent as Lock_Icon } from '../assets/icon/lock.svg';
-import IconTextInput from '../components/Input/IconTextInput';
+import LoginIconTextInput from '../components/Input/LoginIconTextInput';
+import NotoText from '../components/Text/NotoText';
+import LoginTextButton from '../components/Button/LoginTextButton';
 
 function LoginPage() {
   // TODO email, password를 한개의 객체로 state처리하기.
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isInputValid, setIsInputValid] = useState<boolean>(true);
   const navigate = useNavigate();
   // enter 입력시 login 함수 실행
   const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      login();
+      console.log('ddfd');
+      postLoginRequest({ email, password });
     }
   };
 
@@ -29,28 +33,31 @@ function LoginPage() {
   // 로그인 실패 메시지 출력
   // TODO 로그인 처리 여부에 따라 경고 messaage 출력
   // TODO axios Post 시에 password hashing
-  // TODO 모바일과 데스크탑 분리하기 (모바일환경에서는 기본 base가 full, desktop은 375px)
-  const login = () => {
-    axios
-      .post('https:/www.kudog.email/auth/login', {
-        email: email,
-        password: password,
-      })
-      .then(res => {
-        if (res.status === 200) {
-          console.log(res);
-          //로컬 저장소에 token 값들 저장
-          window.localStorage.setItem('accessToken', res.data.data.accessToken);
-          window.localStorage.setItem('refreshToken', res.data.data.refreshToken);
-
-          navigate('../');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        alert('로그인에 실패하였습니다.\n 다시 시도해 주세요');
+  async function postLoginRequest({ email, password }: { email: string; password: string }) {
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: `${BASE__URL}auth/login`,
+        data: {
+          email: email,
+          password: password,
+        },
       });
-  };
+      if (res?.data?.response?.status === 200) {
+        console.log(res);
+        //로컬 저장소에 token 값들 저장
+        window.localStorage.setItem('accessToken', res?.data?.response?.data?.accessToken);
+        window.localStorage.setItem('refreshToken', res.data?.response?.data?.refreshToken);
+        navigate('../');
+      }
+    } catch (err) {
+      console.log(err);
+      setIsInputValid(false);
+      console.log(isInputValid);
+
+      alert('로그인에 실패하였습니다.\n 다시 시도해 주세요');
+    }
+  }
 
   return (
     <PageStyled>
@@ -66,45 +73,76 @@ function LoginPage() {
         <LoginHeaderContainer title={'로그인'} subtitle={'공지사항 구독 시작하기'}></LoginHeaderContainer>
         <Blank height={getHeightPixel(20)} />
 
-        <IconTextInput
-          width={getWidthPixel(238)}
+        <LoginIconTextInput
+          width={getWidthPixel(357)}
           height={getHeightPixel(47)}
           setFunc={setEmail}
-          fontSize={getPixelToPixel(13)}
-          placeHolder={'이메일을 입력하세요'}
+          fontSize={getPixelToPixel(14)}
+          placeHolder={'example.korea.ac.kr'}
           icon={<MailIconStyled />}
-          type="email"
+          type={'email'}
         />
-        <Blank height={getHeightPixel(20)} />
-        <IconTextInput
+        <Blank height={getHeightPixel(10)} />
+        <LoginIconTextInput
           width={getWidthPixel(357)}
           height={getHeightPixel(47)}
           setFunc={setPassword}
-          fontSize={getPixelToPixel(13)}
-          placeHolder={'비밀번호를 입력하세요'}
+          fontSize={getPixelToPixel(14)}
+          placeHolder={'비밀번호'}
           icon={<LockIconStyled />}
           type={'password'}
+          onKeyDown={handleOnKeyPress}
         />
-        <Blank height={getHeightPixel(20)} />
-        <TextButton
+        {isInputValid ? (
+          <Blank height={getHeightPixel(10)} />
+        ) : (
+          <div>
+            <Blank height={getHeightPixel(5)} />
+            <NotoText fontColor={palette.red} fontSize={getPixelToPixel(12)} fontWeight={'bold'}>
+              이메일 혹은 비밀번호가 일치하지 않습니다. 입력한 내용을 다시 확인해 주세요.
+            </NotoText>
+          </div>
+        )}
+        <Blank height={getHeightPixel(40)} />
+        <LoginTextButton
           text="로그인"
           backgroundColor={palette.crimson}
           fontColor={palette.white}
+          fontSize={getPixelToPixel(14)}
           width={getWidthPixel(357)}
           height={getHeightPixel(47)}
           borderColor={palette.crimson}
-          onClick={() => postLoginAPI({ email, password })}
+          onClick={() => {
+            postLoginRequest({ email, password });
+          }}
         />
-        <Blank />
-        <TextButton
-          text="회원가입"
-          backgroundColor={palette.white}
-          fontColor={palette.crimson}
-          width={getWidthPixel(357)}
-          height={getHeightPixel(47)}
-          borderColor={palette.crimson}
-          onClick={() => navigate('../signup')}
-        />
+        <Blank height={getHeightPixel(9)} />
+        <div className="flex w-[100%] justify-center">
+          <NotoText fontColor={palette.crimson} fontSize={getPixelToPixel(13)} fontWeight={'500'}>
+            또는
+          </NotoText>
+        </div>
+        <Blank height={getHeightPixel(9)} />
+        <div>
+          <LoginTextButton
+            text="회원가입"
+            backgroundColor={palette.white}
+            fontColor={palette.crimson}
+            fontSize={getPixelToPixel(14)}
+            width={getWidthPixel(357)}
+            height={getHeightPixel(47)}
+            borderColor={palette.crimson}
+            onClick={() => {
+              navigate('../register');
+            }}
+          />
+        </div>
+        <Blank height={getHeightPixel(9)} />
+        <div onClick={() => navigate('../register')} className="flex w-[100%] justify-center">
+          <NotoText fontColor={palette.crimson} fontSize={getPixelToPixel(13)} fontWeight={'500'}>
+            비밀번호 찾기
+          </NotoText>
+        </div>
       </InputPageStyled>
     </PageStyled>
   );
@@ -183,6 +221,7 @@ export default LoginPage;
 
 const PageStyled = styled.div`
   flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
   background: ${palette.crimson};
@@ -195,9 +234,11 @@ const LogoPageStyled = styled.div`
 `;
 
 const InputPageStyled = styled.div`
-  flex-direction: column;
+  display: flex;
   width: 100%;
   height: ${getHeightPixel(636)};
+  flex-direction: column;
+  align-items: center;
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
@@ -210,11 +251,11 @@ const LogoStyled = styled(LogoIcon)`
 `;
 
 const MailIconStyled = styled(Mail_Icon)`
-  width: ${getWidthPixel(14)};
+  width: ${getWidthPixel(18.33)};
   height: ${getHeightPixel(14)};
 `;
 
 const LockIconStyled = styled(Lock_Icon)`
-  width: ${getWidthPixel(14)};
-  height: ${getHeightPixel(14)};
+  width: ${getWidthPixel(14.67)};
+  height: ${getHeightPixel(18.38)};
 `;
