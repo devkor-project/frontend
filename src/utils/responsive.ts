@@ -16,11 +16,10 @@ export function getWidthForDesktop() {
 
 export function getPixelToPixel(size: number) {
   const scale = WIDTH / FIGMA__WINDOW__WIDTH;
-
   const newSize = size * scale;
-  let result = 0;
-  result = Math.round(newSize);
-  return result.toString() + 'px';
+
+  const result = newSize.toFixed(2);
+  return result + 'px';
 }
 
 export function getPixelToNumber(size: string) {
@@ -34,8 +33,8 @@ export const getWidthPercentage = (width: number) => {
 };
 
 export const getWidthPixel = (width: number) => {
-  const result = Math.round((width / FIGMA__WINDOW__WIDTH) * WIDTH);
-  return result.toString() + 'px';
+  const result = ((width / FIGMA__WINDOW__WIDTH) * WIDTH).toFixed(2);
+  return result + 'px';
 };
 
 export const getHeightPercentage = (height: number) => {
@@ -44,8 +43,8 @@ export const getHeightPercentage = (height: number) => {
 };
 
 export const getHeightPixel = (height: number) => {
-  const result = Math.round((height / FIGMA__WINDOW__HEIGHT) * HEIGHT);
-  return result.toString() + 'px';
+  const result = ((height / FIGMA__WINDOW__HEIGHT) * HEIGHT).toFixed(2);
+  return result + 'px';
 };
 
 export const getHeightPixelByWidth = (width: number, height: number) => {
