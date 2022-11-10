@@ -22,6 +22,26 @@ function LoginPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isInputValid, setIsInputValid] = useState<boolean>(true);
+
+  // focus 변화에 따라 border 색상 변경
+  const [borderColor, setBorderColor] = useState({
+    emailBorderColor: palette.gray,
+    passwordBorderColor: palette.gray,
+  });
+
+  const handleFocusBorder = (border: string): void => {
+    setBorderColor({
+      ...borderColor,
+      [border]: palette.crimson,
+    });
+  };
+  const handleBlurBorder = (border: string): void => {
+    setBorderColor({
+      ...borderColor,
+      [border]: palette.gray,
+    });
+  };
+
   const navigate = useNavigate();
   // enter 입력시 login 함수 실행
   const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -81,8 +101,10 @@ function LoginPage() {
           setFunc={setEmail}
           fontSize={getPixelToPixel(14)}
           placeHolder={'example.korea.ac.kr'}
-          icon={<MailIconStyled />}
+          icon={<MailIconStyled fill={borderColor.emailBorderColor} />}
           type={'email'}
+          onFocus={() => handleFocusBorder('emailBorderColor')}
+          onBlur={() => handleBlurBorder('emailBorderColor')}
         />
         <Blank height={getHeightPixel(10)} />
         <LoginIconTextInput
@@ -91,9 +113,11 @@ function LoginPage() {
           setFunc={setPassword}
           fontSize={getPixelToPixel(14)}
           placeHolder={'비밀번호'}
-          icon={<LockIconStyled />}
+          icon={<LockIconStyled fill={borderColor.passwordBorderColor} />}
           type={'password'}
           onKeyDown={handleOnKeyPress}
+          onFocus={() => handleFocusBorder('passwordBorderColor')}
+          onBlur={() => handleBlurBorder('passwordBorderColor')}
         />
         {isInputValid ? (
           <Blank height={getHeightPixel(10)} />
@@ -157,75 +181,6 @@ function LoginPage() {
       </InputPageStyled>
     </PageStyled>
   );
-  // return (
-  //   <div className="flex w-full h-full justify-center font-noto">
-  //     <div className="w-full h-full bg-crimson-red flex flex-col">
-  //       <div className="h-20 text-white pt-[31px] pb-[30px] pl-4">
-  //         <Reservation width="60" height="23" />
-  //       </div>
-
-  //       <div className="bg-white h-screen rounded-t -3xl flex align-center flex-col grow">
-  //         <div className="flex justify-start pt-[75px] pb-[33px] pl-[49.12px]">
-  //           <div className="font-bold text-4xl">로그인</div>
-  //           <div className="text-xs font-medium flex items-end pl-[7.87px] text-[#7E7E7E]">
-  //             <div className="drop-shadow-3xl">공지사항 쿠독 시작하기</div>
-  //           </div>
-  //         </div>
-  //         <div className="flex justify-center">
-  //           <input
-  //             id="email"
-  //             className={`bg-[url('~/src/assets/mail.svg')] bg-no-repeat bg-left-4 outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}
-  //             type="text"
-  //             name="이메일"
-  //             onChange={e => {
-  //               setEmail(e.target.value);
-  //             }}
-  //             placeholder="이메일"
-  //           />
-  //         </div>
-  //         <div className="pb-[10px]"></div>
-  //         <div className="flex justify-center mx-[24px]">
-  //           <input
-  //             id="password"
-  //             className={`bg-[url('~/src/assets/lock.svg')] bg-no-repeat bg-left-4 outline outline-[2px] outline-[#CDCDCD] rounded-[208px] w-80 h-12 pl-[62px] pr-[30px]`}
-  //             type="password"
-  //             name="비밀번호"
-  //             onChange={e => {
-  //               setPassword(e.target.value);
-  //             }}
-  //             onKeyUp={handleOnKeyPress}
-  //             placeholder="비밀번호"
-  //           />
-  //         </div>
-  //         <div className="pb-[40px]"></div>
-  //         <div className="flex justify-center">
-  //           <button
-  //             onClick={login}
-  //             className={`font-bold text-center w-80 outline outline-[2px] outline-[#CE4040] rounded-[58px] h-12 bg-[#CE4040] text-[#FFFFFF]`}
-  //           >
-  //             로그인
-  //           </button>
-  //         </div>
-  //         <div className="pb-[9px]"></div>
-  //         <Text content="또는"></Text>
-  //         <div className="pb-[9px]"></div>
-
-  //         <div className="flex justify-center">
-  //           <button
-  //             onClick={() => {
-  //               console.log('회원가입');
-  //             }}
-  //             className={`font-bold text-center w-80 outline outline-[2px] outline-[#CE4040] rounded-[58px] h-12 bg-[#FFFFFF] text-[#DB4A4A]`}
-  //           >
-  //             회원가입
-  //           </button>
-  //         </div>
-  //         <div className="pb-[9px]"></div>
-  //         <Text content="비밀번호 찾기"></Text>
-  //       </div>
-  //     </div>
-  //   </div>
-  //);
 }
 
 export default LoginPage;
@@ -271,11 +226,13 @@ const LogoStyled = styled(LogoIcon)`
 const MailIconStyled = styled(Mail_Icon)`
   width: ${getWidthPixel(18.33)};
   height: ${getHeightPixel(14)};
+  fill: ${props => props.fill};
 `;
 
 const LockIconStyled = styled(Lock_Icon)`
   width: ${getWidthPixel(14.67)};
   height: ${getHeightPixel(18.38)};
+  fill: ${props => props.fill};
 `;
 
 const InfoIconStyled = styled(Info_Icon)`

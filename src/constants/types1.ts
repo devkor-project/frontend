@@ -29,6 +29,9 @@ export interface InputPropsAdd<T> extends ContainerProps {
   fontWeight?: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   children?: ReactNode;
+  isFocus?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export interface ButtonStyle extends ContainerProps {

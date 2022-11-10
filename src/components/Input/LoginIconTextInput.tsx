@@ -14,6 +14,8 @@ function IconTextInput({
   fontSize,
   icon,
   onKeyDown,
+  onFocus,
+  onBlur,
 }: InputPropsAdd<string>) {
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
@@ -29,6 +31,8 @@ function IconTextInput({
         placeholder={placeHolder}
         type={type}
         onKeyDown={onKeyDown}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </ContainerStyled>
   );
@@ -57,6 +61,8 @@ const InputStyled = styled.input<{ width: string; height: string; fontSize: stri
     border-radius: ${height};
     font-size: ${fontSize};
   `}
+  outline-color: ${palette.crimson};
+  outline-width: 2px;
   padding-left: ${getPixelToPixel(62)};
   border: ${getPixelToPixel(2)} solid ${palette.gray};
   background-color: ${palette.white};
