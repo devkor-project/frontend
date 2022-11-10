@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { ReactComponent as Reservation1 } from '../assets/bottomItem1.svg';
-import { ReactComponent as Reservation2 } from '../assets/bottomItem2.svg';
-import { ReactComponent as Reservation3 } from '../assets/bottomItem3.svg';
-import { ReactComponent as Reservation4 } from '../assets/bottomItem4.svg';
-import { ReactComponent as Reservation5 } from '../assets/bottomItem5.svg';
-import { ReactComponent as ActivateReservation1 } from '../assets/activated_bottomItem1.svg';
-import { ReactComponent as ActivateReservation2 } from '../assets/activated_bottomItem2.svg';
-import { ReactComponent as ActivateReservation3 } from '../assets/activated_bottomItem3.svg';
-import { ReactComponent as ActivateReservation4 } from '../assets/activated_bottomItem4.svg';
-import { ReactComponent as ActivateReservation5 } from '../assets/activated_bottomItem5.svg';
+import { ReactComponent as Reservation1 } from '../assets/bottomNavigationBar/bottomItem1.svg';
+import { ReactComponent as Reservation2 } from '../assets/bottomNavigationBar/bottomItem2.svg';
+import { ReactComponent as Reservation3 } from '../assets/bottomNavigationBar/bottomItem3.svg';
+import { ReactComponent as Reservation4 } from '../assets/bottomNavigationBar/bottomItem4.svg';
+import { ReactComponent as Reservation5 } from '../assets/bottomNavigationBar/bottomItem5.svg';
+import { ReactComponent as ActivateReservation1 } from '../assets/bottomNavigationBar/activated_bottomItem1.svg';
+import { ReactComponent as ActivateReservation2 } from '../assets/bottomNavigationBar/activated_bottomItem2.svg';
+import { ReactComponent as ActivateReservation3 } from '../assets/bottomNavigationBar/activated_bottomItem3.svg';
+import { ReactComponent as ActivateReservation4 } from '../assets/bottomNavigationBar/activated_bottomItem4.svg';
+import { ReactComponent as ActivateReservation5 } from '../assets/bottomNavigationBar/activated_bottomItem5.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function BottomNavigationBar() {
