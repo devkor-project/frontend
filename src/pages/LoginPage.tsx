@@ -173,7 +173,7 @@ function LoginPage() {
           />
         </div>
         <Blank height={getHeightPixel(9)} />
-        <div onClick={() => navigate('../register')} className="flex w-[100%] justify-center">
+        <div onClick={() => navigate('../forget')} className="flex w-[100%] justify-center">
           <NotoText fontColor={palette.crimson} fontSize={getPixelToPixel(13)} fontWeight={'500'}>
             비밀번호 찾기
           </NotoText>
