@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 import Blank from '../../components/Blank';
-import NotoText from '../../components/Text/NotoTextBordered';
+import NotoText from '../../components/Text/NotoText';
 import { palette } from '../../constants/palette';
 import { REGISTER__SCREEN__TEXT } from '../../constants/text';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';

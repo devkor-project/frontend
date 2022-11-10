@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { InputProps } from '../../constants/types';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
-import NotoText from '../Text/NotoTextBordered';
+import NotoText from '../Text/NotoText';
 import { ReactComponent as Arrow_Icon } from '../../assets/button/top_arrow.svg';
 
 function DropDownInput<T>({ width, height, text, fontSize, fontWeight, setFunc }: InputProps<T>) {

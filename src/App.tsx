@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
 import RegisterPage from './pages/RegisterPage';
+import styled from 'styled-components';
+import { HEIGHT, WIDTH } from './utils/responsive';
 
 import { ReactComponent as MainLogo } from './assets/mainLogo.svg';
 const router = createBrowserRouter([
@@ -19,9 +21,6 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
 ]);
-import styled from 'styled-components';
-
-import { HEIGHT, WIDTH } from './utils/responsive';
 
 function App() {
   return (

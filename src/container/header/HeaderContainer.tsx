@@ -1,5 +1,5 @@
 import React from 'react';
-import NotoText from '../../components/Text/NotoTextBordered';
+import NotoText from '../../components/Text/NotoText';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
 import { ReactComponent as BackIcon } from '../../assets/button/left_arrow.svg';
