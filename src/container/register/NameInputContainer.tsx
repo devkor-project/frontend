@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import TextInput from '../../components/Input/TextInput';
-import NotoText from '../../components/Text/NotoText';
+import NotoText from '../../components/Text/NotoTextBordered';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 

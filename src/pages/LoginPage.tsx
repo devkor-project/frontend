@@ -11,9 +11,11 @@ import LoginHeaderContainer from '../container/login/LoginHeaderContainer';
 import { BASE__URL } from '../constants';
 import { ReactComponent as Mail_Icon } from '../assets/icon/mail.svg';
 import { ReactComponent as Lock_Icon } from '../assets/icon/lock.svg';
-import LoginIconTextInput from '../components/Input/LoginIconTextInput';
 import NotoText from '../components/Text/NotoText';
+import NotoTextBordered from '../components/Text/NotoTextBordered';
+import LoginIconTextInput from '../components/Input/LoginIconTextInput';
 import LoginTextButton from '../components/Button/LoginTextButton';
+import { ReactComponent as Info_Icon } from '../assets/icon/info1.svg';
 
 function LoginPage() {
   // TODO email, password를 한개의 객체로 state처리하기.
@@ -96,14 +98,23 @@ function LoginPage() {
         {isInputValid ? (
           <Blank height={getHeightPixel(10)} />
         ) : (
-          <div>
-            <Blank height={getHeightPixel(5)} />
-            <NotoText fontColor={palette.red} fontSize={getPixelToPixel(12)} fontWeight={'bold'}>
-              이메일 혹은 비밀번호가 일치하지 않습니다. 입력한 내용을 다시 확인해 주세요.
-            </NotoText>
-          </div>
+          <ErrContainer>
+            <Blank height={getHeightPixel(8)} />
+            <div className="flex flex-row">
+              <Info_Icon className="mt-[6px] mr-[8px]" />
+              <NotoTextBordered
+                fontColor={palette.crimson}
+                fontSize={getPixelToPixel(11)}
+                fontWeight={'400'}
+                borderColor={palette.gray_04}
+                borderWidth={getPixelToPixel(0.2)}
+              >
+                이메일 혹은 비밀번호가 일치하지 않습니다. 입력한 내용을 다시 확인해 주세요.
+              </NotoTextBordered>
+            </div>
+          </ErrContainer>
         )}
-        <Blank height={getHeightPixel(40)} />
+        <Blank height={getHeightPixel(40)} width={getWidthPixel(100)} />
         <LoginTextButton
           text="로그인"
           backgroundColor={palette.crimson}
@@ -244,6 +255,13 @@ const InputPageStyled = styled.div`
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
 `;
 
+const ErrContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: ${getWidthPixel(317)};
+`;
+
 const LogoStyled = styled(LogoIcon)`
   width: ${getPixelToPixel(60)};
   height: ${getPixelToPixel(23)};
@@ -258,4 +276,9 @@ const MailIconStyled = styled(Mail_Icon)`
 const LockIconStyled = styled(Lock_Icon)`
   width: ${getWidthPixel(14.67)};
   height: ${getHeightPixel(18.38)};
+`;
+
+const InfoIconStyled = styled(Info_Icon)`
+  width: ${getWidthPixel(12)};
+  height: ${getHeightPixel(12)};
 `;

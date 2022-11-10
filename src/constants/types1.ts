@@ -5,6 +5,8 @@ export interface TextStyle {
   fontSize: string;
   fontColor?: PaletteKeyTypes;
   fontWeight?: string;
+  borderColor?: PaletteKeyTypes;
+  borderWidth?: string;
 }
 
 export interface TextProps extends TextStyle {

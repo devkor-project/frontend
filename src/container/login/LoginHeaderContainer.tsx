@@ -1,9 +1,10 @@
 import React from 'react';
-import NotoText from '../../components/Text/NotoText';
+import NotoText from '../../components/Text/NotoTextBordered';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 import styled from 'styled-components';
 import { palette } from '../../constants/palette';
 import Blank from '../../components/Blank';
+import NotoTextBordered from '../../components/Text/NotoTextBordered';
 
 function LoginHeaderContainer({ title, subtitle }: { title: string; subtitle: string }) {
   return (
@@ -13,9 +14,15 @@ function LoginHeaderContainer({ title, subtitle }: { title: string; subtitle: st
       </NotoText>
       <Blank width={getWidthPixel(7.88)} />
       <div className="flex items-end drop-shadow-3xl mb-[5px]">
-        <NotoText fontSize={getPixelToPixel(12)} fontWeight={'700'} fontColor={palette.gray_02}>
+        <NotoTextBordered
+          fontSize={getPixelToPixel(12)}
+          fontWeight={'700'}
+          fontColor={palette.gray_02}
+          borderWidth={getPixelToPixel(0.2)}
+          borderColor={palette.gray_04}
+        >
           {subtitle}
-        </NotoText>
+        </NotoTextBordered>
       </div>
     </ContainerStyled>
   );
