@@ -11,6 +11,7 @@ import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
 import SearchContainer from '../container/main/SearchContainer';
 import NotoText from '../components/Text/NotoText';
 import CategoryListContainer from '../commons/CategoryListContainer';
+import NoticeListContainer from '../commons/NoticeListContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 const mockupData_1 = [
@@ -362,26 +363,10 @@ function MainPage() {
         />
         <CategoryListContainer
           CategoryList={mockupCategory}
-          changeCategory={() => changeCategory(1)}
+          changeCategory={changeCategory}
           selectedCategory={category}
         />
-        <div className="bg-white w-full flex items-center align flex-col overflow-y-scroll scrollbar pb-[44px] shadow-[0_0px_-4px_8px_rgba(105, 56, 56, 0.15)]">
-          <div className="w-full">
-            {noticeData.map((notice, idx) => {
-              return (
-                <NoticeItem
-                  key={idx}
-                  title={notice.title}
-                  date={notice.date}
-                  isBookmarked={notice.isBookmarked}
-                  bookmark={() => {
-                    changeBookmark(notice.id);
-                  }}
-                />
-              );
-            })}
-          </div>
-        </div>
+        <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} />
       </MainPageStyled>
       {/* <BottomNavigationBar /> */}
     </PageStyled>
