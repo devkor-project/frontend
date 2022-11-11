@@ -40,3 +40,8 @@ export interface ButtonProps extends ButtonStyle {
   text: string;
   onClick: () => void;
 }
+
+export interface CategoryProps {
+  id: number;
+  title: string;
+}
