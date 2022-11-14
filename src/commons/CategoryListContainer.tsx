@@ -12,7 +12,7 @@ function CategoryListContainer({
   changeCategory: any;
 }) {
   return (
-    <div className="flex flex-row justify-center pb-[29px]">
+    <div className="w-full flex flex-row justify-center pb-[29px] px-[30px]">
       {CategoryList.map((category, index) => {
         return (
           <CategoriesButton

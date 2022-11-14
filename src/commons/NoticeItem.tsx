@@ -34,9 +34,9 @@ const NoticeItem = ({
       </NoticeContent>
       <NoticeBookmark>
         {isBookmarked ? (
-          <IsBookmarked width="16" height="20" onClick={bookmark} />
+          <IsBookmarked width={getPixelToPixel(16)} height={getPixelToPixel(20)} onClick={bookmark} />
         ) : (
-          <IsNotBookmarked width="16" height="20" onClick={bookmark} />
+          <IsNotBookmarked width={getPixelToPixel(16)} height={getPixelToPixel(20)} onClick={bookmark} />
         )}
       </NoticeBookmark>
     </NoticeContainer>
@@ -49,10 +49,15 @@ const NoticeContainer = styled.div`
   width: 100%;
   padding-left: ${getPixelToPixel(24)};
   height: ${getHeightPixel(71)};
+  margin-bottom: ${getPixelToPixel(16)};
+  border: 1, 0, 1, 0, rgba(0.1, 0.1, 0.1, 0.1);
 `;
 const NoticeContent = styled.div`
   width: 100%;
   padding-right: ${getPixelToPixel(40)};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 `;
 const NoticeTitle = styled.div`
   line-height: ${getHeightPixel(23.17)};
@@ -62,6 +67,7 @@ const NoticeDate = styled.div`
 `;
 const NoticeBookmark = styled.div`
   right: ${getPixelToPixel(24)};
+  top: ${getPixelToPixel(5)};
   position: relative;
 `;
 export default NoticeItem;

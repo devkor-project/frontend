@@ -24,7 +24,7 @@ const mockupData_1 = [
   },
   {
     id: 2,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: '2023아ㅜㄻ낼주내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
     isBookmarked: false,
@@ -368,7 +368,7 @@ function MainPage() {
         />
         <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} />
       </MainPageStyled>
-      {/* <BottomNavigationBar /> */}
+      <BottomNavigationBar />
     </PageStyled>
   );
 }
