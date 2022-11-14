@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
-import CategoriesButton from '../commons/CategoriesButton';
-import NoticeItem from '../commons/NoticeItem';
 import { palette } from '../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 import { ReactComponent as Notification_Icon } from '../assets/icon/notification.svg';
@@ -12,6 +10,7 @@ import SearchContainer from '../container/main/SearchContainer';
 import NotoText from '../components/Text/NotoText';
 import CategoryListContainer from '../commons/CategoryListContainer';
 import NoticeListContainer from '../commons/NoticeListContainer';
+import NotSearchedContainer from '../container/main/NotSearchedContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 const mockupData_1 = [
@@ -296,6 +295,7 @@ const mockupCategory = [
 ];
 
 function MainPage() {
+  const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState(0);
   // TODO server에서 받아온 데이터를 저장하는 state
@@ -309,6 +309,7 @@ function MainPage() {
     //     category: category,
     //   },
     // });
+    // 임시..
     if (category == 0) {
       setNoticeData(mockupData_1);
     }
@@ -316,15 +317,26 @@ function MainPage() {
       setNoticeData(mockupData_2);
     }
   };
-
+  // 카테고리 변경 함수
+  // TODO 검색어도 해당 카테고리에 맞게 재검색 필요 (API 나온후 작업)
   const changeCategory = (idx: number) => {
     setCategory(idx);
+    setIsSearch(false);
   };
+  // 서버에 검색 요청
+  function getSearchedList() {
+    // TODO 서버에 검색 요청
+    console.log('FDDFD');
 
+    console.log(search);
+    changeCategory(1);
+    setIsSearch(true);
+  }
+  // 카테고리 변경시 getNoticeList 호출
   useEffect(() => {
     getNoticeList(category);
   }, [category]);
-
+  // 공지사항 북마크 변경
   const changeBookmark = (idx: number) => {
     // TODO 서버에 저장 get request
     const newNoticeData = noticeData.map(data => {
@@ -338,39 +350,75 @@ function MainPage() {
     });
     setNoticeData(newNoticeData);
   };
-
-  return (
-    <PageStyled>
-      <div className="w-full flex flex-row items-center justify-center">
-        <LogoPageStyled>
-          <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
-          <TitleStyled>
-            <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-              홈
-            </NotoText>
-          </TitleStyled>
-          <NotificationIconStyled />
-        </LogoPageStyled>
-      </div>
-      <MainPageStyled>
-        <SearchContainer
-          width={getWidthPixel(357)}
-          height={getHeightPixel(40)}
-          fontSize={getHeightPixel(14)}
-          placeHolder="검색어를 입력하세요"
-          setFunc={setSearch}
-          icon={<SearchIconStyled />}
-        />
-        <CategoryListContainer
-          CategoryList={mockupCategory}
-          changeCategory={changeCategory}
-          selectedCategory={category}
-        />
-        <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} />
-      </MainPageStyled>
-      <BottomNavigationBar />
-    </PageStyled>
-  );
+  //검색버튼이 눌렸는데 검색 응답이 없는 경우
+  if (isSearch) {
+    return (
+      <PageStyled>
+        <div className="w-full flex flex-row items-center justify-center">
+          <LogoPageStyled>
+            <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
+            <TitleStyled>
+              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
+                홈
+              </NotoText>
+            </TitleStyled>
+            <NotificationIconStyled />
+          </LogoPageStyled>
+        </div>
+        <MainPageStyled>
+          <SearchContainer
+            width={getWidthPixel(357)}
+            height={getHeightPixel(40)}
+            fontSize={getHeightPixel(14)}
+            placeHolder="검색어를 입력하세요"
+            setFunc={setSearch}
+            icon={<SearchIconStyled />}
+            searchFunc={getSearchedList}
+          />
+          <CategoryListContainer
+            CategoryList={mockupCategory}
+            changeCategory={changeCategory}
+            selectedCategory={category}
+          />
+          <NotSearchedContainer />
+        </MainPageStyled>
+        <BottomNavigationBar />
+      </PageStyled>
+    );
+  } else
+    return (
+      <PageStyled>
+        <div className="w-full flex flex-row items-center justify-center">
+          <LogoPageStyled>
+            <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
+            <TitleStyled>
+              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
+                홈
+              </NotoText>
+            </TitleStyled>
+            <NotificationIconStyled />
+          </LogoPageStyled>
+        </div>
+        <MainPageStyled>
+          <SearchContainer
+            width={getWidthPixel(357)}
+            height={getHeightPixel(40)}
+            fontSize={getHeightPixel(14)}
+            placeHolder="검색어를 입력하세요"
+            setFunc={setSearch}
+            icon={<SearchIconStyled />}
+            searchFunc={getSearchedList}
+          />
+          <CategoryListContainer
+            CategoryList={mockupCategory}
+            changeCategory={changeCategory}
+            selectedCategory={category}
+          />
+          <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} />
+        </MainPageStyled>
+        <BottomNavigationBar />
+      </PageStyled>
+    );
 }
 
 export default MainPage;
