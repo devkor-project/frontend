@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import CategoriesButton from '../commons/CategoriesButton';
 import NoticeItem from '../commons/NoticeItem';
-// import { ReactComponent as Reservation } from '../assets/logo.svg';
+import { palette } from '../constants/palette';
+import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
+import { ReactComponent as Notification_Icon } from '../assets/icon/notification.svg';
+import { ReactComponent as Main_Logo } from '../assets/icon/logo.svg';
+import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
+import SearchContainer from '../container/main/SearchContainer';
+import NotoText from '../components/Text/NotoText';
+import CategoryListContainer from '../commons/CategoryListContainer';
+import NoticeListContainer from '../commons/NoticeListContainer';
+// import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
-const mockupData = [
+const mockupData_1 = [
   {
     id: 1,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
@@ -14,7 +24,7 @@ const mockupData = [
   },
   {
     id: 2,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: '2023아ㅜㄻ낼주내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
     isBookmarked: false,
@@ -69,66 +79,195 @@ const mockupData = [
     isBookmarked: false,
   },
   {
-    id: 1,
+    id: 10,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
     isBookmarked: false,
   },
   {
-    id: 2,
+    id: 11,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 12,
+    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    date: '2021.09.01',
+    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 13,
+    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    date: '2021.09.01',
+    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 14,
+    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    date: '2021.09.01',
+    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 15,
+    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    date: '2021.09.01',
+    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 16,
+    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    date: '2021.09.01',
+    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 17,
+    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    date: '2021.09.01',
+    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 18,
+    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    date: '2021.09.01',
+    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    isBookmarked: false,
+  },
+];
+
+const mockupData_2 = [
+  {
+    id: 1,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: true,
+  },
+  {
+    id: 2,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
     isBookmarked: false,
   },
   {
     id: 3,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: 'This is Two',
     date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: true,
   },
   {
     id: 4,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: 'This is Two',
     date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    detail: 'This is Two을 받았습니다.',
     isBookmarked: false,
   },
   {
     id: 5,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: 'This is Two',
     date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    detail: 'This is Two을 받았습니다.',
     isBookmarked: false,
   },
   {
     id: 6,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: 'This is Two',
     date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    detail: 'This is Two을 받았습니다.',
     isBookmarked: false,
   },
   {
     id: 7,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: 'This is Two',
     date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    detail: 'This is Two을 받았습니다.',
     isBookmarked: false,
   },
   {
     id: 8,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: 'This is Two',
     date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    detail: 'This is Two을 받았습니다.',
     isBookmarked: false,
   },
   {
     id: 9,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
+    title: 'This is Two',
     date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 10,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 11,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 12,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 13,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 14,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 15,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 16,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 17,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
+    isBookmarked: false,
+  },
+  {
+    id: 18,
+    title: 'This is Two',
+    date: '2021.09.01',
+    detail: 'This is Two을 받았습니다.',
     isBookmarked: false,
   },
 ];
@@ -152,20 +291,39 @@ const mockupCategory = [
   },
   {
     id: 4,
-    title: '학사일정',
+    title: 'ddd',
   },
 ];
 
 function MainPage() {
+  const [search, setSearch] = useState('');
   const [category, setCategory] = useState(0);
   // TODO server에서 받아온 데이터를 저장하는 state
   // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
-  const [noticeData, setNoticeData] = useState(mockupData);
+  type Notice = { id: number; title: string; date: string; detail: string; isBookmarked: boolean };
+  const [noticeData, setNoticeData] = useState<Notice[]>([]);
+  // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
+  const getNoticeList = async (category: number) => {
+    // const response = await axios.get('https://kupid.korea.ac.kr/api/notice/list', {
+    //   params: {
+    //     category: category,
+    //   },
+    // });
+    if (category == 0) {
+      setNoticeData(mockupData_1);
+    }
+    if (category == 1) {
+      setNoticeData(mockupData_2);
+    }
+  };
 
   const changeCategory = (idx: number) => {
     setCategory(idx);
-    console.log(category);
   };
+
+  useEffect(() => {
+    getNoticeList(category);
+  }, [category]);
 
   const changeBookmark = (idx: number) => {
     // TODO 서버에 저장 get request
@@ -180,49 +338,88 @@ function MainPage() {
     });
     setNoticeData(newNoticeData);
   };
+
   return (
-    // if you want to change full width, change below w-[405px]
-    <div className="w-[405px] h-full font-noto">
-      <div className="w-full h-full bg-crimson-red flex flex-col">
-        <div className="h-[59px] pt-[21px] pb-[15px] flex justify-center">
-          <img src={require('./logo.png')} height="100%" alt="dfdf" />
-        </div>
-        <div className="bg-white rounded-t-[30px] w-full flex items-center align flex-col">
-          <div className=" bg-white w-[88%] min-h-[47px] border-[2px] border-[#999999] mt-[24px] mb-[11px] rounded-[208px]"></div>
-        </div>
-        <div className="bg-white pb-[29px] flex flex-row min-h-[73px] overflow-x-scroll scrollbar">
-          {mockupCategory.map((cat, idx) => {
-            return (
-              <CategoriesButton
-                key={idx}
-                title={cat.title}
-                isSelected={cat.id === category}
-                changeCategory={() => changeCategory(cat.id)}
-              />
-            );
-          })}
-        </div>
-        <div className="bg-white w-full flex items-center align flex-col overflow-y-scroll scrollbar pb-[44px] shadow-[0_0px_-4px_8px_rgba(105, 56, 56, 0.15)]">
-          <div className="w-full">
-            {noticeData.map((notice, idx) => {
-              return (
-                <NoticeItem
-                  key={idx}
-                  title={notice.title}
-                  date={notice.date}
-                  isBookmarked={notice.isBookmarked}
-                  bookmark={() => {
-                    changeBookmark(notice.id);
-                  }}
-                />
-              );
-            })}
-          </div>
-        </div>
+    <PageStyled>
+      <div className="w-full flex flex-row items-center justify-center">
+        <LogoPageStyled>
+          <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
+          <TitleStyled>
+            <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
+              홈
+            </NotoText>
+          </TitleStyled>
+          <NotificationIconStyled />
+        </LogoPageStyled>
       </div>
+      <MainPageStyled>
+        <SearchContainer
+          width={getWidthPixel(357)}
+          height={getHeightPixel(40)}
+          fontSize={getHeightPixel(14)}
+          placeHolder="검색어를 입력하세요"
+          setFunc={setSearch}
+          icon={<SearchIconStyled />}
+        />
+        <CategoryListContainer
+          CategoryList={mockupCategory}
+          changeCategory={changeCategory}
+          selectedCategory={category}
+        />
+        <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} />
+      </MainPageStyled>
       <BottomNavigationBar />
-    </div>
+    </PageStyled>
   );
 }
 
 export default MainPage;
+
+const PageStyled = styled.div`
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: ${palette.crimson};
+`;
+
+const LogoPageStyled = styled.div`
+  width: 100%;
+  height: ${getHeightPixel(59)};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-basis: 100%;
+`;
+
+const TitleStyled = styled.div`
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+`;
+const MainPageStyled = styled.div`
+  display: flex;
+  width: 100%;
+  height: ${getHeightPixel(661)};
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  background: ${palette.white};
+  border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
+`;
+const NotificationIconStyled = styled(Notification_Icon)`
+  width: ${getWidthPixel(16)};
+  height: ${getHeightPixel(21.89)};
+  margin-right: ${getWidthPixel(24)};
+`;
+const SearchIconStyled = styled(Search_Icon)`
+  width: ${getWidthPixel(21)};
+  height: ${getHeightPixel(21)};
+`;
+const MainLogoStyled = styled(Main_Logo)`
+  position: relative;
+  left: 0;
+  width: ${getWidthPixel(58)};
+  height: ${getHeightPixel(22.23)};
+  margin-left: ${getWidthPixel(24)};
+`;

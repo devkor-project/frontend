@@ -1,8 +1,8 @@
 import React from 'react';
 import { ButtonProps, ButtonStyle } from '../../constants/types';
-import { palette } from '../../constants/palette';
 import { getHeightPixel, getWidthPixel, getPixelToPixel } from '../../utils/responsive';
 import styled, { css } from 'styled-components';
+import { palette } from '../../constants/palette';
 
 function LoginTextButton({
   backgroundColor,

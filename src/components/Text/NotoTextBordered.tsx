@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { TextProps, TextStyle } from '../../constants/types1';
 import { palette } from '../../constants/palette';
+import { TextProps, TextStyle } from '../../constants/types1';
 import { getPixelToPixel } from '../../utils/responsive';
 
 function NotoTextBordered({ children, fontColor, fontSize, fontWeight, borderColor, borderWidth }: TextProps) {

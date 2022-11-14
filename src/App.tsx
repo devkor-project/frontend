@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
-import RegisterPage from './pages/RegisterPage';
 import styled from 'styled-components';
 import { HEIGHT, WIDTH } from './utils/responsive';
-
-import { ReactComponent as MainLogo } from './assets/mainLogo.svg';
+import MainPage from './pages/MainPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 const router = createBrowserRouter([
   {
     path: '/',

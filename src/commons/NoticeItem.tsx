@@ -1,6 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 import { ReactComponent as IsBookmarked } from '../assets/isBookmarked.svg';
 import { ReactComponent as IsNotBookmarked } from '../assets/isNotBookmarked.svg';
+import NotoText from '../components/Text/NotoText';
+import { palette } from '../constants/palette';
+
+import { getHeightPixel, getPixelToPixel } from '../utils/responsive';
 
 const NoticeItem = ({
   title,
@@ -14,20 +19,55 @@ const NoticeItem = ({
   bookmark: () => void;
 }) => {
   return (
-    <div className="w-full px-[24px] h-[71px] flex flex-row">
-      <div>
-        <div className="text-black font-[700] text-[16px] leading-[23.17px]">{title}</div>
-        <div className="text-[#7E7E7E] font-[400] text-[10px] leading-[14.48px]">{date}</div>
-      </div>
-      <div className="pl-[26px] pt-[4px]">
+    <NoticeContainer>
+      <NoticeContent>
+        <NoticeTitle>
+          <NotoText fontSize={getPixelToPixel(16)} fontWeight={'700'} fontColor={palette.black}>
+            {title}
+          </NotoText>
+        </NoticeTitle>
+        <NoticeDate>
+          <NotoText fontSize={getPixelToPixel(10)} fontWeight={'400'} fontColor={palette.gray_02}>
+            {date}
+          </NotoText>
+        </NoticeDate>
+      </NoticeContent>
+      <NoticeBookmark>
         {isBookmarked ? (
-          <IsBookmarked width="16" height="20" onClick={bookmark} />
+          <IsBookmarked width={getPixelToPixel(16)} height={getPixelToPixel(20)} onClick={bookmark} />
         ) : (
-          <IsNotBookmarked width="16" height="20" onClick={bookmark} />
+          <IsNotBookmarked width={getPixelToPixel(16)} height={getPixelToPixel(20)} onClick={bookmark} />
         )}
-      </div>
-    </div>
+      </NoticeBookmark>
+    </NoticeContainer>
   );
 };
 
+const NoticeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-left: ${getPixelToPixel(24)};
+  height: ${getHeightPixel(71)};
+  margin-bottom: ${getPixelToPixel(16)};
+  border: 1, 0, 1, 0, rgba(0.1, 0.1, 0.1, 0.1);
+`;
+const NoticeContent = styled.div`
+  width: 100%;
+  padding-right: ${getPixelToPixel(40)};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+const NoticeTitle = styled.div`
+  line-height: ${getHeightPixel(23.17)};
+`;
+const NoticeDate = styled.div`
+  line-height: ${getHeightPixel(14.48)};
+`;
+const NoticeBookmark = styled.div`
+  right: ${getPixelToPixel(24)};
+  top: ${getPixelToPixel(5)};
+  position: relative;
+`;
 export default NoticeItem;

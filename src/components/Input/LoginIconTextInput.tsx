@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { palette } from '../../constants/palette';
 
 import { InputPropsAdd } from '../../constants/types1';
-import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
 function IconTextInput({
