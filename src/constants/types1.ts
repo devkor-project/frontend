@@ -46,3 +46,13 @@ export interface ButtonProps extends ButtonStyle {
   text: string;
   onClick: () => void;
 }
+
+export interface SearchInputProps extends ContainerProps {
+  width: string;
+  height: string;
+  setFunc: Dispatch<SetStateAction<string>>;
+  fontSize: string;
+  icon: ReactNode;
+  placeHolder: string;
+  searchFunc: () => void;
+}

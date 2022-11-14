@@ -2,9 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 import { palette } from '../../constants/palette';
-import { InputProps } from '../../constants/types';
+import { SearchInputProps } from '../../constants/types1';
 
-const SearchContainer = ({ width, height, setFunc, fontSize, icon, placeHolder }: InputProps<string>) => {
+const SearchContainer = ({ width, height, setFunc, fontSize, icon, placeHolder, searchFunc }: SearchInputProps) => {
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
   }
@@ -18,7 +18,15 @@ const SearchContainer = ({ width, height, setFunc, fontSize, icon, placeHolder }
         onChange={handleChange}
         placeholder={placeHolder}
       />
-      <IconStyled height={height}>{icon}</IconStyled>
+      <IconStyled
+        height={height}
+        onClick={() => {
+          searchFunc();
+          console.log('search');
+        }}
+      >
+        {icon}
+      </IconStyled>
     </ContainerStyled>
   );
 };
