@@ -5,6 +5,8 @@ export interface TextStyle {
   fontSize: string;
   fontColor?: PaletteKeyTypes;
   fontWeight?: string;
+  borderColor?: PaletteKeyTypes;
+  borderWidth?: string;
 }
 
 export interface TextProps extends TextStyle {
@@ -16,7 +18,7 @@ export interface ContainerProps {
   height: string;
 }
 
-export interface InputProps<T> extends ContainerProps {
+export interface InputPropsAdd<T> extends ContainerProps {
   placeHolder?: string;
   setFunc: Dispatch<SetStateAction<T>>;
   type?: string;
@@ -25,7 +27,11 @@ export interface InputProps<T> extends ContainerProps {
   text?: string;
   selected?: T;
   fontWeight?: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   children?: ReactNode;
+  isFocus?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export interface ButtonStyle extends ContainerProps {
@@ -41,15 +47,12 @@ export interface ButtonProps extends ButtonStyle {
   onClick: () => void;
 }
 
-export interface CategoryProps {
-  id: number;
-  title: string;
-}
-
-export interface NoticeProps {
-  id: number;
-  title: string;
-  date: string;
-  detail: string;
-  isBookmarked: boolean;
+export interface SearchInputProps extends ContainerProps {
+  width: string;
+  height: string;
+  setFunc: Dispatch<SetStateAction<string>>;
+  fontSize: string;
+  icon: ReactNode;
+  placeHolder: string;
+  searchFunc: () => void;
 }
