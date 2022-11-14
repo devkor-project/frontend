@@ -5,6 +5,7 @@ import { HEIGHT, WIDTH } from './utils/responsive';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import NoticeDetailPage from './pages/NoticeDetailPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <RegisterPage />,
+  },
+  {
+    path: '/notice/:noticeId',
+    element: <NoticeDetailPage />,
   },
 ]);
 
