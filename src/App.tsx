@@ -1,12 +1,12 @@
-<<<<<<< Updated upstream
 import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import styled from 'styled-components';
 import { HEIGHT, WIDTH } from './utils/responsive';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
 import { ReactComponent as MainLogo } from './assets/mainLogo.svg';
+import RegisterPage from './pages/RegisterPage';
+import RegisterSubscribePage from './pages/RegisterSubscribePage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -15,6 +15,14 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />,
+  },
+  {
+    path: '/register/subscribe',
+    element: <RegisterSubscribePage />,
   },
 ]);
 function App() {
@@ -28,35 +36,21 @@ function App() {
   // Width를 기반으로 왼쪽에 메인 로고를 띄울지 말지 결정
   if (width < 810) {
     return (
-      <div className="w-full h-full flex justify-center">
-        <RouterProvider router={router} />
-      </div>
+      <PageStyled>
+        <ContainerStyled>
+          <RouterProvider router={router} />
+        </ContainerStyled>
+      </PageStyled>
     );
   } else
     return (
-      <div className="flex justify-center w-full h-full">
-        <MainLogo width="400px" height="688px" />
-
-        <RouterProvider router={router} />
-      </div>
+      <PageStyled>
+        <ContainerStyled>
+          <MainLogo width="400px" height="688px" />
+          <RouterProvider router={router} />
+        </ContainerStyled>
+      </PageStyled>
     );
-=======
-import React from 'react';
-import styled from 'styled-components';
-
-import RegisterPage from './pages/RegisterPage';
-import { HEIGHT, WIDTH } from './utils/responsive';
-
-function App() {
-  return (
-    <PageStyled>
-      <ContainerStyled>
-        <RegisterPage />
-      </ContainerStyled>
-    </PageStyled>
-  );
-  //return <RegisterPage />;
->>>>>>> Stashed changes
 }
 
 const PageStyled = styled.div`
@@ -67,7 +61,6 @@ const PageStyled = styled.div`
 const ContainerStyled = styled.div`
   width: ${WIDTH.toString() + 'px'};
   height: ${HEIGHT.toString() + 'px'};
-  border: 1px solid red;
 `;
 
 export default App;
