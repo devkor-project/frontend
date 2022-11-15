@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Blank from '../../components/Blank';
 import NotoText from '../../components/Text/NotoText';
 import { palette } from '../../constants/palette';
-import { REGISTER__SCREEN__TEXT } from '../../constants/text';
+import { REGISTER__PAGE__TEXT } from '../../constants/text';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
@@ -21,7 +21,7 @@ function PasswordInputContainer({
     <ContainerStyled>
       <TitleStyled>
         <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
-          {REGISTER__SCREEN__TEXT.title.password[0]}
+          {REGISTER__PAGE__TEXT.title.password[0]}
         </NotoText>
       </TitleStyled>
       <IconTextInput
@@ -29,7 +29,7 @@ function PasswordInputContainer({
         height={getHeightPixel(47)}
         setFunc={setPassword}
         fontSize={getPixelToPixel(13)}
-        placeHolder={REGISTER__SCREEN__TEXT.placeholder.password[0]}
+        placeHolder={REGISTER__PAGE__TEXT.placeholder.password[0]}
         icon={<IconStyled />}
         type={'password'}
       />
@@ -39,7 +39,7 @@ function PasswordInputContainer({
         height={getHeightPixel(47)}
         setFunc={setRepeatPassword}
         fontSize={getPixelToPixel(13)}
-        placeHolder={REGISTER__SCREEN__TEXT.placeholder.repeatPassword[0]}
+        placeHolder={REGISTER__PAGE__TEXT.placeholder.repeatPassword[0]}
         icon={<IconStyled />}
         type={'password'}
       />

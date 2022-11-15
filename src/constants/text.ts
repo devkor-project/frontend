@@ -1,4 +1,4 @@
-export const REGISTER__SCREEN__TEXT = {
+export const REGISTER__PAGE__TEXT = {
   header: {
     title: ['회원가입'],
   },
@@ -21,4 +21,8 @@ export const REGISTER__SCREEN__TEXT = {
   },
 };
 
-export const GRADE__LIST = ['1학년', '2학년', '3학년', '4학년'];
+export const REGISTER__SUBSCRIBE__PAGE__TEXT = {
+  header: {
+    title: ['카테고리 구독'],
+  },
+};

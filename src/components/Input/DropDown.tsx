@@ -1,47 +1,60 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from '../../constants/palette';
 import { ButtonStyle } from '../../constants/types';
-import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
+import { getHeightPixel, getPixelToNumber, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
-function DropDown<T>({
+function DropDown({
   width,
   dividerWidth,
   height,
   list,
   selected,
   setFunc,
+  setVisible,
 }: {
   width: string;
   dividerWidth?: string;
   height: string;
   list: string[];
-  selected: T;
-  setFunc: Dispatch<SetStateAction<T | number>>;
+  selected: number;
+  setFunc: Dispatch<SetStateAction<number>>;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
-    <ContainerStyled width={width}>
-      {list.map((content, index) => {
-        return (
-          <div key={content}>
-            <ButtonStyled
-              width={width}
-              height={height}
-              backgroundColor={index === selected ? palette.pink : palette.none}
-              fontColor={index === selected ? palette.white : palette.black}
-              onClick={() => setFunc(index)}
-            >
-              {content}
-            </ButtonStyled>
-            <InnerContainerStyled>
-              {index !== content.length ? <DividerStyled width={dividerWidth} /> : null}
-            </InnerContainerStyled>
-          </div>
-        );
-      })}
-    </ContainerStyled>
+    <PaddingStyled height={(getPixelToNumber(height) * (list.length - 0.9)).toString() + 'px'}>
+      <ContainerStyled width={width} onBlur={() => setVisible(false)} onMouseDown={event => event.preventDefault()}>
+        {list.map((content, index) => {
+          return (
+            <div key={content}>
+              <ButtonStyled
+                width={width}
+                height={height}
+                backgroundColor={palette.none}
+                fontColor={palette.black}
+                onMouseUp={() => {
+                  setFunc(index);
+                  setVisible(false);
+                }}
+              >
+                {content}
+              </ButtonStyled>
+              <InnerContainerStyled>
+                {index !== list.length - 1 ? <DividerStyled width={dividerWidth} /> : null}
+              </InnerContainerStyled>
+            </div>
+          );
+        })}
+      </ContainerStyled>
+    </PaddingStyled>
   );
 }
+
+const PaddingStyled = styled.div<{ height: string }>`
+  ${({ height = getHeightPixel(47) }) => css`
+    padding-bottom: ${height};
+  `}
+`;
 
 const ContainerStyled = styled.div<{ width: string }>`
   ${({ width = getWidthPixel(174) }) => css`
@@ -53,7 +66,6 @@ const ContainerStyled = styled.div<{ width: string }>`
   border-radius: ${getPixelToPixel(24)};
   background-color: ${palette.white};
   overflow: hidden;
-  flex-direction: column-reverse;
 `;
 
 const InnerContainerStyled = styled.div`
@@ -74,6 +86,9 @@ const ButtonStyled = styled.button<ButtonStyle>`
     background-color: ${backgroundColor};
     color: ${fontColor};
   `}
+  &:hover {
+    background-color: ${palette.pink};
+  }
   font-size: ${getPixelToPixel(16)};
 `;
 

@@ -16,16 +16,32 @@ export interface ContainerProps {
   height: string;
 }
 
-export interface InputProps<T> extends ContainerProps {
+export interface InputProps extends ContainerProps {
   placeHolder?: string;
-  setFunc: Dispatch<SetStateAction<T>>;
+  setFunc: Dispatch<SetStateAction<number>>;
   type?: string;
   fontSize: string;
   icon?: ReactNode;
   text?: string;
-  selected?: T;
   fontWeight?: string;
   children?: ReactNode;
+}
+
+export interface TextInputProps extends ContainerProps {
+  placeHolder?: string;
+  setFunc: Dispatch<SetStateAction<string>>;
+  type?: string;
+  fontSize: string;
+  icon?: ReactNode;
+  text?: string;
+  fontWeight?: string;
+  children?: ReactNode;
+}
+
+export interface DropDownInputProps extends InputProps {
+  dividerWidth?: string;
+  selected: number;
+  list: string[];
 }
 
 export interface ButtonStyle extends ContainerProps {

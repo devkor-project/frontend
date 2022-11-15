@@ -14,6 +14,7 @@ export const palette: PaletteType = {
   black: '#000000',
   pink: '#DF8383',
   gray: '#CDCDCD',
+  gray_01: '#696969',
   gray_02: '#7E7E7E',
   gray_03: '#A4A4A4',
   gray_04: '#D9D9D9',
