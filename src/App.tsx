@@ -45,8 +45,8 @@ function App() {
   } else
     return (
       <PageStyled>
+        <MainLogo width="400px" height="688px" />
         <ContainerStyled>
-          <MainLogo width="400px" height="688px" />
           <RouterProvider router={router} />
         </ContainerStyled>
       </PageStyled>
