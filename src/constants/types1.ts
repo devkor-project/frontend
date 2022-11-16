@@ -57,12 +57,15 @@ export interface SearchInputProps extends ContainerProps {
   searchFunc: () => void;
 }
 
-export interface NoticeDetailProps {
+export interface NoticeDetailHeaderProps {
+  noticeId: number;
   category: string;
   title: string;
   date: string;
-  publisher: string;
+  writer: string;
   views: number;
   scraps: number;
+}
+export interface NoticeDetailProps extends NoticeDetailHeaderProps {
   content: string;
 }

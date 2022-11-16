@@ -1,11 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { InputProps } from '../../constants/types';
+import { TextInputProps } from '../../constants/types';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
-function IconTextInput({ width, height, placeHolder, type, setFunc, fontSize, icon }: InputProps<string>) {
+function IconTextInput({ width, height, placeHolder, type, setFunc, fontSize, icon }: TextInputProps) {
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
   }

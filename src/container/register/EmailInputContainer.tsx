@@ -6,7 +6,7 @@ import TextButton from '../../components/Button/TextButton';
 import TextInput from '../../components/Input/TextInput';
 import NotoText from '../../components/Text/NotoText';
 import { palette } from '../../constants/palette';
-import { REGISTER__SCREEN__TEXT } from '../../constants/text';
+import { REGISTER__PAGE__TEXT } from '../../constants/text';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 import { postMailAPI, postMailReqAPI } from '../../utils/api';
 
@@ -28,7 +28,7 @@ function EmailInputContainer({
     <ContainerStyled>
       <TitleStyled>
         <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
-          {REGISTER__SCREEN__TEXT.title.email[0]}
+          {REGISTER__PAGE__TEXT.title.email[0]}
         </NotoText>
       </TitleStyled>
       <InnerContainerStyled>
@@ -37,13 +37,13 @@ function EmailInputContainer({
           height={getHeightPixel(47)}
           setFunc={setEmail}
           fontSize={getPixelToPixel(13)}
-          placeHolder={REGISTER__SCREEN__TEXT.placeholder.email[0]}
+          placeHolder={REGISTER__PAGE__TEXT.placeholder.email[0]}
           icon={<IconStyled />}
           type="email"
         />
         <Blank width={getWidthPixel(8)} />
         <TextButton
-          text={REGISTER__SCREEN__TEXT.button.email[0]}
+          text={REGISTER__PAGE__TEXT.button.email[0]}
           backgroundColor={palette.white}
           borderColor={palette.crimson}
           fontColor={palette.crimson}
@@ -66,7 +66,7 @@ function EmailInputContainer({
         />
         <Blank width={getWidthPixel(8)} />
         <TextButton
-          text={REGISTER__SCREEN__TEXT.button.repeatEmail[0]}
+          text={REGISTER__PAGE__TEXT.button.repeatEmail[0]}
           backgroundColor={palette.white}
           borderColor={palette.crimson}
           fontColor={palette.crimson}

@@ -11,6 +11,7 @@ import NotoText from '../components/Text/NotoText';
 import CategoryListContainer from '../commons/CategoryListContainer';
 import NoticeListContainer from '../commons/NoticeListContainer';
 import NotSearchedContainer from '../container/main/NotSearchedContainer';
+import { useNavigate } from 'react-router-dom';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 const mockupData_1 = [
@@ -350,6 +351,10 @@ function MainPage() {
     });
     setNoticeData(newNoticeData);
   };
+  const navigate = useNavigate();
+  const goNoticeDetail = (noticeId: number) => {
+    navigate(`/notice/${noticeId}`);
+  };
   //검색버튼이 눌렸는데 검색 응답이 없는 경우
   if (isSearch) {
     return (
@@ -414,7 +419,11 @@ function MainPage() {
             changeCategory={changeCategory}
             selectedCategory={category}
           />
-          <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} />
+          <NoticeListContainer
+            NoticeList={noticeData}
+            changeBookmark={changeBookmark}
+            goNoticeDetail={goNoticeDetail}
+          />
         </MainPageStyled>
         <BottomNavigationBar />
       </PageStyled>
