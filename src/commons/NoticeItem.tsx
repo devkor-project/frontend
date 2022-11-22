@@ -12,15 +12,17 @@ const NoticeItem = ({
   date,
   isBookmarked,
   bookmark,
+  goNoticeDetail,
 }: {
   title: string;
   date: string;
   isBookmarked: boolean;
   bookmark: () => void;
+  goNoticeDetail: () => void;
 }) => {
   return (
     <NoticeContainer>
-      <NoticeContent>
+      <NoticeContent onClick={goNoticeDetail}>
         <NoticeTitle>
           <NotoText fontSize={getPixelToPixel(16)} fontWeight={'700'} fontColor={palette.black}>
             {title}

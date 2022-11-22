@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import { ReactComponent as MainLogo } from './assets/mainLogo.svg';
 import RegisterPage from './pages/RegisterPage';
+import NoticeDetailPage from './pages/NoticeDetailPage';
 import RegisterSubscribePage from './pages/RegisterSubscribePage';
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <RegisterPage />,
+  },
+  {
+    path: '/notice/:noticeId',
+    element: <NoticeDetailPage />,
   },
   {
     path: '/register/subscribe',

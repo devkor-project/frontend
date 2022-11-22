@@ -4,7 +4,15 @@ import NoticeItem from './NoticeItem';
 import { palette } from '../constants/palette';
 import styled from 'styled-components';
 import { getPixelToPixel } from '../utils/responsive';
-function NoticeListContainer({ NoticeList, changeBookmark }: { NoticeList: NoticeProps[]; changeBookmark: any }) {
+function NoticeListContainer({
+  NoticeList,
+  changeBookmark,
+  goNoticeDetail,
+}: {
+  NoticeList: NoticeProps[];
+  changeBookmark: any;
+  goNoticeDetail: any;
+}) {
   return (
     <NoticeListWrapper>
       <div className="w-full">
@@ -17,6 +25,10 @@ function NoticeListContainer({ NoticeList, changeBookmark }: { NoticeList: Notic
               isBookmarked={notice.isBookmarked}
               bookmark={() => {
                 changeBookmark(notice.id);
+              }}
+              goNoticeDetail={() => {
+                console.log(notice.id);
+                goNoticeDetail(notice.id);
               }}
             />
           );
