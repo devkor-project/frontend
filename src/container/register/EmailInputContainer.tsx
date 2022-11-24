@@ -8,7 +8,7 @@ import NotoText from '../../components/Text/NotoText';
 import { palette } from '../../constants/palette';
 import { REGISTER__PAGE__TEXT } from '../../constants/text';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
-import { postMailAPI, postMailReqAPI } from '../../utils/api';
+import { postMailAPI, postMailReqAPI } from '../../utils/api_register';
 
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
 import IconTextInput from '../../components/Input/IconTextInput';
@@ -46,6 +46,7 @@ function EmailInputContainer({
             placeHolder={REGISTER__PAGE__TEXT.placeholder.email[0]}
             icon={<IconStyled />}
             type="email"
+            text={email}
           />
           <Blank width={getWidthPixel(8)} />
           <TextButton

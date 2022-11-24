@@ -9,6 +9,7 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
   title: {
     name: ['이름'],
     email: ['이메일'],
+    subscribeEmail: ['구독용 이메일'],
     password: ['비밀번호'],
     major: ['학과'],
     year: ['학번'],
@@ -16,6 +17,7 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
   },
   placeholder: {
     email: ['학교 이메일을 입력해주세요'],
+    subscribeEmail: ['수신 받을 이메일을 입력해주세요'],
     password: ['6-16자 / 영문 소문자, 숫자 사용가능'],
     repeatPassword: ['한번 더 입려해 주세요'],
   },
@@ -39,6 +41,9 @@ export const REGISTER__SUBSCRIBE__PAGE__TEXT = {
   },
   search: {
     placeHolder: ['검색어를 입력하세요'],
+  },
+  button: {
+    text: ['쿠독 시작하기'],
   },
 };
 

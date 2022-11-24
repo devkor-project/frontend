@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
-import Blank from '../../components/Blank';
 import NotoText from '../../components/Text/NotoText';
 import { palette } from '../../constants/palette';
 import { REGISTER__PAGE__TEXT } from '../../constants/text';
@@ -9,54 +8,32 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/resp
 
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
 import IconTextInput from '../../components/Input/IconTextInput';
-import WarningTextContainer from './WarningTextContainer';
 
-function PasswordInputContainer({
-  password,
-  repeatPassword,
-  setPassword,
-  setRepeatPassword,
-  warningCode,
-  secondWarningCode,
+export default function SubscribeEmailInputContainer({
+  subscribeEmail,
+  setSubscribeEmail,
 }: {
-  password: string;
-  repeatPassword: string;
-  setPassword: Dispatch<SetStateAction<string>>;
-  setRepeatPassword: Dispatch<SetStateAction<string>>;
-  warningCode: string;
-  secondWarningCode: string;
+  subscribeEmail: string;
+  setSubscribeEmail: Dispatch<SetStateAction<string>>;
 }) {
   return (
     <CenterStyled>
       <ContainerStyled>
         <TitleStyled>
           <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
-            {REGISTER__PAGE__TEXT.title.password[0]}
+            {REGISTER__PAGE__TEXT.title.subscribeEmail[0]}
           </NotoText>
         </TitleStyled>
         <IconTextInput
           width={getWidthPixel(357)}
           height={getHeightPixel(47)}
-          setFunc={setPassword}
+          setFunc={setSubscribeEmail}
           fontSize={getPixelToPixel(13)}
-          placeHolder={REGISTER__PAGE__TEXT.placeholder.password[0]}
+          placeHolder={REGISTER__PAGE__TEXT.placeholder.subscribeEmail[0]}
           icon={<IconStyled />}
-          type={'password'}
-          text={password}
+          type={'email'}
+          text={subscribeEmail}
         />
-        {warningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode][0]} /> : null}
-        <Blank height={getHeightPixel(10)} />
-        <IconTextInput
-          width={getWidthPixel(357)}
-          height={getHeightPixel(47)}
-          setFunc={setRepeatPassword}
-          fontSize={getPixelToPixel(13)}
-          placeHolder={REGISTER__PAGE__TEXT.placeholder.repeatPassword[0]}
-          icon={<IconStyled />}
-          type={'password'}
-          text={repeatPassword}
-        />
-        {secondWarningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[secondWarningCode][0]} /> : null}
       </ContainerStyled>
     </CenterStyled>
   );
@@ -87,5 +64,3 @@ const IconStyled = styled(Info_Icon)`
   width: ${getWidthPixel(14)};
   height: ${getHeightPixel(14)};
 `;
-
-export default PasswordInputContainer;

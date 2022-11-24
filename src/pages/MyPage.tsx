@@ -23,7 +23,12 @@ export default function MyPage() {
             </NotoText>
           </TextStyled>
           <ButtonStyled>
-            <ToggleButton isToggle={isToggle} />
+            <ToggleButton
+              isToggle={isToggle}
+              onClick={() => {
+                setToggle(!isToggle);
+              }}
+            />
           </ButtonStyled>
         </GrayContainerStyled>
         <MyPageListContainer />

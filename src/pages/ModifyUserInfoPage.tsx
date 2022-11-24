@@ -17,7 +17,7 @@ import { RegisterWarningProps } from '../constants/types';
 import { getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 
-function RegisterPage() {
+export default function ModifyUserInfoPage() {
   const [userName, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [code, setCode] = useState<string>('');
@@ -111,5 +111,3 @@ const ButtonContainer = styled.div`
   justify-content: center;
   width: 100%;
 `;
-
-export default RegisterPage;

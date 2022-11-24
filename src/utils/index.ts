@@ -1,3 +1,4 @@
+import { RegisterWarningProps } from '../constants/types';
 import { getWidthPixel } from './responsive';
 
 export function getButtonWidthList(list: string[], width: number) {
@@ -28,4 +29,25 @@ export function getButtonList(list: string[], width: number) {
     }
   });
   return resultArr;
+}
+
+export function getRegisterWarningCode(
+  email: string,
+  password: string,
+  repeatPassword: string,
+  errorCode: RegisterWarningProps
+) {
+  const emailRegex = new RegExp('%@korea.ac.kr');
+  const modifiedErrorCode = { ...errorCode };
+  if (email !== '' && !emailRegex.test(email)) {
+    modifiedErrorCode.emailWarningCode = 'univEmail';
+  } else {
+    modifiedErrorCode.emailWarningCode = '';
+  }
+  if (password !== '' && repeatPassword !== '' && password !== repeatPassword) {
+    modifiedErrorCode.repeatWarningCode = 'wrongPassword';
+  } else {
+    modifiedErrorCode.repeatWarningCode = '';
+  }
+  return modifiedErrorCode;
 }

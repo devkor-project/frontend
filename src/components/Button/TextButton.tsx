@@ -13,6 +13,7 @@ function TextButton({
   fontSize,
   width,
   height,
+  onClick,
 }: ButtonProps) {
   return (
     <ButtonStyled
@@ -23,6 +24,7 @@ function TextButton({
       height={height}
       fontWeight={fontWeight}
       fontSize={fontSize}
+      onClick={onClick}
     >
       {text}
     </ButtonStyled>

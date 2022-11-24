@@ -3,9 +3,9 @@ import styled, { css } from 'styled-components';
 import { palette, PaletteKeyTypes } from '../../constants/palette';
 import { getWidthPixel } from '../../utils/responsive';
 
-export default function ToggleButton({ isToggle }: { isToggle: boolean }) {
+export default function ToggleButton({ isToggle, onClick }: { isToggle: boolean; onClick: () => void }) {
   return (
-    <ButtonStyled backgroundColor={isToggle ? palette.crimson : palette.gray_02}>
+    <ButtonStyled backgroundColor={isToggle ? palette.crimson : palette.gray_02} onClick={onClick}>
       <BallStyled isToggle={isToggle} />
     </ButtonStyled>
   );

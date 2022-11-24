@@ -9,16 +9,19 @@ export default function CategoryButton({
   text,
   width,
   isSelected,
+  onClick,
 }: {
   text: string;
   width: string;
   isSelected: boolean;
+  onClick: () => void;
 }) {
   return (
     <ContainerStyled
       width={width}
       backgroundColor={isSelected ? palette.crimson_02 : palette.white}
       borderColor={isSelected ? palette.none : palette.gray_03}
+      onClick={onClick}
     >
       <NotoText fontSize={getWidthPixel(14)} fontColor={isSelected ? palette.white : palette.gray_01}>
         {text}

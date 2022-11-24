@@ -9,6 +9,7 @@ import RegisterSubscribePage from './pages/RegisterSubscribePage';
 import LogoPage from './pages/LogoPage';
 import { palette } from './constants/palette';
 import MyPage from './pages/MyPage';
+import ModifyUserInfoPage from './pages/ModifyUserInfoPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/mypage',
     element: <MyPage />,
+  },
+  {
+    path: '/mypage/modify',
+    element: <ModifyUserInfoPage />,
   },
 ]);
 function App() {

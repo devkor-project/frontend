@@ -1,4 +1,4 @@
-import { Component, Dispatch, ReactNode, SetStateAction } from 'react';
+import React, { Component, Dispatch, ReactElement, ReactNode, SetStateAction } from 'react';
 import { PaletteKeyTypes } from './palette';
 
 export interface TextStyle {
