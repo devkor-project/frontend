@@ -9,56 +9,70 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/resp
 
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
 import IconTextInput from '../../components/Input/IconTextInput';
+import WarningTextContainer from './WarningTextContainer';
 
 function PasswordInputContainer({
   setPassword,
   setRepeatPassword,
+  warningCode,
+  secondWarningCode,
 }: {
   setPassword: Dispatch<SetStateAction<string>>;
   setRepeatPassword: Dispatch<SetStateAction<string>>;
+  warningCode: string;
+  secondWarningCode: string;
 }) {
   return (
-    <ContainerStyled>
-      <TitleStyled>
-        <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
-          {REGISTER__PAGE__TEXT.title.password[0]}
-        </NotoText>
-      </TitleStyled>
-      <IconTextInput
-        width={getWidthPixel(357)}
-        height={getHeightPixel(47)}
-        setFunc={setPassword}
-        fontSize={getPixelToPixel(13)}
-        placeHolder={REGISTER__PAGE__TEXT.placeholder.password[0]}
-        icon={<IconStyled />}
-        type={'password'}
-      />
-      <Blank height={getHeightPixel(10)} />
-      <IconTextInput
-        width={getWidthPixel(357)}
-        height={getHeightPixel(47)}
-        setFunc={setRepeatPassword}
-        fontSize={getPixelToPixel(13)}
-        placeHolder={REGISTER__PAGE__TEXT.placeholder.repeatPassword[0]}
-        icon={<IconStyled />}
-        type={'password'}
-      />
-    </ContainerStyled>
+    <CenterStyled>
+      <ContainerStyled>
+        <TitleStyled>
+          <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
+            {REGISTER__PAGE__TEXT.title.password[0]}
+          </NotoText>
+        </TitleStyled>
+        <IconTextInput
+          width={getWidthPixel(357)}
+          height={getHeightPixel(47)}
+          setFunc={setPassword}
+          fontSize={getPixelToPixel(13)}
+          placeHolder={REGISTER__PAGE__TEXT.placeholder.password[0]}
+          icon={<IconStyled />}
+          type={'password'}
+        />
+        {warningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode][0]} /> : null}
+        <Blank height={getHeightPixel(10)} />
+        <IconTextInput
+          width={getWidthPixel(357)}
+          height={getHeightPixel(47)}
+          setFunc={setRepeatPassword}
+          fontSize={getPixelToPixel(13)}
+          placeHolder={REGISTER__PAGE__TEXT.placeholder.repeatPassword[0]}
+          icon={<IconStyled />}
+          type={'password'}
+        />
+        {secondWarningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[secondWarningCode][0]} /> : null}
+      </ContainerStyled>
+    </CenterStyled>
   );
 }
+
+const CenterStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ContainerStyled = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: ${getWidthPixel(357)};
   justify-content: center;
-  align-items: center;
 `;
 
 const TitleStyled = styled.div`
   display: flex;
   justify-content: left;
-  padding-left: ${getWidthPixel(49)};
+  padding-left: ${getWidthPixel(25)};
   padding-bottom: ${getHeightPixel(5)};
   width: 100%;
 `;

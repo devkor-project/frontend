@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CategoryButton from '../../components/Button/CategoryButton';
 import { getButtonList, getButtonWidthList } from '../../utils';
-import { getWidthPixel } from '../../utils/responsive';
+import { getHeightPixel, getWidthPixel } from '../../utils/responsive';
 
 export default function CategoryButtonContainer() {
   const tempArr = [
@@ -13,6 +13,13 @@ export default function CategoryButtonContainer() {
     '정보대학',
     '고려대학교',
     'KUPID 전체 공지사항',
+    '내일',
+    '2학기',
+    '맛집',
+    '사이버 국방학과',
+    '데이터 과학과',
+    '카페 안암동',
+    '이런저런 데이터',
   ];
   const textArr = getButtonList(tempArr, 345);
   return (
@@ -40,7 +47,9 @@ export default function CategoryButtonContainer() {
 
 const ContainerStyled = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  margin-top: ${getHeightPixel(16)};
 `;
 
 const RowStyled = styled.div`
@@ -48,4 +57,5 @@ const RowStyled = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: ${getWidthPixel(345)};
+  margin-bottom: ${getHeightPixel(10)};
 `;

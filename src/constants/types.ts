@@ -69,3 +69,10 @@ export interface NoticeProps {
   detail: string;
   isBookmarked: boolean;
 }
+
+export interface RegisterWarningProps {
+  emailWarningCode: string;
+  codeWarningCode: string;
+  formatWarningCode: string;
+  repeatWarningCode: string;
+}

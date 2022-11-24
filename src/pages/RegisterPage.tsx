@@ -13,6 +13,7 @@ import PasswordInputContainer from '../container/register/PasswordInputContainer
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 import { postSignupAPI } from '../utils/api';
 import { MAJOR__LIST, MIN__STUDENT__ID } from '../constants';
+import { RegisterWarningProps } from '../constants/types';
 
 function RegisterPage() {
   const [userName, setName] = useState<string>('');
@@ -23,15 +24,33 @@ function RegisterPage() {
   const [major, setMajor] = useState<number>(0);
   const [studentID, setStudentID] = useState<number>(0);
   const [grade, setGrade] = useState<number>(0);
+  const [warningCode, setWarningCode] = useState<RegisterWarningProps>({
+    emailWarningCode: 'wrongEmail',
+    codeWarningCode: 'wrongCode',
+    formatWarningCode: 'wrongFormat',
+    repeatWarningCode: 'wrongPassword',
+  });
   return (
     <PageStyled>
       <HeaderContainer title={REGISTER__PAGE__TEXT.header.title[0]} />
       <Blank height={getHeightPixel(39)} />
       <NameInputContainer setName={setName} />
       <Blank height={getHeightPixel(20)} />
-      <EmailInputContainer setEmail={setEmail} setCode={setCode} email={email} code={code} />
+      <EmailInputContainer
+        setEmail={setEmail}
+        setCode={setCode}
+        email={email}
+        code={code}
+        warningCode={warningCode.emailWarningCode}
+        secondWarningCode={warningCode.codeWarningCode}
+      />
       <Blank height={getHeightPixel(20)} />
-      <PasswordInputContainer setPassword={setPassword} setRepeatPassword={setRepeatPassword} />
+      <PasswordInputContainer
+        setPassword={setPassword}
+        setRepeatPassword={setRepeatPassword}
+        warningCode={warningCode.formatWarningCode}
+        secondWarningCode={warningCode.repeatWarningCode}
+      />
       <Blank height={getHeightPixel(20)} />
       <MajorInputContainer
         setMajor={setMajor}
@@ -61,7 +80,7 @@ function RegisterPage() {
           }
         />
       </ButtonContainer>
-      <Blank height={getHeightPixel(35)} />
+      <Blank height={getHeightPixel(65)} />
     </PageStyled>
   );
 }
@@ -71,6 +90,10 @@ const PageStyled = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  align-items: center;
+  background-color: white;
+  border-radius: ${getWidthPixel(30)} ${getWidthPixel(30)} 0 0;
+  margin-top: ${getHeightPixel(30)};
 `;
 
 const ButtonContainer = styled.div`

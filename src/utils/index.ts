@@ -1,14 +1,14 @@
 import { getWidthPixel } from './responsive';
 
 export function getButtonWidthList(list: string[], width: number) {
-  const totalWidth = width - list.length * 8;
+  const totalWidth = width - (list.length - 1) * 8;
   let totalLength = 0;
   const widthArr: string[] = [];
   list.forEach(text => {
-    totalLength += text.length;
+    totalLength += text.length + 2;
   });
   list.forEach(text => {
-    widthArr.push(getWidthPixel(totalWidth * (text.length / totalLength)));
+    widthArr.push(getWidthPixel(totalWidth * ((text.length + 2) / totalLength)));
   });
   return widthArr;
 }
@@ -18,11 +18,11 @@ export function getButtonList(list: string[], width: number) {
   const resultArr: string[][] = [[]];
   let lengthSum = 0;
   list.forEach(text => {
-    if (lengthSum + text.length * UNIT <= width) {
-      lengthSum += text.length * UNIT;
+    if (lengthSum + (text.length + 2) * UNIT <= width) {
+      lengthSum += (text.length + 2) * UNIT;
       resultArr[resultArr.length - 1].push(text);
     } else {
-      lengthSum = 0;
+      lengthSum = (text.length + 2) * UNIT;
       resultArr.push([]);
       resultArr[resultArr.length - 1].push(text);
     }
