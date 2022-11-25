@@ -20,19 +20,24 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
+    "jsonwebtoken": "^8.5.1",
     "postcss": "^8.4.16",
     "postcss-loader": "^7.0.1",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.4",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.2",
     "styled-components": "^5.3.6",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.4.2",
+    "typescript": "^4.9.3",
     "util": "^0.12.5",
     "web-vitals": "^2.1.0"
   },
@@ -61,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@types/redux-logger": "^3.0.9",
     "@types/styled-components": "^5.1.26"
   }
 }
