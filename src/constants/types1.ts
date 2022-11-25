@@ -59,11 +59,14 @@ export interface SearchInputProps extends ContainerProps {
 
 export interface NoticeDetailHeaderProps {
   noticeId: number;
-  category: string;
   title: string;
-  date: string;
   writer: string;
-  views: number;
+  date: string;
+  url: string;
+  provider: number;
+  viewCount: number;
+  categoryName: string;
+  isScraped: boolean;
   scraps: number;
 }
 export interface NoticeDetailProps extends NoticeDetailHeaderProps {
