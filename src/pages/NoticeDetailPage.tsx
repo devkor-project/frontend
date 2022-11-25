@@ -10,6 +10,7 @@ import NotoTextBordered from '../components/Text/NotoTextBordered';
 import { palette } from '../constants/palette';
 import { NoticeDetailProps } from '../constants/types1';
 import DetailHeaderContainer from '../container/Detail/DetailHeaderContainer';
+import { translateDatetime } from '../utils/datetime';
 import { isExpired } from '../utils/refresh';
 import { getHeightPixel, getPixelToPixel } from '../utils/responsive';
 
@@ -22,6 +23,7 @@ function NoticeDetailPage() {
     console.log(params.noticeId);
     isExpired(token);
     const response = await axios.get(`https://kudog.email/notices/details/${params.noticeId}`);
+    response.data.data.date = translateDatetime(response.data.data.date);
 
     setNoticeData({
       ...response.data.data,
