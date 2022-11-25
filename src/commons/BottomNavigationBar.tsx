@@ -59,7 +59,7 @@ function BottomNavigationBar() {
             />
           </div>
         )}
-        {location.pathname === '/bookmark' ? (
+        {location.pathname === '/scrap' ? (
           <div className="mx-auto my-auto">
             <ActivateReservation4 />
           </div>
@@ -67,7 +67,7 @@ function BottomNavigationBar() {
           <div className="mx-auto my-auto">
             <Reservation4
               onClick={() => {
-                navigate('/bookmark');
+                navigate('/scrap');
               }}
             />
           </div>
