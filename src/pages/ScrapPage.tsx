@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
 import axios from 'axios';
 import { NoticeProps } from '../constants/types';
+import NotScrapedContainer from '../container/hot/NotScrapedContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 const mockupCategory = [
@@ -34,8 +35,6 @@ const mockupCategory = [
 ];
 
 function ScrapPage() {
-  const [isSearch, setIsSearch] = useState(false);
-  const [category, setCategory] = useState('');
   const token = useSelector((store: any) => store.tokenReducer);
   // TODO server에서 받아온 데이터를 저장하는 state
   // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
@@ -72,7 +71,7 @@ function ScrapPage() {
     navigate(`/notice/${noticeId}`);
   };
   //검색버튼이 눌렸는데 검색 응답이 없는 경우
-  if (isSearch) {
+  if (noticeData.length === 0) {
     return (
       <PageStyled>
         <div className="w-full flex flex-row items-center justify-center">
@@ -91,7 +90,7 @@ function ScrapPage() {
           </LogoPageStyled>
         </div>
         <ScrapPageStyled>
-          <NotSearchedContainer />
+          <NotScrapedContainer />
         </ScrapPageStyled>
         <BottomNavigationBar />
       </PageStyled>
