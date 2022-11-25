@@ -58,14 +58,16 @@ export interface ButtonProps extends ButtonStyle {
 }
 
 export interface CategoryProps {
-  id: number;
+  id: string;
   title: string;
 }
 
 export interface NoticeProps {
-  id: number;
+  noticeId: number;
   title: string;
   date: string;
-  detail: string;
-  isBookmarked: boolean;
+  provider: string;
+  viewCount: number;
+  categoryName: string;
+  isScraped: boolean;
 }
