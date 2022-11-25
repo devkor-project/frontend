@@ -5,11 +5,16 @@ import { getHeightPixel, HEIGHT, WIDTH } from './utils/responsive';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import NoticeDetailPage from './pages/NoticeDetailPage';
 import RegisterSubscribePage from './pages/RegisterSubscribePage';
+
 import LogoPage from './pages/LogoPage';
 import { palette } from './constants/palette';
 import MyPage from './pages/MyPage';
 import ModifyUserInfoPage from './pages/ModifyUserInfoPage';
+
+import ScrapPage from './pages/ScrapPage';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,6 +29,10 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
+    path: '/notice/:noticeId',
+    element: <NoticeDetailPage />,
+  },
+  {
     path: '/register/subscribe',
     element: <RegisterSubscribePage />,
   },
@@ -34,7 +43,11 @@ const router = createBrowserRouter([
   {
     path: '/mypage/modify',
     element: <ModifyUserInfoPage />,
-  },
+ },
+ {
+    path: '/scrap',
+    element: <ScrapPage />,
+ },
 ]);
 function App() {
   const [width, setWidth] = React.useState(window.innerWidth);

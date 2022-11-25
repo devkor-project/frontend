@@ -16,13 +16,16 @@ import NotoTextBordered from '../components/Text/NotoTextBordered';
 import LoginIconTextInput from '../components/Input/LoginIconTextInput';
 import LoginTextButton from '../components/Button/LoginTextButton';
 import { ReactComponent as Info_Icon } from '../assets/icon/info1.svg';
+import { useCookies } from 'react-cookie';
+import { SetToken } from '../reducers/auth';
+import store from '../store';
 
 function LoginPage() {
   // TODO email, password를 한개의 객체로 state처리하기.
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isInputValid, setIsInputValid] = useState<boolean>(true);
-
+  const [cookies, setCookie] = useCookies(['refreshToken']);
   // focus 변화에 따라 border 색상 변경
   const [borderColor, setBorderColor] = useState({
     emailBorderColor: palette.gray,
@@ -54,8 +57,7 @@ function LoginPage() {
   // axios post로 email, password 보내고 결과를 바탕으로 "/" 리다이렉트
   // 로그인 실패 메시지 출력
   // TODO 로그인 처리 여부에 따라 경고 messaage 출력
-  // TODO axios Post 시에 password hashing
-  async function postLoginRequest({ email, password }: { email: string; password: string }) {
+  const postLoginRequest = async ({ email, password }: { email: string; password: string }) => {
     try {
       const res = await axios({
         method: 'POST',
@@ -65,21 +67,28 @@ function LoginPage() {
           password: password,
         },
       });
-      if (res?.data?.response?.status === 200) {
-        console.log(res);
-        //로컬 저장소에 token 값들 저장
-        window.localStorage.setItem('accessToken', res?.data?.response?.data?.accessToken);
-        window.localStorage.setItem('refreshToken', res.data?.response?.data?.refreshToken);
+
+      if (res?.status === 200) {
+        const accessToken = res.data.data.accessToken;
+        const refreshToken = res.data.data.refreshToken;
+        // refreshToken은 http-only token이므로 cookie에 저장
+        setCookie('refreshToken', refreshToken, {
+          path: '/',
+          secure: true,
+          httpOnly: true,
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+        });
+        console.log('success');
+        const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
+        store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
+
         navigate('../');
       }
     } catch (err) {
       console.log(err);
       setIsInputValid(false);
-      console.log(isInputValid);
-
-      alert('로그인에 실패하였습니다.\n 다시 시도해 주세요');
     }
-  }
+  };
 
   return (
     <PageStyled>

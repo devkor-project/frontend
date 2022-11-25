@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import { palette } from '../constants/palette';
@@ -11,6 +11,11 @@ import NotoText from '../components/Text/NotoText';
 import CategoryListContainer from '../commons/CategoryListContainer';
 import NoticeListContainer from '../commons/NoticeListContainer';
 import NotSearchedContainer from '../container/main/NotSearchedContainer';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isExpired } from '../utils/refresh';
+import axios from 'axios';
+import { NoticeProps } from '../constants/types';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 const mockupData_1 = [
@@ -19,126 +24,126 @@ const mockupData_1 = [
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: true,
+    isScraped: true,
   },
   {
     id: 2,
     title: '2023아ㅜㄻ낼주내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 3,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: true,
+    isScraped: true,
   },
   {
     id: 4,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 5,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 6,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 7,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 8,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 9,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 10,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 11,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 12,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 13,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 14,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 15,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 16,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 17,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 18,
     title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
     date: '2021.09.01',
     detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
 ];
 
@@ -148,190 +153,191 @@ const mockupData_2 = [
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: true,
+    isScraped: true,
   },
   {
     id: 2,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 3,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: true,
+    isScraped: true,
   },
   {
     id: 4,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 5,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 6,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 7,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 8,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 9,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 10,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 11,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 12,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 13,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 14,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 15,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 16,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 17,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
   {
     id: 18,
     title: 'This is Two',
     date: '2021.09.01',
     detail: 'This is Two을 받았습니다.',
-    isBookmarked: false,
+    isScraped: false,
   },
 ];
 
 const mockupCategory = [
   {
-    id: 0,
+    id: 'hi',
     title: 'KUPID 전체',
   },
   {
-    id: 1,
+    id: 'hello',
     title: '학사일정',
   },
   {
-    id: 2,
+    id: '333',
     title: '일반 공지',
-  },
-  {
-    id: 3,
-    title: '장학금',
-  },
-  {
-    id: 4,
-    title: 'ddd',
   },
 ];
 
-function MainPage() {
+function MainPage(props: any) {
   const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState('');
+  const token = useSelector((store: any) => store.tokenReducer);
   // TODO server에서 받아온 데이터를 저장하는 state
   // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
-  type Notice = { id: number; title: string; date: string; detail: string; isBookmarked: boolean };
-  const [noticeData, setNoticeData] = useState<Notice[]>([]);
+  // type Notice = {
+  //   noticeId: string;
+  //   title: string;
+  //   date: string;
+  //   provider: string;
+  //   viewCount: number;
+  //   categoryName: string;
+  //   isScraped: boolean;
+  // };
+  const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
-  const getNoticeList = async (category: number) => {
-    // const response = await axios.get('https://kupid.korea.ac.kr/api/notice/list', {
-    //   params: {
-    //     category: category,
-    //   },
-    // });
-    // 임시..
-    if (category == 0) {
-      setNoticeData(mockupData_1);
-    }
-    if (category == 1) {
-      setNoticeData(mockupData_2);
-    }
+  const getNoticeList = async (category: string) => {
+    isExpired(token);
+    console.log(category);
+
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const response = await axios.get('https://kudog.email/notices', {
+      params: {
+        categoryName: 'InfomaticsNotice',
+      },
+    });
+    console.log(response.data.data);
+    setNoticeData(response.data.data);
   };
   // 카테고리 변경 함수
   // TODO 검색어도 해당 카테고리에 맞게 재검색 필요 (API 나온후 작업)
-  const changeCategory = (idx: number) => {
-    setCategory(idx);
+  const changeCategory = (cat: string) => {
+    console.log(cat);
+
+    setCategory(cat);
     setIsSearch(false);
   };
   // 서버에 검색 요청
-  function getSearchedList() {
+  const getSearchedList = () => {
     // TODO 서버에 검색 요청
-    console.log('FDDFD');
 
     console.log(search);
-    changeCategory(1);
+    changeCategory('AndNotice');
     setIsSearch(true);
-  }
+  };
   // 카테고리 변경시 getNoticeList 호출
   useEffect(() => {
     getNoticeList(category);
@@ -340,15 +346,19 @@ function MainPage() {
   const changeBookmark = (idx: number) => {
     // TODO 서버에 저장 get request
     const newNoticeData = noticeData.map(data => {
-      if (data.id === idx) {
+      if (data.noticeId === idx) {
         return {
           ...data,
-          isBookmarked: !data.isBookmarked,
+          isScraped: !data.isScraped,
         };
       }
       return data;
     });
     setNoticeData(newNoticeData);
+  };
+  const navigate = useNavigate();
+  const goNoticeDetail = (noticeId: number) => {
+    navigate(`/notice/${noticeId}`);
   };
   //검색버튼이 눌렸는데 검색 응답이 없는 경우
   if (isSearch) {
@@ -356,13 +366,17 @@ function MainPage() {
       <PageStyled>
         <div className="w-full flex flex-row items-center justify-center">
           <LogoPageStyled>
-            <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
+            <div className="w-70px">
+              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
+            </div>
             <TitleStyled>
               <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
                 홈
               </NotoText>
             </TitleStyled>
-            <NotificationIconStyled />
+            <div className="w-70px">
+              <NotificationIconStyled />
+            </div>
           </LogoPageStyled>
         </div>
         <MainPageStyled>
@@ -390,13 +404,17 @@ function MainPage() {
       <PageStyled>
         <div className="w-full flex flex-row items-center justify-center">
           <LogoPageStyled>
-            <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
+            <div className="w-70px">
+              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
+            </div>
             <TitleStyled>
               <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
                 홈
               </NotoText>
             </TitleStyled>
-            <NotificationIconStyled />
+            <div className="w-70px">
+              <NotificationIconStyled />
+            </div>
           </LogoPageStyled>
         </div>
         <MainPageStyled>
@@ -414,7 +432,11 @@ function MainPage() {
             changeCategory={changeCategory}
             selectedCategory={category}
           />
-          <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} />
+          <NoticeListContainer
+            NoticeList={noticeData}
+            changeBookmark={changeBookmark}
+            goNoticeDetail={goNoticeDetail}
+          />
         </MainPageStyled>
         <BottomNavigationBar />
       </PageStyled>
