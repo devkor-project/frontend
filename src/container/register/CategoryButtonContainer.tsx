@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import CategoryButton from '../../components/Button/CategoryButton';
 import { getButtonList, getButtonWidthList } from '../../utils';
-import { getWidthPixel } from '../../utils/responsive';
+import { getHeightPixel, getWidthPixel } from '../../utils/responsive';
 
-export default function CategoryButtonContainer() {
-  const tempArr = [
-    '컴퓨터학과',
-    '디자인조형학부',
-    '학사일정',
-    '장학금',
-    '정보대학',
-    '고려대학교',
-    'KUPID 전체 공지사항',
-  ];
-  const textArr = getButtonList(tempArr, 345);
+export default function CategoryButtonContainer({
+  categoryList,
+  selectedList,
+  setList,
+}: {
+  categoryList: string[];
+  selectedList: string[];
+  setList: Dispatch<SetStateAction<string[]>>;
+}) {
+  const textArr = getButtonList(categoryList, 345);
   return (
     <ContainerStyled>
       {textArr.map((arr, index) => {
@@ -26,8 +25,11 @@ export default function CategoryButtonContainer() {
                 <CategoryButton
                   text={text}
                   width={widthArr[idx]}
-                  isSelected={false}
+                  isSelected={selectedList.includes(text)}
                   key={'layer' + index.toString() + '/' + idx.toString()}
+                  onClick={() => {
+                    setList([...selectedList, text]);
+                  }}
                 />
               );
             })}
@@ -40,7 +42,11 @@ export default function CategoryButtonContainer() {
 
 const ContainerStyled = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  margin-top: ${getHeightPixel(16)};
+  overflow: scroll;
+  height: ${getHeightPixel(410)};
 `;
 
 const RowStyled = styled.div`
@@ -48,4 +54,5 @@ const RowStyled = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: ${getWidthPixel(345)};
+  margin-bottom: ${getHeightPixel(10)};
 `;

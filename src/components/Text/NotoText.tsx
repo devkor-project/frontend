@@ -13,7 +13,7 @@ function NotoText({ children, fontColor, fontSize, fontWeight }: TextProps) {
 }
 
 const TextStyled = styled.div<TextStyle>`
-  ${({ fontColor = palette.black, fontSize = getPixelToPixel(16), fontWeight = 'bold' }) => css`
+  ${({ fontColor = palette.black, fontSize = getPixelToPixel(16), fontWeight = '500' }) => css`
     font-size: ${fontSize};
     color: ${fontColor};
     font-weight: ${fontWeight};

@@ -98,6 +98,7 @@ const BottomNavigationBarPageStyled = styled.div`
   height: ${getHeightPixel(66)};
   position: fixed;
   bottom: 0;
+  box-shadow: 0px -4px 8px 0px #69696926;
 `;
 
 const BottomNavigationBarStyled = styled.div`

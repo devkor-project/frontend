@@ -1,4 +1,4 @@
-import { Component, Dispatch, ReactNode, SetStateAction } from 'react';
+import React, { Component, Dispatch, ReactElement, ReactNode, SetStateAction } from 'react';
 import { PaletteKeyTypes } from './palette';
 
 export interface TextStyle {
@@ -70,4 +70,11 @@ export interface NoticeProps {
   viewCount: number;
   categoryName: string;
   isScraped: boolean;
+}
+
+export interface RegisterWarningProps {
+  emailWarningCode: string;
+  codeWarningCode: string;
+  formatWarningCode: string;
+  repeatWarningCode: string;
 }

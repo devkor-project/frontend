@@ -5,13 +5,13 @@ import { TextInputProps } from '../../constants/types';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
-function IconTextInput({ width, height, placeHolder, type, setFunc, fontSize, icon }: TextInputProps) {
+function IconTextInput({ width, height, placeHolder, type, setFunc, fontSize, icon, text }: TextInputProps) {
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
   }
   return (
     <ContainerStyled>
-      <IconStyled height={height}>{icon}</IconStyled>
+      {(text?.length || 0) == 0 ? <IconStyled height={height}>{icon}</IconStyled> : null}
       <InputStyled
         width={width}
         height={height}
@@ -19,6 +19,7 @@ function IconTextInput({ width, height, placeHolder, type, setFunc, fontSize, ic
         onChange={handleChange}
         placeholder={placeHolder}
         type={type}
+        isEmpty={(text?.length || 0) == 0}
       />
     </ContainerStyled>
   );
@@ -40,14 +41,14 @@ const IconStyled = styled.div<{ height: string }>`
   align-items: center;
 `;
 
-const InputStyled = styled.input<{ width: string; height: string; fontSize: string }>`
-  ${({ width = getWidthPixel(357), height = getHeightPixel(47), fontSize = getPixelToPixel(16) }) => css`
+const InputStyled = styled.input<{ width: string; height: string; fontSize: string; isEmpty: boolean }>`
+  ${({ width = getWidthPixel(357), height = getHeightPixel(47), fontSize = getPixelToPixel(16), isEmpty }) => css`
     width: ${width};
     height: ${height};
     border-radius: ${height};
     font-size: ${fontSize};
+    padding-left: ${getPixelToPixel(isEmpty ? 46 : 24)};
   `}
-  padding-left: ${getPixelToPixel(46)};
   border: ${getPixelToPixel(2)} solid ${palette.gray};
   background-color: ${palette.white};
 `;
