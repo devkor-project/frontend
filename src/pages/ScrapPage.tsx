@@ -17,6 +17,7 @@ import { isExpired } from '../utils/refresh';
 import axios from 'axios';
 import { NoticeProps } from '../constants/types';
 import NotScrapedContainer from '../container/hot/NotScrapedContainer';
+import Blank from '../components/Blank';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 const mockupCategory = [
@@ -81,7 +82,7 @@ function ScrapPage() {
             </div>
             <TitleStyled>
               <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                홈
+                스크랩
               </NotoText>
             </TitleStyled>
             <div className="w-70px">
@@ -105,7 +106,7 @@ function ScrapPage() {
             </div>
             <TitleStyled>
               <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                홈
+                스크랩
               </NotoText>
             </TitleStyled>
             <div className="w-70px">
@@ -114,6 +115,7 @@ function ScrapPage() {
           </LogoPageStyled>
         </div>
         <ScrapPageStyled>
+          <Blank height={getHeightPixel(31)} />
           <NoticeListContainer
             NoticeList={noticeData}
             changeBookmark={changeBookmark}
@@ -163,10 +165,7 @@ const NotificationIconStyled = styled(Notification_Icon)`
   width: ${getWidthPixel(16)};
   height: ${getHeightPixel(21.89)};
   margin-right: ${getWidthPixel(24)};
-`;
-const SearchIconStyled = styled(Search_Icon)`
-  width: ${getWidthPixel(21)};
-  height: ${getHeightPixel(21)};
+  margin-left: ${getWidthPixel(36.11)};
 `;
 const MainLogoStyled = styled(Main_Logo)`
   position: relative;
