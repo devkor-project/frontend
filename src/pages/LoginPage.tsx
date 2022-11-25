@@ -57,9 +57,7 @@ function LoginPage() {
   // axios post로 email, password 보내고 결과를 바탕으로 "/" 리다이렉트
   // 로그인 실패 메시지 출력
   // TODO 로그인 처리 여부에 따라 경고 messaage 출력
-  async function postLoginRequest({ email, password }: { email: string; password: string }) {
-    console.log('Fdfdfddfdfdfdfdfd');
-
+  const postLoginRequest = async ({ email, password }: { email: string; password: string }) => {
     try {
       const res = await axios({
         method: 'POST',
@@ -90,7 +88,7 @@ function LoginPage() {
       console.log(err);
       setIsInputValid(false);
     }
-  }
+  };
 
   return (
     <PageStyled>

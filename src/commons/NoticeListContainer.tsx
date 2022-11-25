@@ -13,6 +13,10 @@ function NoticeListContainer({
   changeBookmark: any;
   goNoticeDetail: any;
 }) {
+  console.log('good');
+
+  console.log(NoticeList.length);
+
   return (
     <NoticeListWrapper>
       <div className="w-full">
@@ -22,13 +26,13 @@ function NoticeListContainer({
               key={idx}
               title={notice.title}
               date={notice.date}
-              isBookmarked={notice.isBookmarked}
+              isBookmarked={notice.isScraped}
               bookmark={() => {
-                changeBookmark(notice.id);
+                changeBookmark(notice.noticeId);
               }}
               goNoticeDetail={() => {
-                console.log(notice.id);
-                goNoticeDetail(notice.id);
+                console.log(notice.noticeId);
+                goNoticeDetail(notice.noticeId);
               }}
             />
           );

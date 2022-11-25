@@ -8,7 +8,7 @@ function CategoryListContainer({
   changeCategory,
 }: {
   CategoryList: CategoryProps[];
-  selectedCategory: number;
+  selectedCategory: string;
   changeCategory: any;
 }) {
   return (
@@ -18,7 +18,7 @@ function CategoryListContainer({
           <CategoriesButton
             key={index}
             title={category.title}
-            isSelected={selectedCategory === index}
+            isSelected={selectedCategory === category.id}
             changeCategory={() => changeCategory(category.id)}
           />
         );
