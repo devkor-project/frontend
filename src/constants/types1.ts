@@ -56,3 +56,16 @@ export interface SearchInputProps extends ContainerProps {
   placeHolder: string;
   searchFunc: () => void;
 }
+
+export interface NoticeDetailHeaderProps {
+  noticeId: number;
+  category: string;
+  title: string;
+  date: string;
+  writer: string;
+  views: number;
+  scraps: number;
+}
+export interface NoticeDetailProps extends NoticeDetailHeaderProps {
+  content: string;
+}

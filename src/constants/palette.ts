@@ -19,6 +19,7 @@ export const palette: PaletteType = {
   gray_03: '#CDCDCD',
   gray_04: '#D9D9D9',
   gray_05: '#999999',
+  gray_06: '#727272',
   crimson: '#CE4040',
   crimson_02: '#DF8383',
   none: '#ffffff00',
