@@ -8,6 +8,7 @@ import { ReactComponent as MainLogo } from './assets/mainLogo.svg';
 import RegisterPage from './pages/RegisterPage';
 import NoticeDetailPage from './pages/NoticeDetailPage';
 import RegisterSubscribePage from './pages/RegisterSubscribePage';
+import ScrapPage from './pages/ScrapPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/register/subscribe',
     element: <RegisterSubscribePage />,
+  },
+  {
+    path: '/scrap',
+    element: <ScrapPage />,
   },
 ]);
 function App() {
