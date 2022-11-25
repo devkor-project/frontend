@@ -8,7 +8,7 @@ import NotoText from '../../components/Text/NotoText';
 import { ReactComponent as Views_Icon } from '../../assets/icon/view.svg';
 import { ReactComponent as Scraps_Icon } from '../../assets/icon/scraps.svg';
 
-function DetailHeaderContainer({ category, title, date, writer, views, scraps }: NoticeDetailHeaderProps) {
+function DetailHeaderContainer({ categoryName, title, date, writer, viewCount, scraps }: NoticeDetailHeaderProps) {
   return (
     <DetailHeaderContainerStyled>
       <CategoryStyled>
@@ -19,7 +19,7 @@ function DetailHeaderContainer({ category, title, date, writer, views, scraps }:
           borderColor={palette.gray_04}
           borderWidth={getPixelToPixel(0.2)}
         >
-          {category}
+          {categoryName}
         </NotoTextBordered>
       </CategoryStyled>
       <TitleStyled>
@@ -65,7 +65,7 @@ function DetailHeaderContainer({ category, title, date, writer, views, scraps }:
                 borderColor={palette.gray_04}
                 borderWidth={getPixelToPixel(0.2)}
               >
-                {views}
+                {viewCount}
               </NotoTextBordered>
             </div>
           </ViewsStyled>
