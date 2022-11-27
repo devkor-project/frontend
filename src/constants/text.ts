@@ -55,3 +55,13 @@ export const MY__PAGE__TEXT = {
     title: ['공지사항 메일 수신'],
   },
 };
+
+export const FIND__PASSWORD__PAGE__TEXT = {
+  header: {
+    title_find: ['비밀번호 찾기'],
+    title_modify: ['비밀번호 변경'],
+  },
+  button: {
+    submit: ['비밀번호 저장'],
+  },
+};
