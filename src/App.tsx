@@ -43,11 +43,11 @@ const router = createBrowserRouter([
   {
     path: '/mypage/modify',
     element: <ModifyUserInfoPage />,
- },
- {
+  },
+  {
     path: '/scrap',
     element: <ScrapPage />,
- },
+  },
 ]);
 function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
