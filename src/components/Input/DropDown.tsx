@@ -23,7 +23,7 @@ function DropDown({
 }) {
   return (
     <PaddingStyled height={(getPixelToNumber(height) * (list.length - 0.9)).toString() + 'px'}>
-      <ContainerStyled width={width} onBlur={() => setVisible(false)} onMouseDown={event => event.preventDefault()}>
+      <ContainerStyled width={width} onMouseDown={event => event.preventDefault()}>
         {list.map((content, index) => {
           return (
             <div key={content}>
