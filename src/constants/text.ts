@@ -5,6 +5,7 @@ type TextConstantType = {
 export const REGISTER__PAGE__TEXT: TextConstantType = {
   header: {
     title: ['회원가입'],
+    title_modify: ['내 정보 수정하기'],
   },
   title: {
     name: ['이름'],
@@ -24,6 +25,8 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
   button: {
     email: ['인증번호 받기'],
     submitCode: ['확인'],
+    submit: ['회원가입'],
+    modify: ['수정하기'],
   },
   warning: {
     wrongEmail: ['잘못된 형식의 이메일입니다.'],
@@ -63,5 +66,30 @@ export const FIND__PASSWORD__PAGE__TEXT = {
   },
   button: {
     submit: ['비밀번호 저장'],
+  },
+};
+
+export const ERROR__PAGE__TEXT = {
+  default: {
+    title: ['연결에 실패했어요'],
+    text: ['네트워크 상태를 확인해주세요'],
+  },
+  button: {
+    submit: ['재시도'],
+  },
+};
+
+export const SUBSCRIBE__PAGE__TEXT = {
+  header: {
+    title: ['구독'],
+  },
+  button: {
+    submit: ['변경사항 저장'],
+  },
+};
+
+export const NOTICE__MODAL__TEXT = {
+  header: {
+    title: ['알림'],
   },
 };
