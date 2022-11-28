@@ -75,7 +75,7 @@ function RegisterPage() {
       <Blank height={getHeightPixel(20)} />
       <ButtonContainer>
         <TextButton
-          text={REGISTER__PAGE__TEXT.header.title[0]}
+          text={REGISTER__PAGE__TEXT.button.submit[0]}
           backgroundColor={palette.crimson}
           fontColor={palette.white}
           width={getWidthPixel(357)}
@@ -83,13 +83,14 @@ function RegisterPage() {
           borderColor={palette.crimson}
           onClick={() => {
             postSignupAPI({
+              userName: userName,
               email: email,
               password: password,
               studentID: studentID + MIN__STUDENT__ID,
               major: MAJOR__LIST[major],
               grade: grade + 1,
+              submitFunc: () => navigate(ROUTER__URI.registerSubscribePage),
             });
-            navigate(ROUTER__URI.registerSubscribePage);
           }}
         />
       </ButtonContainer>

@@ -9,6 +9,7 @@ import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 import TextButton from '../components/Button/TextButton';
 import { palette } from '../constants/palette';
 import { useState } from 'react';
+import { ROUTER__URI } from '../constants';
 
 const tempArr = [
   '컴퓨터학과',
@@ -65,7 +66,7 @@ export default function RegisterSubscribePage() {
   }, [keyword]);
   return (
     <PageStyled>
-      <HeaderContainer title={REGISTER__SUBSCRIBE__PAGE__TEXT.header.title[0]} />
+      <HeaderContainer title={REGISTER__SUBSCRIBE__PAGE__TEXT.header.title[0]} goBackKey={ROUTER__URI.mainPage} />
       <SearchContainer
         width={getWidthPixel(357)}
         height={getHeightPixel(47)}
