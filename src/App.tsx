@@ -15,6 +15,8 @@ import ModifyUserInfoPage from './pages/ModifyUserInfoPage';
 
 import ScrapPage from './pages/ScrapPage';
 import FindPasswordPage from './pages/FindPasswordPage';
+import ErrorPage from './pages/ErrorPage';
+import SubscribePage from './pages/SubscribePage';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
   {
     path: '/findpassword',
     element: <FindPasswordPage />,
+  },
+  {
+    path: '/error',
+    element: <ErrorPage />,
+  },
+  {
+    path: '/subscribe',
+    element: <SubscribePage />,
   },
 ]);
 function App() {
