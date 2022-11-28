@@ -10,4 +10,5 @@ export const PageStyled = styled.div`
   background-color: white;
   border-radius: ${getWidthPixel(30)} ${getWidthPixel(30)} 0 0;
   margin-top: ${getHeightPixel(80)};
+  display: flex;
 `;
