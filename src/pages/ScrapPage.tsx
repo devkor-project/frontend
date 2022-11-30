@@ -18,6 +18,7 @@ import axios from 'axios';
 import { NoticeProps } from '../constants/types';
 import NotScrapedContainer from '../container/hot/NotScrapedContainer';
 import Blank from '../components/Blank';
+import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 const mockupCategory = [
@@ -75,21 +76,7 @@ function ScrapPage() {
   if (noticeData.length === 0) {
     return (
       <PageStyled>
-        <div className="w-full flex flex-row items-center justify-center">
-          <LogoPageStyled>
-            <div className="w-70px">
-              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
-            </div>
-            <TitleStyled>
-              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                스크랩
-              </NotoText>
-            </TitleStyled>
-            <div className="w-70px">
-              <NotificationIconStyled />
-            </div>
-          </LogoPageStyled>
-        </div>
+        <TitleHeaderContainer title="스크랩" />
         <ScrapPageStyled>
           <NotScrapedContainer />
         </ScrapPageStyled>
