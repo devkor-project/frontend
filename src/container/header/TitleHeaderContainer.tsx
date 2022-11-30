@@ -5,7 +5,7 @@ import { getHeightPixel, getWidthPixel } from '../../utils/responsive';
 
 import LogoIcon from '../../assets/icon/kudog_logo.png';
 import NotoText from '../../components/Text/NotoText';
-import { ReactComponent as Notification_Icon } from '../../assets/icon/notification.svg';
+import NoticeButton from '../../components/Button/NoticeButton';
 
 export default function TitleHeaderContainer({ title }: { title: string }) {
   return (
@@ -14,7 +14,7 @@ export default function TitleHeaderContainer({ title }: { title: string }) {
       <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
         {title}
       </NotoText>
-      <BellIconStyled />
+      <NoticeButton />
     </ContainerStyled>
   );
 }
@@ -34,13 +34,5 @@ const LogoStyled = styled.img`
   height: ${getWidthPixel(22)};
   position: absolute;
   margin-left: ${getWidthPixel(-300)};
-  margin-top: ${getHeightPixel(2)};
-`;
-
-const BellIconStyled = styled(Notification_Icon)`
-  width: ${getWidthPixel(16)};
-  height: ${getWidthPixel(22)};
-  position: absolute;
-  margin-left: ${getWidthPixel(365)};
   margin-top: ${getHeightPixel(2)};
 `;
