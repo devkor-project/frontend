@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import Blank from '../components/Blank';
 import TextButton from '../components/Button/TextButton';
 import { palette } from '../constants/palette';
 import { SUBSCRIBE__PAGE__TEXT } from '../constants/text';
+import { CategoryDataProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import CategoryButtonContainer from '../container/register/CategoryButtonContainer';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
+import { RootState } from '../reducers';
+import { getCategoryAPI } from '../utils/api_category';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 
 const tempArr = [
@@ -57,8 +61,12 @@ const tempArr = [
 
 export default function SubscribePage() {
   const [email, setEmail] = useState<string>('');
-  const [selectedList, setSelectedList] = useState<string[]>([]);
-  const [categoryList, setCategoryList] = useState<string[]>(tempArr);
+  const [selectedList, setSelectedList] = useState<CategoryDataProps[]>([]);
+  const [categoryList, setCategoryList] = useState<CategoryDataProps[]>([]);
+  const accessToken = useSelector((store: RootState) => store.tokenReducer);
+  useEffect(() => {
+    getCategoryAPI({ setList: setCategoryList });
+  }, []);
   return (
     <PageStyled>
       <TitleHeaderContainer title={SUBSCRIBE__PAGE__TEXT.header.title[0]} />

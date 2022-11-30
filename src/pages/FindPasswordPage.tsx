@@ -45,8 +45,8 @@ export default function FindPasswordPage() {
           setCode={setCode}
           email={email}
           code={code}
-          warningCode={warningCode.emailWarningCode}
-          secondWarningCode={warningCode.codeWarningCode}
+          warningCode={warningCode}
+          setWarningCode={setWarningCode}
         />
       ) : (
         <ContainerStyled>

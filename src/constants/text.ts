@@ -27,6 +27,7 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
     submitCode: ['확인'],
     submit: ['회원가입'],
     modify: ['수정하기'],
+    modal: ['확인'],
   },
   warning: {
     wrongEmail: ['잘못된 형식의 이메일입니다.'],
@@ -35,6 +36,9 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
     wrongCode: ['잘못된 인증번호입니다.'],
     wrongFormat: ['6-16자 영문 소문자, 숫자를 사용하세요.'],
     wrongPassword: ['비밀번호가 일치하지 않습니다.'],
+  },
+  modal: {
+    emailAccept: ['인증코드가 전송되었습니다'],
   },
 };
 

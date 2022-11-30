@@ -49,8 +49,8 @@ function RegisterPage() {
         setCode={setCode}
         email={email}
         code={code}
-        warningCode={warningCode.emailWarningCode}
-        secondWarningCode={warningCode.codeWarningCode}
+        warningCode={warningCode}
+        setWarningCode={setWarningCode}
       />
       <Blank height={getHeightPixel(20)} />
       <SubscribeEmailInputContainer subscribeEmail={subscribeEmail} setSubscribeEmail={setSubscribeEmail} />

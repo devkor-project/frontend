@@ -10,6 +10,11 @@ import TextButton from '../components/Button/TextButton';
 import { palette } from '../constants/palette';
 import { useState } from 'react';
 import { ROUTER__URI } from '../constants';
+import { CategoryDataProps } from '../constants/types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../reducers';
+import { getCategoryAPI } from '../utils/api_category';
+import { isExpired } from '../utils/refresh';
 
 const tempArr = [
   '컴퓨터학과',
@@ -57,12 +62,17 @@ const tempArr = [
 ];
 
 export default function RegisterSubscribePage() {
-  const [selectedList, setSelectedList] = useState<string[]>([]);
   const [keyword, setKeyword] = useState<string>('');
-  const [categoryList, setCategoryList] = useState<string[]>(tempArr);
+  const [selectedList, setSelectedList] = useState<CategoryDataProps[]>([]);
+  const [categoryList, setCategoryList] = useState<CategoryDataProps[]>([]);
+  const accessToken = useSelector((store: RootState) => store.tokenReducer);
+  isExpired(accessToken);
+  useEffect(() => {
+    getCategoryAPI({ setList: setCategoryList });
+  }, []);
   useEffect(() => {
     const searchRegex = new RegExp('.*' + keyword + '.*');
-    setCategoryList(tempArr.filter(text => searchRegex.test(text)));
+    setCategoryList(categoryList.filter(category => searchRegex.test(category.categoryName)));
   }, [keyword]);
   return (
     <PageStyled>

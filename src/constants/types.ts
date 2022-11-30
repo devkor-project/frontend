@@ -50,6 +50,8 @@ export interface ButtonStyle extends ContainerProps {
   fontColor: PaletteKeyTypes;
   fontWeight?: string;
   fontSize?: string;
+  hoverBackgroundColor?: PaletteKeyTypes;
+  hoverFontColor?: PaletteKeyTypes;
 }
 
 export interface ButtonProps extends ButtonStyle {
@@ -77,4 +79,14 @@ export interface RegisterWarningProps {
   codeWarningCode: string;
   formatWarningCode: string;
   repeatWarningCode: string;
+}
+
+export interface CategoryDataProps {
+  categoryId: number;
+  categoryName: string;
+}
+
+export interface TokenProps {
+  accessToken: string;
+  expiredTime: Date;
 }

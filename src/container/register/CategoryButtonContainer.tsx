@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled, { css } from 'styled-components';
 import CategoryButton from '../../components/Button/CategoryButton';
+import { CategoryDataProps } from '../../constants/types';
 import { getButtonList, getButtonWidthList } from '../../utils';
 import { getHeightPixel, getWidthPixel } from '../../utils/responsive';
 
@@ -10,9 +11,9 @@ export default function CategoryButtonContainer({
   setList,
   height,
 }: {
-  categoryList: string[];
-  selectedList: string[];
-  setList: Dispatch<SetStateAction<string[]>>;
+  categoryList: CategoryDataProps[];
+  selectedList: CategoryDataProps[];
+  setList: Dispatch<SetStateAction<CategoryDataProps[]>>;
   height?: string;
 }) {
   const textArr = getButtonList(categoryList, 345);
@@ -22,15 +23,15 @@ export default function CategoryButtonContainer({
         const widthArr = getButtonWidthList(arr, 345);
         return (
           <RowStyled key={'layer' + index.toString()}>
-            {arr.map((text, idx) => {
+            {arr.map((category, idx) => {
               return (
                 <CategoryButton
-                  text={text}
+                  text={category.categoryName}
                   width={widthArr[idx]}
-                  isSelected={selectedList.includes(text)}
+                  isSelected={selectedList.includes(category)}
                   key={'layer' + index.toString() + '/' + idx.toString()}
                   onClick={() => {
-                    setList([...selectedList, text]);
+                    setList([...selectedList, category]);
                   }}
                 />
               );
