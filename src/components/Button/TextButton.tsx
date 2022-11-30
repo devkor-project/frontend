@@ -14,6 +14,8 @@ function TextButton({
   width,
   height,
   onClick,
+  hoverBackgroundColor,
+  hoverFontColor,
 }: ButtonProps) {
   return (
     <ButtonStyled
@@ -25,6 +27,8 @@ function TextButton({
       fontWeight={fontWeight}
       fontSize={fontSize}
       onClick={onClick}
+      hoverBackgroundColor={hoverBackgroundColor}
+      hoverFontColor={hoverFontColor}
     >
       {text}
     </ButtonStyled>
@@ -40,6 +44,8 @@ const ButtonStyled = styled.button<ButtonStyle>`
     height = getHeightPixel(47),
     fontWeight = 'bold',
     fontSize = getPixelToPixel(18),
+    hoverBackgroundColor,
+    hoverFontColor,
   }) => css`
     background-color: ${backgroundColor};
     color: ${fontColor};
@@ -49,6 +55,10 @@ const ButtonStyled = styled.button<ButtonStyle>`
     font-weight: ${fontWeight};
     font-size: ${fontSize};
     border-radius: ${height};
+    &:hover {
+      background-color: ${hoverBackgroundColor || backgroundColor};
+      color: ${hoverFontColor || fontColor};
+    }
   `}
 `;
 

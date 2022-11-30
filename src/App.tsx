@@ -14,6 +14,9 @@ import MyPage from './pages/MyPage';
 import ModifyUserInfoPage from './pages/ModifyUserInfoPage';
 
 import ScrapPage from './pages/ScrapPage';
+import FindPasswordPage from './pages/FindPasswordPage';
+import ErrorPage from './pages/ErrorPage';
+import SubscribePage from './pages/SubscribePage';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +50,18 @@ const router = createBrowserRouter([
   {
     path: '/scrap',
     element: <ScrapPage />,
+  },
+  {
+    path: '/findpassword',
+    element: <FindPasswordPage />,
+  },
+  {
+    path: '/error',
+    element: <ErrorPage />,
+  },
+  {
+    path: '/subscribe',
+    element: <SubscribePage />,
   },
 ]);
 function App() {
@@ -88,13 +103,12 @@ function App() {
 
 const BackgroundStyled = styled.div`
   display: flex;
-  justify-content: center;
 `;
 
 const PageStyled = styled.div`
   display: flex;
+  width: 100%;
   position: absolute;
-  justify-content: center;
 `;
 
 const TopBar = styled.div`
@@ -112,7 +126,7 @@ const ContainerStyled = styled.div`
 `;
 
 const LogoContainerStyled = styled.div`
-  width: ${WIDTH.toString() + 'px'};
+  width: 50%;
   height: ${HEIGHT.toString() + 'px'};
 `;
 

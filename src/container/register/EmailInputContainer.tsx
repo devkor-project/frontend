@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
 import Blank from '../../components/Blank';
@@ -13,6 +13,8 @@ import { postMailAPI, postMailReqAPI } from '../../utils/api_register';
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
 import IconTextInput from '../../components/Input/IconTextInput';
 import WarningTextContainer from './WarningTextContainer';
+import Modal from '../../components/Modal';
+import { RegisterWarningProps } from '../../constants/types';
 
 function EmailInputContainer({
   email,
@@ -20,15 +22,17 @@ function EmailInputContainer({
   setEmail,
   setCode,
   warningCode,
-  secondWarningCode,
+  setWarningCode,
 }: {
   email: string;
   code: string;
   setEmail: Dispatch<SetStateAction<string>>;
   setCode: Dispatch<SetStateAction<string>>;
-  warningCode: string;
-  secondWarningCode: string;
+  warningCode: RegisterWarningProps;
+  setWarningCode: Dispatch<SetStateAction<RegisterWarningProps>>;
 }) {
+  const [isVisible, setVisible] = useState(false);
+  const [modalText, setModalText] = useState('');
   return (
     <CenterStyled>
       <ContainerStyled>
@@ -57,12 +61,18 @@ function EmailInputContainer({
             width={getWidthPixel(111)}
             height={getHeightPixel(47)}
             fontSize={getPixelToPixel(14)}
+            hoverBackgroundColor={palette.crimson}
+            hoverFontColor={palette.white}
             onClick={() => {
               postMailReqAPI({ email });
+              setModalText(REGISTER__PAGE__TEXT.modal.emailAccept[0]);
+              setVisible(true);
             }}
           />
         </InnerContainerStyled>
-        {warningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode][0]} /> : null}
+        {warningCode.emailWarningCode ? (
+          <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.emailWarningCode][0]} />
+        ) : null}
         <Blank height={getHeightPixel(10)} />
         <InnerContainerStyled>
           <TextInput
@@ -82,11 +92,19 @@ function EmailInputContainer({
             height={getHeightPixel(47)}
             fontSize={getPixelToPixel(14)}
             onClick={() => {
-              postMailAPI({ email, code });
+              postMailAPI({
+                email: email,
+                code: code,
+                warningCode: warningCode,
+                setWarningCode: setWarningCode,
+              });
             }}
           />
         </InnerContainerStyled>
-        {secondWarningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[secondWarningCode][0]} /> : null}
+        <Modal isVisible={isVisible} setVisible={setVisible} text={modalText} />
+        {warningCode.codeWarningCode ? (
+          <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.codeWarningCode][0]} />
+        ) : null}
       </ContainerStyled>
     </CenterStyled>
   );

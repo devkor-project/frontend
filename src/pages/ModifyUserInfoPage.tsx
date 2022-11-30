@@ -38,7 +38,7 @@ export default function ModifyUserInfoPage() {
   }, [email, password, repeatPassword]);
   return (
     <PageStyled>
-      <HeaderContainer title={REGISTER__PAGE__TEXT.header.title[0]} />
+      <HeaderContainer title={REGISTER__PAGE__TEXT.header.title_modify[0]} />
       <Blank height={getHeightPixel(39)} />
       <NameInputContainer setName={setName} />
       <Blank height={getHeightPixel(20)} />
@@ -47,8 +47,8 @@ export default function ModifyUserInfoPage() {
         setCode={setCode}
         email={email}
         code={code}
-        warningCode={warningCode.emailWarningCode}
-        secondWarningCode={warningCode.codeWarningCode}
+        warningCode={warningCode}
+        setWarningCode={setWarningCode}
       />
       <Blank height={getHeightPixel(20)} />
       <SubscribeEmailInputContainer subscribeEmail={subscribeEmail} setSubscribeEmail={setSubscribeEmail} />
@@ -73,21 +73,15 @@ export default function ModifyUserInfoPage() {
       <Blank height={getHeightPixel(20)} />
       <ButtonContainer>
         <TextButton
-          text={REGISTER__PAGE__TEXT.header.title[0]}
+          text={REGISTER__PAGE__TEXT.button.modify[0]}
           backgroundColor={palette.crimson}
           fontColor={palette.white}
           width={getWidthPixel(357)}
           height={getHeightPixel(47)}
           borderColor={palette.crimson}
-          onClick={() =>
-            postSignupAPI({
-              email: email,
-              password: password,
-              studentID: studentID + MIN__STUDENT__ID,
-              major: MAJOR__LIST[major],
-              grade: grade + 1,
-            })
-          }
+          onClick={() => {
+            return 0;
+          }}
         />
       </ButtonContainer>
       <Blank height={getHeightPixel(65)} />
