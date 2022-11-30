@@ -7,6 +7,7 @@ import { isNull } from 'util';
 import OptionBar from '../commons/OptionBar';
 import NotoText from '../components/Text/NotoText';
 import NotoTextBordered from '../components/Text/NotoTextBordered';
+import { BASE__URL } from '../constants';
 import { palette } from '../constants/palette';
 import { NoticeDetailProps } from '../constants/types1';
 import DetailHeaderContainer from '../container/Detail/DetailHeaderContainer';
@@ -22,7 +23,7 @@ function NoticeDetailPage() {
   const getNoticeData = async () => {
     console.log(params.noticeId);
     isExpired(token);
-    const response = await axios.get(`https://kudog.email/notices/details/${params.noticeId}`);
+    const response = await axios.get(`${BASE__URL}notices/details/${params.noticeId}`);
     response.data.data.date = translateDatetime(response.data.data.date);
 
     setNoticeData({

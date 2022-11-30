@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { BASE__URL } from '../constants';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import { palette } from '../constants/palette';
@@ -16,265 +17,8 @@ import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
 import axios from 'axios';
 import { NoticeProps } from '../constants/types';
+import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
-
-const mockupData_1 = [
-  {
-    id: 1,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: true,
-  },
-  {
-    id: 2,
-    title: '2023아ㅜㄻ낼주내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 3,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: true,
-  },
-  {
-    id: 4,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 5,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 6,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 7,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 8,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 9,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 10,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 11,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 12,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 13,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 14,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 15,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 16,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 17,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 18,
-    title: '2023학년도 제1학기 복수전공 전형 면접 일정 안내',
-    date: '2021.09.01',
-    detail: '2023학년도 제1학기 복수전공 전형 면접 일정 안내을 받았습니다.',
-    isScraped: false,
-  },
-];
-
-const mockupData_2 = [
-  {
-    id: 1,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: true,
-  },
-  {
-    id: 2,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 3,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: true,
-  },
-  {
-    id: 4,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 5,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 6,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 7,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 8,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 9,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 10,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 11,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 12,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 13,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 14,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 15,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 16,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 17,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-  {
-    id: 18,
-    title: 'This is Two',
-    date: '2021.09.01',
-    detail: 'This is Two을 받았습니다.',
-    isScraped: false,
-  },
-];
 
 const mockupCategory = [
   {
@@ -296,25 +40,16 @@ function MainPage(props: any) {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const token = useSelector((store: any) => store.tokenReducer);
-  // TODO server에서 받아온 데이터를 저장하는 state
-  // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
-  // type Notice = {
-  //   noticeId: string;
-  //   title: string;
-  //   date: string;
-  //   provider: string;
-  //   viewCount: number;
-  //   categoryName: string;
-  //   isScraped: boolean;
-  // };
+
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getNoticeList = async (category: string) => {
+    console.log(token.payload.accessToken);
     isExpired(token);
     console.log(category);
 
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get('https://kudog.email/notices', {
+    const response = await axios.get(`${BASE__URL}notices`, {
       params: {
         categoryName: 'InfomaticsNotice',
       },
@@ -322,6 +57,14 @@ function MainPage(props: any) {
     console.log(response.data.data);
     setNoticeData(response.data.data);
   };
+  // 카테고리 리스트 가져오는 api
+  const getCategoryList = async () => {
+    isExpired(token);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const response = await axios.get(`${BASE__URL}host/category/subscribe`);
+    console.log(response.data.data);
+  };
+
   // 카테고리 변경 함수
   // TODO 검색어도 해당 카테고리에 맞게 재검색 필요 (API 나온후 작업)
   const changeCategory = (cat: string) => {
@@ -341,6 +84,7 @@ function MainPage(props: any) {
   // 카테고리 변경시 getNoticeList 호출
   useEffect(() => {
     getNoticeList(category);
+    getCategoryList();
   }, [category]);
   // 공지사항 북마크 변경
   const changeBookmark = (idx: number) => {
@@ -364,21 +108,7 @@ function MainPage(props: any) {
   if (isSearch) {
     return (
       <PageStyled>
-        <div className="w-full flex flex-row items-center justify-center">
-          <LogoPageStyled>
-            <div className="w-70px">
-              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
-            </div>
-            <TitleStyled>
-              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                홈
-              </NotoText>
-            </TitleStyled>
-            <div className="w-70px">
-              <NotificationIconStyled />
-            </div>
-          </LogoPageStyled>
-        </div>
+        <TitleHeaderContainer title="홈" />
         <MainPageStyled>
           <SearchContainer
             width={getWidthPixel(357)}
@@ -481,6 +211,7 @@ const NotificationIconStyled = styled(Notification_Icon)`
   width: ${getWidthPixel(16)};
   height: ${getHeightPixel(21.89)};
   margin-right: ${getWidthPixel(24)};
+  margin-left: ${getWidthPixel(36.11)};
 `;
 const SearchIconStyled = styled(Search_Icon)`
   width: ${getWidthPixel(21)};

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Cookies, useCookies } from 'react-cookie';
 import { SetToken } from '../reducers/auth';
-import store from '../store';
+import { store } from '../store';
 
 // Use this when you call api
 export async function isExpired(state: any) {
