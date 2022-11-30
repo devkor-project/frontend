@@ -14,6 +14,7 @@ import MyPage from './pages/MyPage';
 import ModifyUserInfoPage from './pages/ModifyUserInfoPage';
 
 import ScrapPage from './pages/ScrapPage';
+import { useSelector } from 'react-redux';
 
 const router = createBrowserRouter([
   {
@@ -51,11 +52,17 @@ const router = createBrowserRouter([
 ]);
 function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
+  const token = useSelector((store: any) => store.tokenReducer);
 
+  // token이 없으면 로그인 화면으로 이동
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
+
+    if (token.payload.accessToken === null) {
+      router.navigate('/login');
+    }
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   // Width를 기반으로 왼쪽에 메인 로고를 띄울지 말지 결정
