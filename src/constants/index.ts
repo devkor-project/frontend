@@ -1,4 +1,4 @@
-export const BASE__URL = 'https:/www.kudog.email/';
+export const BASE__URL = 'https:/www.api.kudog.email/';
 
 export const GRADE__LIST = ['1학년', '2학년', '3학년', '4학년'];
 

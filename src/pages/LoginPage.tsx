@@ -18,7 +18,7 @@ import LoginTextButton from '../components/Button/LoginTextButton';
 import { ReactComponent as Info_Icon } from '../assets/icon/info1.svg';
 import { useCookies } from 'react-cookie';
 import { SetToken } from '../reducers/auth';
-import store from '../store';
+import { store } from '../store';
 
 function LoginPage() {
   // TODO email, password를 한개의 객체로 state처리하기.

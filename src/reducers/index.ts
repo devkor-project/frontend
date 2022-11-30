@@ -1,8 +1,16 @@
 import { combineReducers } from 'redux';
 import { tokenReducer } from './auth';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   tokenReducer,
 });
 
-export default rootReducer;
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['token'],
+};
+
+export default persistReducer(persistConfig, rootReducer);

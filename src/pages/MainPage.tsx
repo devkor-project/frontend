@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { BASE__URL } from '../constants';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import { palette } from '../constants/palette';
@@ -43,11 +44,12 @@ function MainPage(props: any) {
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getNoticeList = async (category: string) => {
+    console.log(token.payload.accessToken);
     isExpired(token);
     console.log(category);
 
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get('https://kudog.email/notices', {
+    const response = await axios.get(`${BASE__URL}notices`, {
       params: {
         categoryName: 'InfomaticsNotice',
       },
@@ -55,6 +57,14 @@ function MainPage(props: any) {
     console.log(response.data.data);
     setNoticeData(response.data.data);
   };
+  // 카테고리 리스트 가져오는 api
+  const getCategoryList = async () => {
+    isExpired(token);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const response = await axios.get(`${BASE__URL}host/category/subscribe`);
+    console.log(response.data.data);
+  };
+
   // 카테고리 변경 함수
   // TODO 검색어도 해당 카테고리에 맞게 재검색 필요 (API 나온후 작업)
   const changeCategory = (cat: string) => {
@@ -74,6 +84,7 @@ function MainPage(props: any) {
   // 카테고리 변경시 getNoticeList 호출
   useEffect(() => {
     getNoticeList(category);
+    getCategoryList();
   }, [category]);
   // 공지사항 북마크 변경
   const changeBookmark = (idx: number) => {
