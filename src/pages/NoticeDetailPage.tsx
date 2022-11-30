@@ -12,7 +12,7 @@ import { palette } from '../constants/palette';
 import { NoticeDetailProps } from '../constants/types1';
 import DetailHeaderContainer from '../container/Detail/DetailHeaderContainer';
 import { translateDatetime } from '../utils/datetime';
-import { isExpired } from '../utils/refresh'; 
+import { isExpired } from '../utils/refresh';
 import { getHeightPixel, getPixelToPixel } from '../utils/responsive';
 
 function NoticeDetailPage() {
