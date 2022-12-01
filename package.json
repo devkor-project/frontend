@@ -57,6 +57,12 @@
       "react-app/jest"
     ]
   },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:5000",
+      "secure": true
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
