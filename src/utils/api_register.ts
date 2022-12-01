@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
+import { getErrorCode } from '.';
 import { BASE__URL } from '../constants';
 import { RegisterWarningProps } from '../constants/types';
 
@@ -30,18 +31,34 @@ export async function postSignupAPI({
       major: major,
     },
   });
-  console.log('data: ', data);
   if (data) {
     submitFunc();
   }
   return data;
 }
 
-export async function postMailReqAPI({ email }: { email: string }) {
-  const { data } = await axios.post(`${BASE__URL}auth/mail/req`, {
-    email: email,
-  });
-  return data;
+export async function postMailReqAPI({
+  email,
+  setWarningCode,
+  warningCode,
+}: {
+  email: string;
+  setWarningCode: Dispatch<SetStateAction<RegisterWarningProps>>;
+  warningCode: RegisterWarningProps;
+}) {
+  try {
+    const { data } = await axios.post(`${BASE__URL}auth/mail/req`, {
+      email: email,
+    });
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (getErrorCode(error) === 2001) {
+        warningCode.codeWarningCode = 'duplicateEmail';
+        setWarningCode({ ...warningCode });
+      }
+    }
+  }
 }
 
 export async function postMailAPI({
@@ -62,17 +79,9 @@ export async function postMailAPI({
     });
     return data;
   } catch (error) {
-    console.log(error);
-    if (axios.isAxiosError(error) && error.response) {
-      console.log(error.response);
+    if (axios.isAxiosError(error) && error) {
+      warningCode.codeWarningCode = 'wrongCode';
+      setWarningCode({ ...warningCode });
     }
   }
-
-  // if (data && data.success === false) {
-  //   warningCode.codeWarningCode = 'wrongCode';
-  //   setWarningCode(warningCode);
-  //   console.log('asdf');
-  // } else {
-  //   console.log('this is else');
-  // }
 }
