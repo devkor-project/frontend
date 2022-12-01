@@ -12,7 +12,14 @@ import NameInputContainer from '../container/register/NameInputContainer';
 import PasswordInputContainer from '../container/register/PasswordInputContainer';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 import { postSignupAPI } from '../utils/api_register';
-import { DEFAULT__REGISTER__WARNING__CODE, MAJOR__LIST, MIN__STUDENT__ID, ROUTER__URI } from '../constants';
+import {
+  DEFAULT__REGISTER__WARNING__CODE,
+  GRADE__LIST,
+  MAJOR__LIST,
+  MIN__STUDENT__ID,
+  ROUTER__URI,
+  STUDENT__ID__LIST,
+} from '../constants';
 import { RegisterWarningProps } from '../constants/types';
 import { getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
@@ -81,9 +88,9 @@ function RegisterPage() {
               userName: userName,
               email: email,
               password: password,
-              studentID: studentID + MIN__STUDENT__ID,
+              studentID: STUDENT__ID__LIST[studentID],
               major: MAJOR__LIST[major],
-              grade: grade + 1,
+              grade: GRADE__LIST[grade],
               submitFunc: () => navigate(ROUTER__URI.registerSubscribePage),
             });
           }}
