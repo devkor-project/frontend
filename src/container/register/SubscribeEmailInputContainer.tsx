@@ -33,6 +33,7 @@ export default function SubscribeEmailInputContainer({
           icon={<IconStyled />}
           type={'email'}
           text={subscribeEmail}
+          defaultValue={subscribeEmail}
         />
       </ContainerStyled>
     </CenterStyled>
