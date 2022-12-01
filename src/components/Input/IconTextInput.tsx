@@ -5,7 +5,18 @@ import { TextInputProps } from '../../constants/types';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
-function IconTextInput({ width, height, placeHolder, type, setFunc, fontSize, icon, text }: TextInputProps) {
+function IconTextInput({
+  width,
+  height,
+  placeHolder,
+  type,
+  setFunc,
+  fontSize,
+  icon,
+  text,
+  disabled,
+  defaultValue,
+}: TextInputProps) {
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
   }
@@ -20,6 +31,8 @@ function IconTextInput({ width, height, placeHolder, type, setFunc, fontSize, ic
         placeholder={placeHolder}
         type={type}
         isEmpty={(text?.length || 0) == 0}
+        disabled={disabled}
+        defaultValue={defaultValue}
       />
     </ContainerStyled>
   );

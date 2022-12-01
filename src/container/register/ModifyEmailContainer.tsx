@@ -8,33 +8,30 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/resp
 
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
 import IconTextInput from '../../components/Input/IconTextInput';
+import { RegisterWarningProps } from '../../constants/types';
 
-export default function SubscribeEmailInputContainer({
-  subscribeEmail,
-  setSubscribeEmail,
-}: {
-  subscribeEmail: string;
-  setSubscribeEmail: Dispatch<SetStateAction<string>>;
-}) {
+function EmailInputContainer({ email, setEmail }: { email: string; setEmail: Dispatch<SetStateAction<string>> }) {
   return (
     <CenterStyled>
       <ContainerStyled>
         <TitleStyled>
           <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
-            {REGISTER__PAGE__TEXT.title.subscribeEmail[0]}
+            {REGISTER__PAGE__TEXT.title.email[0]}
           </NotoText>
         </TitleStyled>
-        <IconTextInput
-          width={getWidthPixel(357)}
-          height={getHeightPixel(47)}
-          setFunc={setSubscribeEmail}
-          fontSize={getPixelToPixel(13)}
-          placeHolder={REGISTER__PAGE__TEXT.placeholder.subscribeEmail[0]}
-          icon={<IconStyled />}
-          type={'email'}
-          text={subscribeEmail}
-          defaultValue={subscribeEmail}
-        />
+        <InnerContainerStyled>
+          <IconTextInput
+            width={getWidthPixel(357)}
+            height={getHeightPixel(47)}
+            setFunc={setEmail}
+            fontSize={getPixelToPixel(13)}
+            icon={<IconStyled />}
+            type="email"
+            text={email}
+            disabled={true}
+            defaultValue={email}
+          />
+        </InnerContainerStyled>
       </ContainerStyled>
     </CenterStyled>
   );
@@ -53,15 +50,23 @@ const ContainerStyled = styled.div`
   justify-content: center;
 `;
 
-const TitleStyled = styled.div`
+const InnerContainerStyled = styled.div`
   display: flex;
-  justify-content: left;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+`;
+
+const TitleStyled = styled.div`
   padding-left: ${getWidthPixel(25)};
   padding-bottom: ${getHeightPixel(5)};
-  width: 100%;
+  display: flex;
+  justify-content: left;
 `;
 
 const IconStyled = styled(Info_Icon)`
   width: ${getWidthPixel(14)};
   height: ${getHeightPixel(14)};
 `;
+
+export default EmailInputContainer;

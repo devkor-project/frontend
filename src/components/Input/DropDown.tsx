@@ -12,14 +12,16 @@ function DropDown({
   selected,
   setFunc,
   setVisible,
+  suffix,
 }: {
   width: string;
   dividerWidth?: string;
   height: string;
-  list: string[];
+  list: string[] | number[];
   selected: number;
   setFunc: Dispatch<SetStateAction<number>>;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  suffix?: string;
 }) {
   return (
     <PaddingStyled height={(getPixelToNumber(height) * (list.length - 0.9)).toString() + 'px'}>
@@ -38,6 +40,7 @@ function DropDown({
                 }}
               >
                 {content}
+                {suffix}
               </ButtonStyled>
               <InnerContainerStyled>
                 {index !== list.length - 1 ? <DividerStyled width={dividerWidth} /> : null}

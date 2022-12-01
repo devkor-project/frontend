@@ -43,6 +43,7 @@ function PasswordInputContainer({
           icon={<IconStyled />}
           type={'password'}
           text={password}
+          defaultValue={password}
         />
         {warningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode][0]} /> : null}
         <Blank height={getHeightPixel(10)} />

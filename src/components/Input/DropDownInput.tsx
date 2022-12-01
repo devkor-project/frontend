@@ -17,6 +17,7 @@ function DropDownInput({
   setFunc,
   list,
   dividerWidth,
+  suffix,
 }: DropDownInputProps) {
   const [visible, setVisible] = useState<boolean>(false);
   return (
@@ -25,6 +26,7 @@ function DropDownInput({
         <TextStyled>
           <NotoText fontSize={fontSize} fontWeight={fontWeight}>
             {list[selected]}
+            {suffix}
           </NotoText>
         </TextStyled>
         <ButtonStyled>
@@ -40,6 +42,7 @@ function DropDownInput({
               setFunc={setFunc}
               selected={selected}
               dividerWidth={dividerWidth}
+              suffix={suffix}
             />
           </MarginStyled>
         ) : null}

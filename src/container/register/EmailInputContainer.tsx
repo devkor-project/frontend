@@ -64,7 +64,7 @@ function EmailInputContainer({
             hoverBackgroundColor={palette.crimson}
             hoverFontColor={palette.white}
             onClick={() => {
-              postMailReqAPI({ email });
+              postMailReqAPI({ email: email, setWarningCode: setWarningCode, warningCode: warningCode });
               setModalText(REGISTER__PAGE__TEXT.modal.emailAccept[0]);
               setVisible(true);
             }}

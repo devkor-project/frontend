@@ -12,7 +12,7 @@ import NameInputContainer from '../container/register/NameInputContainer';
 import PasswordInputContainer from '../container/register/PasswordInputContainer';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 import { postSignupAPI } from '../utils/api_register';
-import { MAJOR__LIST, MIN__STUDENT__ID, ROUTER__URI } from '../constants';
+import { DEFAULT__REGISTER__WARNING__CODE, MAJOR__LIST, MIN__STUDENT__ID, ROUTER__URI } from '../constants';
 import { RegisterWarningProps } from '../constants/types';
 import { getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
@@ -28,12 +28,7 @@ function RegisterPage() {
   const [major, setMajor] = useState<number>(0);
   const [studentID, setStudentID] = useState<number>(0);
   const [grade, setGrade] = useState<number>(0);
-  const [warningCode, setWarningCode] = useState<RegisterWarningProps>({
-    emailWarningCode: '',
-    codeWarningCode: '',
-    formatWarningCode: '',
-    repeatWarningCode: '',
-  });
+  const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
   const navigate = useNavigate();
   useEffect(() => {
     setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode));

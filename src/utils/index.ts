@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { CategoryDataProps, RegisterWarningProps } from '../constants/types';
 import { getWidthPixel } from './responsive';
 
@@ -52,13 +53,7 @@ export function getRegisterWarningCode(
   return modifiedErrorCode;
 }
 
-// const handleError = (error: RequestError) => {
-//   const { message, extensions, description } = error;
-//   const error_code = extensions?.code ?? error.error ?? 'unexpected error';
-//   const error_message = message ?? description ?? extensions?.description ?? default_message;
-
-//   const _error = Object.assign(new Error(error_message), {
-//     code: error_code,
-//   });
-//   return _error;
-// };
+export function getErrorCode(error: AxiosError) {
+  const errorData = error.response?.data as { error: { code: number; message: string } };
+  return errorData.error.code;
+}
