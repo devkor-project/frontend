@@ -5,7 +5,7 @@ import { TextInputProps } from '../../constants/types';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
-function TextInput({ width, height, placeHolder, type, setFunc, fontSize, fontWeight }: TextInputProps) {
+function TextInput({ width, height, placeHolder, type, setFunc, fontSize, fontWeight, defaultValue }: TextInputProps) {
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
   }
@@ -18,6 +18,7 @@ function TextInput({ width, height, placeHolder, type, setFunc, fontSize, fontWe
       placeholder={placeHolder}
       type={type}
       fontWeight={fontWeight || ''}
+      defaultValue={defaultValue}
     />
   );
 }
