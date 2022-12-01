@@ -61,6 +61,9 @@ export const MY__PAGE__TEXT = {
   bar: {
     title: ['공지사항 메일 수신'],
   },
+  button: {
+    edit: ['편집'],
+  },
 };
 
 export const FIND__PASSWORD__PAGE__TEXT = {
