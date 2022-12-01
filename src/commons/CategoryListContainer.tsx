@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { CategoryProps } from '../constants/types';
+import { CategoryListProps, CategoryProps } from '../constants/types';
 import CategoriesButton from './CategoriesButton';
 
 function CategoryListContainer({
@@ -7,8 +7,8 @@ function CategoryListContainer({
   selectedCategory,
   changeCategory,
 }: {
-  CategoryList: CategoryProps[];
-  selectedCategory: string;
+  CategoryList: CategoryListProps[];
+  selectedCategory: number;
   changeCategory: any;
 }) {
   return (
@@ -17,9 +17,9 @@ function CategoryListContainer({
         return (
           <CategoriesButton
             key={index}
-            title={category.title}
-            isSelected={selectedCategory === category.id}
-            changeCategory={() => changeCategory(category.id)}
+            title={category.categoryName}
+            isSelected={selectedCategory === category.categoryId}
+            changeCategory={() => changeCategory(category.categoryId)}
           />
         );
       })}

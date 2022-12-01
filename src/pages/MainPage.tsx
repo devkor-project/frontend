@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
 import axios from 'axios';
-import { NoticeProps } from '../constants/types';
+import { CategoryListProps, NoticeProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
@@ -36,14 +36,17 @@ const mockupCategory = [
 ];
 
 function MainPage(props: any) {
+  //전체 카테고리 리스트를 저장하는 state
+  const [categoryList, setCategoryList] = useState<CategoryListProps[]>([]);
   const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('');
+  // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
+  const [category, setCategory] = useState(0);
   const token = useSelector((store: any) => store.tokenReducer);
 
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
-  const getNoticeList = async (category: string) => {
+  const getNoticeList = async (category: number) => {
     console.log(token.payload.accessToken);
     isExpired(token);
     console.log(category);
@@ -51,7 +54,7 @@ function MainPage(props: any) {
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}notices`, {
       params: {
-        categoryName: 'InfomaticsNotice',
+        categoryId: category,
       },
     });
     console.log(response.data.data);
@@ -60,17 +63,18 @@ function MainPage(props: any) {
   // 카테고리 리스트 가져오는 api
   const getCategoryList = async () => {
     isExpired(token);
-    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(`${BASE__URL}host/category/subscribe`);
-    console.log(response.data.data);
+    // axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const categoryL = await axios.get(`${BASE__URL}category`);
+    console.log(categoryL.data.data);
+    setCategoryList(categoryL.data.data);
   };
 
   // 카테고리 변경 함수
   // TODO 검색어도 해당 카테고리에 맞게 재검색 필요 (API 나온후 작업)
-  const changeCategory = (cat: string) => {
-    console.log(cat);
+  const changeCategory = (index: number) => {
+    console.log(index);
 
-    setCategory(cat);
+    setCategory(index);
     setIsSearch(false);
   };
   // 서버에 검색 요청
@@ -78,14 +82,15 @@ function MainPage(props: any) {
     // TODO 서버에 검색 요청
 
     console.log(search);
-    changeCategory('AndNotice');
+    changeCategory(1);
     setIsSearch(true);
   };
   // 카테고리 변경시 getNoticeList 호출
   useEffect(() => {
-    getNoticeList(category);
     getCategoryList();
+    getNoticeList(category);
   }, [category]);
+
   // 공지사항 북마크 변경
   const changeBookmark = (idx: number) => {
     // TODO 서버에 저장 get request
@@ -120,7 +125,7 @@ function MainPage(props: any) {
             searchFunc={getSearchedList}
           />
           <CategoryListContainer
-            CategoryList={mockupCategory}
+            CategoryList={categoryList}
             changeCategory={changeCategory}
             selectedCategory={category}
           />
@@ -158,7 +163,7 @@ function MainPage(props: any) {
             searchFunc={getSearchedList}
           />
           <CategoryListContainer
-            CategoryList={mockupCategory}
+            CategoryList={categoryList}
             changeCategory={changeCategory}
             selectedCategory={category}
           />
