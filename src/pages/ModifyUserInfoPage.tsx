@@ -6,50 +6,65 @@ import TextButton from '../components/Button/TextButton';
 import { palette } from '../constants/palette';
 import { REGISTER__PAGE__TEXT } from '../constants/text';
 import HeaderContainer from '../container/header/HeaderContainer';
-import EmailInputContainer from '../container/register/EmailInputContainer';
 import MajorInputContainer from '../container/register/MajorInputContainer';
 import NameInputContainer from '../container/register/NameInputContainer';
 import PasswordInputContainer from '../container/register/PasswordInputContainer';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
-import { postSignupAPI } from '../utils/api_register';
-import { MAJOR__LIST, MIN__STUDENT__ID } from '../constants';
-import { RegisterWarningProps } from '../constants/types';
+import {
+  DEFAULT__REGISTER__WARNING__CODE,
+  DEFAULT__USER__DATA,
+  GRADE__LIST,
+  MAJOR__LIST,
+  STUDENT__ID__LIST,
+} from '../constants';
+import { RegisterWarningProps, UserDataProps } from '../constants/types';
 import { getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
+import { refreshAccessToken } from '../utils/refresh';
+import { useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
+import { getUserDataAPI, modifyUserDataAPI } from '../utils/api_user';
+import ModifyEmailContainer from '../container/register/ModifyEmailContainer';
+import { useNavigate } from 'react-router-dom';
 
 export default function ModifyUserInfoPage() {
+  const [userData, setData] = useState<UserDataProps>(DEFAULT__USER__DATA);
   const [userName, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [code, setCode] = useState<string>('');
   const [subscribeEmail, setSubscribeEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [repeatPassword, setRepeatPassword] = useState<string>('');
   const [major, setMajor] = useState<number>(0);
   const [studentID, setStudentID] = useState<number>(0);
   const [grade, setGrade] = useState<number>(0);
-  const [warningCode, setWarningCode] = useState<RegisterWarningProps>({
-    emailWarningCode: '',
-    codeWarningCode: '',
-    formatWarningCode: '',
-    repeatWarningCode: '',
-  });
+  const [status, setStatus] = useState<string>('');
+  const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
+  const accessToken = useSelector((store: any) => store.tokenReducer);
+  const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
+  const navigate = useNavigate();
   useEffect(() => {
     setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode));
   }, [email, password, repeatPassword]);
+  useEffect(() => {
+    refreshAccessToken(accessToken, refreshToken);
+    getUserDataAPI({ setData: setData });
+  }, []);
+  useEffect(() => {
+    setName(userData.name);
+    setEmail(userData.email);
+    setSubscribeEmail(userData.receiveEmail);
+    setMajor(MAJOR__LIST.indexOf(userData.major));
+    setStudentID(STUDENT__ID__LIST.indexOf(userData.studentID));
+    setGrade(GRADE__LIST.indexOf(userData.grade));
+    setStatus(userData.status);
+  }, [userData]);
   return (
     <PageStyled>
       <HeaderContainer title={REGISTER__PAGE__TEXT.header.title_modify[0]} />
       <Blank height={getHeightPixel(39)} />
-      <NameInputContainer setName={setName} />
+      <NameInputContainer userName={userName} setName={setName} />
       <Blank height={getHeightPixel(20)} />
-      <EmailInputContainer
-        setEmail={setEmail}
-        setCode={setCode}
-        email={email}
-        code={code}
-        warningCode={warningCode}
-        setWarningCode={setWarningCode}
-      />
+      <ModifyEmailContainer setEmail={setEmail} email={email} />
       <Blank height={getHeightPixel(20)} />
       <SubscribeEmailInputContainer subscribeEmail={subscribeEmail} setSubscribeEmail={setSubscribeEmail} />
       <Blank height={getHeightPixel(20)} />
@@ -80,7 +95,17 @@ export default function ModifyUserInfoPage() {
           height={getHeightPixel(47)}
           borderColor={palette.crimson}
           onClick={() => {
-            return 0;
+            refreshAccessToken(accessToken, refreshToken);
+            modifyUserDataAPI({
+              name: userName,
+              email: email,
+              receiveEmail: subscribeEmail,
+              studentID: studentID,
+              grade: grade,
+              major: MAJOR__LIST[major],
+              status: status,
+              submitFunc: () => navigate(-1),
+            });
           }}
         />
       </ButtonContainer>
