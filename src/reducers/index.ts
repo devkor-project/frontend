@@ -14,8 +14,5 @@ const persistConfig = {
 };
 
 export default persistReducer(persistConfig, rootReducer);
-<<<<<<< HEAD
 
 export type RootState = ReturnType<typeof rootReducer>;
-=======
->>>>>>> f1fd285 (feat: redux-persistent to store when f5)

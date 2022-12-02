@@ -50,11 +50,15 @@ export async function postMailReqAPI({
     const { data } = await axios.post(`${BASE__URL}auth/mail/req`, {
       email: email,
     });
+    if (data) {
+      warningCode.emailWarningCode = 'emailAccept';
+      setWarningCode({ ...warningCode });
+    }
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (getErrorCode(error) === 2001) {
-        warningCode.codeWarningCode = 'duplicateEmail';
+        warningCode.emailWarningCode = 'duplicateEmail';
         setWarningCode({ ...warningCode });
       }
     }

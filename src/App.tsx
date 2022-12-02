@@ -22,46 +22,57 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/login',
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/register',
     element: <RegisterPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/notice/:noticeId',
     element: <NoticeDetailPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/register/subscribe',
     element: <RegisterSubscribePage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/mypage',
     element: <MyPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/mypage/modify',
     element: <ModifyUserInfoPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/scrap',
     element: <ScrapPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/findpassword',
     element: <FindPasswordPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/error',
     element: <ErrorPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/subscribe',
     element: <SubscribePage />,
+    errorElement: <ErrorPage />,
   },
 ]);
 function App() {

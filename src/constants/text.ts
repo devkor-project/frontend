@@ -36,9 +36,7 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
     wrongCode: ['잘못된 인증번호입니다.'],
     wrongFormat: ['6-16자 영문 소문자, 숫자를 사용하세요.'],
     wrongPassword: ['비밀번호가 일치하지 않습니다.'],
-  },
-  modal: {
-    emailAccept: ['인증코드가 전송되었습니다'],
+    emailAccept: ['인증번호를 발송했습니다.'],
   },
 };
 

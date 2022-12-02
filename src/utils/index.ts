@@ -38,7 +38,7 @@ export function getRegisterWarningCode(
   repeatPassword: string,
   errorCode: RegisterWarningProps
 ) {
-  const emailRegex = new RegExp('.*@korea.ac.kr');
+  const emailRegex = new RegExp('.*@korea.ac.kr$');
   const modifiedErrorCode = { ...errorCode };
   if (email !== '' && !emailRegex.test(email)) {
     modifiedErrorCode.emailWarningCode = 'univEmail';
@@ -56,4 +56,20 @@ export function getRegisterWarningCode(
 export function getErrorCode(error: AxiosError) {
   const errorData = error.response?.data as { error: { code: number; message: string } };
   return errorData.error.code;
+}
+
+export function getParseTimer(time: number) {
+  const result = { minute: '', second: '' };
+  if (time / 60 >= 10) {
+    result.minute = Math.floor(time / 60).toString();
+  } else {
+    result.minute = '0' + Math.floor(time / 60).toString();
+  }
+  if (time % 60 >= 10) {
+    result.second = (time % 60).toString();
+  } else {
+    result.second = '0' + (time % 60).toString();
+  }
+
+  return result;
 }
