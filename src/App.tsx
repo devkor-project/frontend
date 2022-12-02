@@ -15,6 +15,7 @@ import ModifyUserInfoPage from './pages/ModifyUserInfoPage';
 
 import ScrapPage from './pages/ScrapPage';
 import { useSelector } from 'react-redux';
+import HotPage from './pages/HotPage';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: '/scrap',
     element: <ScrapPage />,
+  },
+  {
+    path: '/hot',
+    element: <HotPage />,
   },
 ]);
 function App() {
