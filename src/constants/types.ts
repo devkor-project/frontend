@@ -79,8 +79,11 @@ export interface RegisterWarningProps {
   repeatWarningCode: string;
 }
 
+export interface providerListProps {
+  provider: CategoryListProps[];
+}
+
 export interface CategoryListProps {
   categoryId: number;
   categoryName: string;
-  provider: string;
 }

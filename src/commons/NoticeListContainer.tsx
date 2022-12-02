@@ -13,10 +13,6 @@ function NoticeListContainer({
   changeBookmark: any;
   goNoticeDetail: any;
 }) {
-  console.log('good');
-
-  console.log(NoticeList.length);
-
   return (
     <NoticeListWrapper>
       <div className="w-full">

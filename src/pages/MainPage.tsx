@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
 import axios from 'axios';
-import { CategoryListProps, NoticeProps } from '../constants/types';
+import { CategoryListProps, NoticeProps, providerListProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
@@ -36,15 +36,35 @@ const mockupCategory = [
 ];
 
 function MainPage(props: any) {
+  // 공지사항의 provider를 저장하는 state
+  const [providerList, setProviderList] = useState<string[]>([]);
+  // 현재 선택된 provider를 저장하는 state
+  const [selectedProvider, setSelectedProvider] = useState<string>('정보대학');
   //전체 카테고리 리스트를 저장하는 state
-  const [categoryList, setCategoryList] = useState<CategoryListProps[]>([]);
+  const [categoryList, setCategoryList] = useState();
+  // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
+  const [category, setCategory] = useState(1);
+  // 현재 선택된 provider에 맞는 카테고리 리스트를 저장하는 state
+  const [categoryListByProvider, setCategoryListByProvider] = useState<CategoryListProps[]>([]);
+
   const [isSearch, setIsSearch] = useState(false);
   const [search, setSearch] = useState('');
-  // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
-  const [category, setCategory] = useState(0);
-  const token = useSelector((store: any) => store.tokenReducer);
-
+  // 현재 선택된 카테고리에 맞는 공지사항 리스트를 저장하는 state
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
+  const token = useSelector((store: any) => store.tokenReducer);
+  // TODO 프로바이더를 변경하는 함수
+  // 프로바이더를 변경하면, 하위 카테고리 리스트를 변경해야함
+  const changeNoticeProvider = (provider: string) => {
+    console.log(provider);
+    console.log(categoryList?.['정보대학']);
+
+    setSelectedProvider(provider);
+    if (categoryList) {
+      setCategoryListByProvider(categoryList[provider]);
+      setCategory(categoryListByProvider[0].categoryId);
+    }
+  };
+  // TODO
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getNoticeList = async (category: number) => {
     console.log(token.payload.accessToken);
@@ -63,21 +83,36 @@ function MainPage(props: any) {
   // 카테고리 리스트 가져오는 api
   const getCategoryList = async () => {
     isExpired(token);
-    // axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const categoryL = await axios.get(`${BASE__URL}category`);
-    console.log(categoryL.data.data);
-    setCategoryList(categoryL.data.data);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const categoryL = await axios.get(`${BASE__URL}category/provider`);
+    // console.log(categoryL.data.data[0]);
+    const providers = Object.keys(categoryL.data.data);
+    const categoryListJson = categoryL.data.data;
+    // const p = providers[0];
+    // console.log(categoryL.data.data?.[p]);
+    // console.log(categoryL.data.data?.['정보대학']);
+    // 프로바이더 리스트 갱신
+    // 카테고리 전체 리스트 갱신
+    // 현재 선택된 프로바이더에 맞는 카테고리 리스트 갱신
+    if (providers.length !== 0 && categoryListJson) {
+      setProviderList(providers);
+      // setSelectedProvider(providers[0]);
+      setCategoryList(categoryListJson);
+      console.log(categoryListJson);
+      setCategoryListByProvider(categoryListJson[selectedProvider]);
+      setCategory(categoryListByProvider[0].categoryId);
+    }
   };
 
-  // 카테고리 변경 함수
-  // TODO 검색어도 해당 카테고리에 맞게 재검색 필요 (API 나온후 작업)
+  // ! 카테고리 변경 함수
   const changeCategory = (index: number) => {
     console.log(index);
 
     setCategory(index);
     setIsSearch(false);
   };
-  // 서버에 검색 요청
+
+  // ! 서버에 검색 요청
   const getSearchedList = () => {
     // TODO 서버에 검색 요청
 
@@ -85,12 +120,14 @@ function MainPage(props: any) {
     changeCategory(1);
     setIsSearch(true);
   };
+
   // 카테고리 변경시 getNoticeList 호출
   useEffect(() => {
-    getCategoryList();
     getNoticeList(category);
   }, [category]);
-
+  useEffect(() => {
+    getCategoryList();
+  }, [selectedProvider]);
   // 공지사항 북마크 변경
   const changeBookmark = (idx: number) => {
     // TODO 서버에 저장 get request
@@ -105,6 +142,7 @@ function MainPage(props: any) {
     });
     setNoticeData(newNoticeData);
   };
+
   const navigate = useNavigate();
   const goNoticeDetail = (noticeId: number) => {
     navigate(`/notice/${noticeId}`);
@@ -124,11 +162,11 @@ function MainPage(props: any) {
             icon={<SearchIconStyled />}
             searchFunc={getSearchedList}
           />
-          <CategoryListContainer
+          {/* <CategoryListContainer
             CategoryList={categoryList}
             changeCategory={changeCategory}
             selectedCategory={category}
-          />
+          /> */}
           <NotSearchedContainer />
         </MainPageStyled>
         <BottomNavigationBar />
@@ -163,9 +201,12 @@ function MainPage(props: any) {
             searchFunc={getSearchedList}
           />
           <CategoryListContainer
-            CategoryList={categoryList}
+            ProviderList={providerList}
+            CategoryList={categoryListByProvider}
             changeCategory={changeCategory}
             selectedCategory={category}
+            selectedProvider={selectedProvider}
+            changeSelectedProvider={changeNoticeProvider}
           />
           <NoticeListContainer
             NoticeList={noticeData}
