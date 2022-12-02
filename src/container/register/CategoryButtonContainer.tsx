@@ -31,7 +31,11 @@ export default function CategoryButtonContainer({
                   isSelected={selectedList.includes(category)}
                   key={'layer' + index.toString() + '/' + idx.toString()}
                   onClick={() => {
-                    setList([...selectedList, category]);
+                    if (selectedList.includes(category)) {
+                      setList(selectedList.filter(element => element !== category));
+                    } else {
+                      setList([...selectedList, category]);
+                    }
                   }}
                 />
               );

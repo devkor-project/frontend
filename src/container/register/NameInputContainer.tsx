@@ -5,7 +5,7 @@ import NotoText from '../../components/Text/NotoText';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
-function NameInputContainer({ setName }: { setName: Dispatch<SetStateAction<string>> }) {
+function NameInputContainer({ userName, setName }: { userName?: string; setName: Dispatch<SetStateAction<string>> }) {
   return (
     <ContainerStyled>
       <TitleStyled>
@@ -20,6 +20,7 @@ function NameInputContainer({ setName }: { setName: Dispatch<SetStateAction<stri
           setFunc={setName}
           fontSize={getPixelToPixel(16)}
           fontWeight={'Bold'}
+          defaultValue={userName}
         />
       </InnerContainerStyled>
     </ContainerStyled>

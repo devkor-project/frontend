@@ -14,60 +14,17 @@ import { CategoryDataProps } from '../constants/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers';
 import { getCategoryAPI } from '../utils/api_category';
-import { isExpired } from '../utils/refresh';
-
-const tempArr = [
-  '컴퓨터학과',
-  '디자인조형학부',
-  '학사일정',
-  '장학금',
-  '정보대학',
-  '고려대학교',
-  'KUPID 전체 공지사항',
-  '내일',
-  '2학기',
-  '맛집',
-  '사이버 국방학과',
-  '데이터 과학과',
-  '카페 안암동',
-  '이런저런 데이터',
-  '1컴퓨터학과',
-  '1디자인조형학부',
-  '1학사일정',
-  '1장학금',
-  '1정보대학',
-  '1고려대학교',
-  'K1UPID 전체 공지사항',
-  '내1일',
-  '2학1기',
-  '맛집1',
-  '사이1버 국방학과',
-  '데이1터 과학과',
-  '카페 1안암동',
-  '이런저1런 데이터',
-  '2컴퓨터학과',
-  '2디자인조형학부',
-  '2학사일정',
-  '2장학금',
-  '2정보대학',
-  '2고려대학교',
-  'K2UPID 전체 공지사항',
-  '내2일',
-  '2학2기',
-  '2맛집',
-  '2사이버 국방학과',
-  '2데이터 과학과',
-  '2카페 안암동',
-  '2이런저런 데이터',
-];
+import { isExpired, refreshAccessToken } from '../utils/refresh';
+import { useCookies } from 'react-cookie';
 
 export default function RegisterSubscribePage() {
   const [keyword, setKeyword] = useState<string>('');
   const [selectedList, setSelectedList] = useState<CategoryDataProps[]>([]);
   const [categoryList, setCategoryList] = useState<CategoryDataProps[]>([]);
   const accessToken = useSelector((store: RootState) => store.tokenReducer);
-  isExpired(accessToken);
+  const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
   useEffect(() => {
+    refreshAccessToken(accessToken, refreshToken);
     getCategoryAPI({ setList: setCategoryList });
   }, []);
   useEffect(() => {

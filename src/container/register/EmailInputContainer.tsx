@@ -15,6 +15,7 @@ import IconTextInput from '../../components/Input/IconTextInput';
 import WarningTextContainer from './WarningTextContainer';
 import Modal from '../../components/Modal';
 import { RegisterWarningProps } from '../../constants/types';
+import Timer from '../../components/Timer';
 
 function EmailInputContainer({
   email,
@@ -31,8 +32,6 @@ function EmailInputContainer({
   warningCode: RegisterWarningProps;
   setWarningCode: Dispatch<SetStateAction<RegisterWarningProps>>;
 }) {
-  const [isVisible, setVisible] = useState(false);
-  const [modalText, setModalText] = useState('');
   return (
     <CenterStyled>
       <ContainerStyled>
@@ -64,46 +63,56 @@ function EmailInputContainer({
             hoverBackgroundColor={palette.crimson}
             hoverFontColor={palette.white}
             onClick={() => {
-              postMailReqAPI({ email });
-              setModalText(REGISTER__PAGE__TEXT.modal.emailAccept[0]);
-              setVisible(true);
+              postMailReqAPI({ email: email, setWarningCode: setWarningCode, warningCode: warningCode });
             }}
           />
         </InnerContainerStyled>
         {warningCode.emailWarningCode ? (
-          <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.emailWarningCode][0]} />
+          <WarningTextContainer
+            text={REGISTER__PAGE__TEXT.warning[warningCode.emailWarningCode][0]}
+            acceptType={warningCode.emailWarningCode === 'emailAccept'}
+          />
         ) : null}
-        <Blank height={getHeightPixel(10)} />
-        <InnerContainerStyled>
-          <TextInput
-            width={getWidthPixel(238)}
-            height={getHeightPixel(47)}
-            setFunc={setCode}
-            fontSize={getPixelToPixel(13)}
-            type="email"
-          />
-          <Blank width={getWidthPixel(8)} />
-          <TextButton
-            text={REGISTER__PAGE__TEXT.button.submitCode[0]}
-            backgroundColor={palette.white}
-            borderColor={palette.crimson}
-            fontColor={palette.crimson}
-            width={getWidthPixel(111)}
-            height={getHeightPixel(47)}
-            fontSize={getPixelToPixel(14)}
-            onClick={() => {
-              postMailAPI({
-                email: email,
-                code: code,
-                warningCode: warningCode,
-                setWarningCode: setWarningCode,
-              });
-            }}
-          />
-        </InnerContainerStyled>
-        <Modal isVisible={isVisible} setVisible={setVisible} text={modalText} />
-        {warningCode.codeWarningCode ? (
-          <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.codeWarningCode][0]} />
+        {warningCode.emailWarningCode === 'emailAccept' ? (
+          <>
+            <Blank height={getHeightPixel(10)} />
+            <InnerContainerStyled>
+              <TextInput
+                width={getWidthPixel(238)}
+                height={getHeightPixel(47)}
+                setFunc={setCode}
+                fontSize={getPixelToPixel(13)}
+                type="number"
+              >
+                <TimerContainerStyled>
+                  <Timer second={600} />
+                </TimerContainerStyled>
+              </TextInput>
+              <Blank width={getWidthPixel(8)} />
+              <TextButton
+                text={REGISTER__PAGE__TEXT.button.submitCode[0]}
+                backgroundColor={palette.white}
+                borderColor={palette.crimson}
+                fontColor={palette.crimson}
+                width={getWidthPixel(111)}
+                height={getHeightPixel(47)}
+                fontSize={getPixelToPixel(14)}
+                hoverBackgroundColor={palette.crimson}
+                hoverFontColor={palette.white}
+                onClick={() => {
+                  postMailAPI({
+                    email: email,
+                    code: code,
+                    warningCode: warningCode,
+                    setWarningCode: setWarningCode,
+                  });
+                }}
+              />
+            </InnerContainerStyled>
+            {warningCode.codeWarningCode ? (
+              <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.codeWarningCode][0]} />
+            ) : null}
+          </>
         ) : null}
       </ContainerStyled>
     </CenterStyled>
@@ -127,7 +136,6 @@ const InnerContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: center;
 `;
 
 const TitleStyled = styled.div`
@@ -140,6 +148,10 @@ const TitleStyled = styled.div`
 const IconStyled = styled(Info_Icon)`
   width: ${getWidthPixel(14)};
   height: ${getHeightPixel(14)};
+`;
+
+const TimerContainerStyled = styled.div`
+  margin-left: ${getWidthPixel(180)};
 `;
 
 export default EmailInputContainer;

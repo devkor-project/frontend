@@ -35,11 +35,20 @@ export default function ErrorPage({ title, text }: { title?: string; text?: stri
           navigate(ROUTER__URI.mainPage);
         }}
       />
+      <Blank height={getHeightPixel(100)} />
     </PageCenterStyled>
   );
 }
 
 const PageCenterStyled = styled(PageStyled)`
+  flex-direction: column;
+  width: 100%;
+  height: ${getHeightPixel(700)};
+  overflow-y: scroll;
+  align-items: center;
+  background-color: white;
+  border-radius: ${getWidthPixel(30)} ${getWidthPixel(30)} 0 0;
+  margin-top: ${getHeightPixel(80)};
   justify-content: center;
 `;
 
