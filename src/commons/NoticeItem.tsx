@@ -16,7 +16,7 @@ const NoticeItem = ({
 }: {
   title: string;
   date: string;
-  isBookmarked: boolean;
+  isBookmarked: string;
   bookmark: () => void;
   goNoticeDetail: () => void;
 }) => {
@@ -35,7 +35,7 @@ const NoticeItem = ({
         </NoticeDate>
       </NoticeContent>
       <NoticeBookmark>
-        {isBookmarked ? (
+        {isBookmarked === 'Y' ? (
           <IsBookmarked width={getPixelToPixel(16)} height={getPixelToPixel(20)} onClick={bookmark} />
         ) : (
           <IsNotBookmarked width={getPixelToPixel(16)} height={getPixelToPixel(20)} onClick={bookmark} />

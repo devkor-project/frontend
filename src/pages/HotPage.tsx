@@ -8,9 +8,6 @@ import { ReactComponent as Main_Logo } from '../assets/icon/logo.svg';
 import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
 import SearchContainer from '../container/main/SearchContainer';
 import NotoText from '../components/Text/NotoText';
-import CategoryListContainer from '../commons/CategoryListContainer';
-import NoticeListContainer from '../commons/NoticeListContainer';
-import NotSearchedContainer from '../container/main/NotSearchedContainer';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
@@ -20,42 +17,30 @@ import NotScrapedContainer from '../container/scrap/NotScrapedContainer';
 import Blank from '../components/Blank';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import { BASE__URL } from '../constants';
+import HotNoticeListContainer from '../commons/HotNoticeListContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
-function ScrapPage() {
+function HotPage() {
   const token = useSelector((store: any) => store.tokenReducer);
   // TODO server에서 받아온 데이터를 저장하는 state
   // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
 
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
-  const getScrapNoticeList = async () => {
+  const getHotNoticeList = async () => {
     isExpired(token);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(`${BASE__URL}scraps`);
+    const response = await axios.get(`${BASE__URL}notices/hot`);
     console.log(response.data.data);
     setNoticeData(response.data.data);
   };
 
   useEffect(() => {
-    getScrapNoticeList();
+    getHotNoticeList();
   }, []);
   // 공지사항 북마크 변경
-  const changeBookmark = async (idx: number) => {
+  const changeBookmark = (idx: number) => {
     // TODO 서버에 저장 get request
-    console.log(token.payload.accessToken);
-    isExpired(token);
-    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const noticeIdx = noticeData.map(data => {
-      if (data.noticeId === idx) {
-        return data.isScraped;
-      }
-    });
-    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
-      whetherScrap: noticeIdx ? 'N' : 'Y',
-    });
-    console.log(res);
-
     const newNoticeData = noticeData.map(data => {
       if (data.noticeId === idx) {
         return {
@@ -75,10 +60,10 @@ function ScrapPage() {
   if (noticeData.length === 0) {
     return (
       <PageStyled>
-        <TitleHeaderContainer title="스크랩" />
-        <ScrapPageStyled>
+        <TitleHeaderContainer title="인기" />
+        <HotPageStyled>
           <NotScrapedContainer />
-        </ScrapPageStyled>
+        </HotPageStyled>
         <BottomNavigationBar />
       </PageStyled>
     );
@@ -92,7 +77,7 @@ function ScrapPage() {
             </div>
             <TitleStyled>
               <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                스크랩
+                인기
               </NotoText>
             </TitleStyled>
             <div className="w-70px">
@@ -100,20 +85,20 @@ function ScrapPage() {
             </div>
           </LogoPageStyled>
         </div>
-        <ScrapPageStyled>
+        <HotPageStyled>
           <Blank height={getHeightPixel(31)} />
-          <NoticeListContainer
+          <HotNoticeListContainer
             NoticeList={noticeData}
             changeBookmark={changeBookmark}
             goNoticeDetail={goNoticeDetail}
           />
-        </ScrapPageStyled>
+        </HotPageStyled>
         <BottomNavigationBar />
       </PageStyled>
     );
 }
 
-export default ScrapPage;
+export default HotPage;
 
 const PageStyled = styled.div`
   flex-direction: column;
@@ -137,11 +122,10 @@ const TitleStyled = styled.div`
   margin-left: auto;
   margin-right: auto;
 `;
-const ScrapPageStyled = styled.div`
+const HotPageStyled = styled.div`
   display: flex;
   width: 100%;
   height: ${getHeightPixel(661)};
-  padding-top: ${getHeightPixel(31)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
