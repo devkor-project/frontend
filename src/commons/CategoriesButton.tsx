@@ -15,7 +15,7 @@ const CategoriesButton = ({
   if (isSelected) {
     return (
       <button
-        className="bg-[#CE4040A6] h-[44px] w-max whitespace-nowrap mx-[4px] px-[24px] pt-[10px] pb-[12px]  rounded-[208px] border-[2px] border-[#CDCDCD]"
+        className="bg-[#CE4040A6] h-[44px] w-max whitespace-nowrap mx-[4px] px-[24px]   pt-[10px] pb-[12px]  rounded-[208px] border-[2px] border-[#CDCDCD]"
         onClick={changeCategory}
       >
         <NotoText fontSize={getPixelToPixel(14)} fontWeight="500" fontColor={palette.white}>
