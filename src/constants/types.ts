@@ -69,7 +69,7 @@ export interface NoticeProps {
   provider: string;
   viewCount: number;
   categoryName: string;
-  isScraped: boolean;
+  isScraped: string;
 }
 
 export interface RegisterWarningProps {

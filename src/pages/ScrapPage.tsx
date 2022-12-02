@@ -19,6 +19,7 @@ import { NoticeProps } from '../constants/types';
 import NotScrapedContainer from '../container/scrap/NotScrapedContainer';
 import Blank from '../components/Blank';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
+import { BASE__URL } from '../constants';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 function ScrapPage() {
@@ -31,7 +32,7 @@ function ScrapPage() {
   const getScrapNoticeList = async () => {
     isExpired(token);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get('https://kudog.email/scraps');
+    const response = await axios.get(`${BASE__URL}scraps`);
     console.log(response.data.data);
     setNoticeData(response.data.data);
   };
@@ -40,13 +41,26 @@ function ScrapPage() {
     getScrapNoticeList();
   }, []);
   // 공지사항 북마크 변경
-  const changeBookmark = (idx: number) => {
+  const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
+    console.log(token.payload.accessToken);
+    isExpired(token);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const noticeIdx = noticeData.map(data => {
+      if (data.noticeId === idx) {
+        return data.isScraped;
+      }
+    });
+    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+      whetherScrap: noticeIdx ? 'N' : 'Y',
+    });
+    console.log(res);
+
     const newNoticeData = noticeData.map(data => {
       if (data.noticeId === idx) {
         return {
           ...data,
-          isScraped: !data.isScraped,
+          isScraped: data.isScraped === 'Y' ? 'N' : 'Y',
         };
       }
       return data;
@@ -127,6 +141,7 @@ const ScrapPageStyled = styled.div`
   display: flex;
   width: 100%;
   height: ${getHeightPixel(661)};
+  padding-top: ${getHeightPixel(31)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;

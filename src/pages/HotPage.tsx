@@ -45,7 +45,7 @@ function HotPage() {
       if (data.noticeId === idx) {
         return {
           ...data,
-          isScraped: !data.isScraped,
+          isScraped: data.isScraped === 'Y' ? 'N' : 'Y',
         };
       }
       return data;

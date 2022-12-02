@@ -129,13 +129,27 @@ function MainPage(props: any) {
     getCategoryList();
   }, [selectedProvider]);
   // 공지사항 북마크 변경
-  const changeBookmark = (idx: number) => {
+  const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
+    console.log(token.payload.accessToken);
+    isExpired(token);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const noticeIdx = noticeData.map(data => {
+      if (data.noticeId === idx) {
+        return data.isScraped === 'Y';
+      }
+    });
+    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+      whetherScrap: noticeIdx ? 'Y' : 'N',
+    });
+    console.log(res);
+
     const newNoticeData = noticeData.map(data => {
+      console.log(data.isScraped);
       if (data.noticeId === idx) {
         return {
           ...data,
-          isScraped: !data.isScraped,
+          isScraped: noticeIdx ? 'Y' : 'N',
         };
       }
       return data;
