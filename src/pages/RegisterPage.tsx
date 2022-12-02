@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 import Blank from '../components/Blank';
@@ -12,10 +12,18 @@ import NameInputContainer from '../container/register/NameInputContainer';
 import PasswordInputContainer from '../container/register/PasswordInputContainer';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 import { postSignupAPI } from '../utils/api_register';
-import { MAJOR__LIST, MIN__STUDENT__ID } from '../constants';
+import {
+  DEFAULT__REGISTER__WARNING__CODE,
+  GRADE__LIST,
+  MAJOR__LIST,
+  MIN__STUDENT__ID,
+  ROUTER__URI,
+  STUDENT__ID__LIST,
+} from '../constants';
 import { RegisterWarningProps } from '../constants/types';
 import { getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
   const [userName, setName] = useState<string>('');
@@ -27,12 +35,8 @@ function RegisterPage() {
   const [major, setMajor] = useState<number>(0);
   const [studentID, setStudentID] = useState<number>(0);
   const [grade, setGrade] = useState<number>(0);
-  const [warningCode, setWarningCode] = useState<RegisterWarningProps>({
-    emailWarningCode: '',
-    codeWarningCode: '',
-    formatWarningCode: '',
-    repeatWarningCode: '',
-  });
+  const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
+  const navigate = useNavigate();
   useEffect(() => {
     setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode));
   }, [email, password, repeatPassword]);
@@ -47,8 +51,8 @@ function RegisterPage() {
         setCode={setCode}
         email={email}
         code={code}
-        warningCode={warningCode.emailWarningCode}
-        secondWarningCode={warningCode.codeWarningCode}
+        warningCode={warningCode}
+        setWarningCode={setWarningCode}
       />
       <Blank height={getHeightPixel(20)} />
       <SubscribeEmailInputContainer subscribeEmail={subscribeEmail} setSubscribeEmail={setSubscribeEmail} />
@@ -73,24 +77,26 @@ function RegisterPage() {
       <Blank height={getHeightPixel(20)} />
       <ButtonContainer>
         <TextButton
-          text={REGISTER__PAGE__TEXT.header.title[0]}
+          text={REGISTER__PAGE__TEXT.button.submit[0]}
           backgroundColor={palette.crimson}
           fontColor={palette.white}
           width={getWidthPixel(357)}
           height={getHeightPixel(47)}
           borderColor={palette.crimson}
-          onClick={() =>
+          onClick={() => {
             postSignupAPI({
+              userName: userName,
               email: email,
               password: password,
-              studentID: studentID + MIN__STUDENT__ID,
+              studentID: STUDENT__ID__LIST[studentID],
               major: MAJOR__LIST[major],
-              grade: grade + 1,
-            })
-          }
+              grade: GRADE__LIST[grade],
+              submitFunc: () => navigate(ROUTER__URI.registerSubscribePage),
+            });
+          }}
         />
       </ButtonContainer>
-      <Blank height={getHeightPixel(65)} />
+      <Blank height={getHeightPixel(80)} />
     </PageStyled>
   );
 }
@@ -98,12 +104,12 @@ function RegisterPage() {
 const PageStyled = styled.div`
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: ${getHeightPixel(700)};
   overflow-y: scroll;
   align-items: center;
   background-color: white;
   border-radius: ${getWidthPixel(30)} ${getWidthPixel(30)} 0 0;
-  margin-top: ${getHeightPixel(30)};
+  margin-top: ${getHeightPixel(80)};
 `;
 
 const ButtonContainer = styled.div`

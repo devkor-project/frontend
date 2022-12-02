@@ -36,12 +36,15 @@ export interface TextInputProps extends ContainerProps {
   text?: string;
   fontWeight?: string;
   children?: ReactNode;
+  defaultValue?: string;
+  disabled?: boolean;
 }
 
 export interface DropDownInputProps extends InputProps {
   dividerWidth?: string;
   selected: number;
-  list: string[];
+  list: string[] | number[];
+  suffix?: string;
 }
 
 export interface ButtonStyle extends ContainerProps {
@@ -50,6 +53,8 @@ export interface ButtonStyle extends ContainerProps {
   fontColor: PaletteKeyTypes;
   fontWeight?: string;
   fontSize?: string;
+  hoverBackgroundColor?: PaletteKeyTypes;
+  hoverFontColor?: PaletteKeyTypes;
 }
 
 export interface ButtonProps extends ButtonStyle {
@@ -86,4 +91,23 @@ export interface providerListProps {
 export interface CategoryListProps {
   categoryId: number;
   categoryName: string;
+}
+
+export interface TokenProps {
+  accessToken: string;
+  expiredTime: Date;
+}
+
+export interface UserDataProps {
+  name: string;
+  email: string;
+  receiveEmail: string;
+  studentID: number;
+  grade: number;
+  major: string;
+  status: string;
+}
+
+export interface UserDataAPIProps extends UserDataProps {
+  submitFunc: () => void;
 }

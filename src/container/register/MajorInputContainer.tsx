@@ -59,6 +59,7 @@ function MajorInputContainer({
               setFunc={setStudentID}
               fontSize={getPixelToPixel(16)}
               fontWeight={'Bold'}
+              suffix={'학번'}
             />
           </InnerContainerStyled>
         </DetailInnerContainerStyled>
@@ -78,6 +79,7 @@ function MajorInputContainer({
               setFunc={setGrade}
               fontSize={getPixelToPixel(16)}
               fontWeight={'Bold'}
+              suffix={'학년'}
             />
           </InnerContainerStyled>
         </DetailInnerContainerStyled>
