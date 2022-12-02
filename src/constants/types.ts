@@ -74,7 +74,7 @@ export interface NoticeProps {
   provider: string;
   viewCount: number;
   categoryName: string;
-  isScraped: boolean;
+  isScraped: string;
 }
 
 export interface RegisterWarningProps {
@@ -84,10 +84,13 @@ export interface RegisterWarningProps {
   repeatWarningCode: string;
 }
 
-export interface CategoryDataProps {
+export interface providerListProps {
+  provider: CategoryListProps[];
+}
+
+export interface CategoryListProps {
   categoryId: number;
   categoryName: string;
-  provider: string;
 }
 
 export interface TokenProps {
