@@ -82,6 +82,7 @@ export interface RegisterWarningProps {
   codeWarningCode: string;
   formatWarningCode: string;
   repeatWarningCode: string;
+  receiveEmailWarningCode: string;
 }
 
 export interface providerListProps {
@@ -110,4 +111,10 @@ export interface UserDataProps {
 
 export interface UserDataAPIProps extends UserDataProps {
   submitFunc: () => void;
+}
+
+export interface CategoryDataProps {
+  categoryId: number;
+  categoryName: string;
+  provider: string;
 }
