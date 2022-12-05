@@ -6,9 +6,9 @@ import { getHeightPixel, getWidthPixel } from '../../utils/responsive';
 import Blank from '../Blank';
 import NotoText from '../Text/NotoText';
 
-export default function ListButton({ text }: { text: string }) {
+export default function ListButton({ text, onClick }: { text: string; onClick: () => void }) {
   return (
-    <ContainerStyled>
+    <ContainerStyled onClick={onClick}>
       <TextStyled>
         <NotoText fontSize={getWidthPixel(20)}>{text}</NotoText>
       </TextStyled>
