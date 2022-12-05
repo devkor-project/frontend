@@ -26,7 +26,7 @@ export default function CategoryButtonContainer({
             {arr.map((category, idx) => {
               return (
                 <CategoryButton
-                  text={category.categoryName}
+                  text={category.provider + ' ' + category.categoryName}
                   width={widthArr[idx]}
                   isSelected={selectedList.includes(category)}
                   key={'layer' + index.toString() + '/' + idx.toString()}
