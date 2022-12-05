@@ -81,6 +81,10 @@ export async function postMailAPI({
       email: email,
       code: code,
     });
+    if (data) {
+      warningCode.codeWarningCode = 'acceptCode';
+      setWarningCode({ ...warningCode });
+    }
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error) {
