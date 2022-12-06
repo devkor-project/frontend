@@ -5,22 +5,42 @@ import { TextInputProps } from '../../constants/types';
 import { palette } from '../../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
-function TextInput({ width, height, placeHolder, type, setFunc, fontSize, fontWeight }: TextInputProps) {
+function TextInput({
+  width,
+  height,
+  placeHolder,
+  type,
+  setFunc,
+  fontSize,
+  fontWeight,
+  defaultValue,
+  children,
+}: TextInputProps) {
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
   }
   return (
-    <InputStyled
-      width={width}
-      height={height}
-      fontSize={fontSize}
-      onChange={handleChange}
-      placeholder={placeHolder}
-      type={type}
-      fontWeight={fontWeight || ''}
-    />
+    <ContainerStyled>
+      <InputStyled
+        width={width}
+        height={height}
+        fontSize={fontSize}
+        onChange={handleChange}
+        placeholder={placeHolder}
+        type={type}
+        fontWeight={fontWeight || ''}
+        defaultValue={defaultValue}
+      />
+      <ChildrenStyled>{children}</ChildrenStyled>
+    </ContainerStyled>
   );
 }
+
+const ContainerStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 
 const InputStyled = styled.input<{ width: string; height: string; fontSize: string; fontWeight: string }>`
   ${({
@@ -38,6 +58,10 @@ const InputStyled = styled.input<{ width: string; height: string; fontSize: stri
   padding-left: ${getPixelToPixel(24)};
   border: ${getPixelToPixel(2)} solid ${palette.gray};
   background-color: ${palette.white};
+`;
+
+const ChildrenStyled = styled.div`
+  position: absolute;
 `;
 
 export default TextInput;

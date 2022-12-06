@@ -1,14 +1,24 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import NotoText from '../../components/Text/NotoText';
-import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
+import { getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
 import { ReactComponent as BackIcon } from '../../assets/button/left_arrow.svg';
 import styled from 'styled-components';
 
-function HeaderContainer({ title }: { title: string }) {
+function HeaderContainer({ title, goBackKey }: { title: string; goBackKey?: string }) {
+  const navigate = useNavigate();
   return (
     <ContainerStyled>
-      <ButtonStyled>
+      <ButtonStyled
+        onClick={() => {
+          if (goBackKey) {
+            navigate(goBackKey);
+          } else {
+            navigate(-1);
+          }
+        }}
+      >
         <BackStyled />
       </ButtonStyled>
       <NotoText fontSize={getPixelToPixel(32)} fontWeight={'Bold'}>

@@ -16,39 +16,65 @@ import ModifyUserInfoPage from './pages/ModifyUserInfoPage';
 import ScrapPage from './pages/ScrapPage';
 import { useSelector } from 'react-redux';
 import HotPage from './pages/HotPage';
+import FindPasswordPage from './pages/FindPasswordPage';
+import ErrorPage from './pages/ErrorPage';
+import SubscribePage from './pages/SubscribePage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/login',
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/register',
     element: <RegisterPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/notice/:noticeId',
     element: <NoticeDetailPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/register/subscribe',
     element: <RegisterSubscribePage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/mypage',
     element: <MyPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/mypage/modify',
     element: <ModifyUserInfoPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/scrap',
     element: <ScrapPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/findpassword',
+    element: <FindPasswordPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/error',
+    element: <ErrorPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/subscribe',
+    element: <SubscribePage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: '/hot',
@@ -100,13 +126,12 @@ function App() {
 
 const BackgroundStyled = styled.div`
   display: flex;
-  justify-content: center;
 `;
 
 const PageStyled = styled.div`
   display: flex;
+  width: 100%;
   position: absolute;
-  justify-content: center;
 `;
 
 const TopBar = styled.div`
@@ -124,7 +149,7 @@ const ContainerStyled = styled.div`
 `;
 
 const LogoContainerStyled = styled.div`
-  width: ${WIDTH.toString() + 'px'};
+  width: 50%;
   height: ${HEIGHT.toString() + 'px'};
 `;
 

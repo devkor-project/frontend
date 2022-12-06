@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import CategoryButton from '../../components/Button/CategoryButton';
+import { CategoryDataProps } from '../../constants/types';
 import { getButtonList, getButtonWidthList } from '../../utils';
 import { getHeightPixel, getWidthPixel } from '../../utils/responsive';
 
@@ -8,27 +9,33 @@ export default function CategoryButtonContainer({
   categoryList,
   selectedList,
   setList,
+  height,
 }: {
-  categoryList: string[];
-  selectedList: string[];
-  setList: Dispatch<SetStateAction<string[]>>;
+  categoryList: CategoryDataProps[];
+  selectedList: CategoryDataProps[];
+  setList: Dispatch<SetStateAction<CategoryDataProps[]>>;
+  height?: string;
 }) {
   const textArr = getButtonList(categoryList, 345);
   return (
-    <ContainerStyled>
+    <ContainerStyled height={height}>
       {textArr.map((arr, index) => {
         const widthArr = getButtonWidthList(arr, 345);
         return (
           <RowStyled key={'layer' + index.toString()}>
-            {arr.map((text, idx) => {
+            {arr.map((category, idx) => {
               return (
                 <CategoryButton
-                  text={text}
+                  text={category.categoryName}
                   width={widthArr[idx]}
-                  isSelected={selectedList.includes(text)}
+                  isSelected={selectedList.includes(category)}
                   key={'layer' + index.toString() + '/' + idx.toString()}
                   onClick={() => {
-                    setList([...selectedList, text]);
+                    if (selectedList.includes(category)) {
+                      setList(selectedList.filter(element => element !== category));
+                    } else {
+                      setList([...selectedList, category]);
+                    }
                   }}
                 />
               );
@@ -40,13 +47,15 @@ export default function CategoryButtonContainer({
   );
 }
 
-const ContainerStyled = styled.div`
+const ContainerStyled = styled.div<{ height?: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: ${getHeightPixel(16)};
   overflow: scroll;
-  height: ${getHeightPixel(410)};
+  ${({ height = getHeightPixel(410) }) => css`
+    height: ${height};
+  `}
 `;
 
 const RowStyled = styled.div`
