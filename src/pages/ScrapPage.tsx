@@ -65,45 +65,16 @@ function ScrapPage() {
     navigate(`/notice/${noticeId}`);
   };
   //검색버튼이 눌렸는데 검색 응답이 없는 경우
-  if (noticeData.length === 0) {
-    return (
-      <PageStyled>
-        <TitleHeaderContainer title="스크랩" />
-        <ScrapPageStyled>
-          <NotScrapedContainer />
-        </ScrapPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
-  } else
-    return (
-      <PageStyled>
-        <div className="w-full flex flex-row items-center justify-center">
-          <LogoPageStyled>
-            <div className="w-70px">
-              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
-            </div>
-            <TitleStyled>
-              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                스크랩
-              </NotoText>
-            </TitleStyled>
-            <div className="w-70px">
-              <NotificationIconStyled />
-            </div>
-          </LogoPageStyled>
-        </div>
-        <ScrapPageStyled>
-          <Blank height={getHeightPixel(31)} />
-          <NoticeListContainer
-            NoticeList={noticeData}
-            changeBookmark={changeBookmark}
-            goNoticeDetail={goNoticeDetail}
-          />
-        </ScrapPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
+  return (
+    <PageStyled>
+      <TitleHeaderContainer title="스크랩" />
+      <ScrapPageStyled>
+        <Blank height={getHeightPixel(31)} />
+        <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} goNoticeDetail={goNoticeDetail} />
+      </ScrapPageStyled>
+      <BottomNavigationBar />
+    </PageStyled>
+  );
 }
 
 export default ScrapPage;
@@ -116,20 +87,6 @@ const PageStyled = styled.div`
   background: ${palette.crimson};
 `;
 
-const LogoPageStyled = styled.div`
-  width: 100%;
-  height: ${getHeightPixel(59)};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-basis: 100%;
-`;
-
-const TitleStyled = styled.div`
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-`;
 const ScrapPageStyled = styled.div`
   display: flex;
   width: 100%;
@@ -140,17 +97,6 @@ const ScrapPageStyled = styled.div`
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
-`;
-const NotificationIconStyled = styled(Notification_Icon)`
-  width: ${getWidthPixel(16)};
-  height: ${getHeightPixel(21.89)};
-  margin-right: ${getWidthPixel(24)};
-  margin-left: ${getWidthPixel(36.11)};
-`;
-const MainLogoStyled = styled(Main_Logo)`
-  position: relative;
-  left: 0;
-  width: ${getWidthPixel(58)};
-  height: ${getHeightPixel(22.23)};
-  margin-left: ${getWidthPixel(24)};
+  margin-top: ${getHeightPixel(-30)};
+  padding-top: ${getHeightPixel(30)};
 `;

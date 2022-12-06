@@ -168,7 +168,7 @@ function MainPage(props: any) {
   } else
     return (
       <PageStyled>
-        <HeaderContainer title="홈" />
+        <TitleHeaderContainer title="홈" />
         <MainPageStyled>
           <SearchContainer
             width={getWidthPixel(357)}
@@ -209,21 +209,6 @@ const PageStyled = styled.div`
   height: 100%;
   background: ${palette.crimson};
 `;
-
-const LogoPageStyled = styled.div`
-  width: 100%;
-  height: ${getHeightPixel(59)};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-basis: 100%;
-`;
-
-const TitleStyled = styled.div`
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-`;
 const MainPageStyled = styled.div`
   display: flex;
   width: 100%;
@@ -233,21 +218,10 @@ const MainPageStyled = styled.div`
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
-`;
-const NotificationIconStyled = styled(Notification_Icon)`
-  width: ${getWidthPixel(16)};
-  height: ${getHeightPixel(21.89)};
-  margin-right: ${getWidthPixel(24)};
-  margin-left: ${getWidthPixel(36.11)};
+  margin-top: ${getHeightPixel(-30)};
+  padding-top: ${getHeightPixel(30)};
 `;
 const SearchIconStyled = styled(Search_Icon)`
   width: ${getWidthPixel(21)};
   height: ${getHeightPixel(21)};
-`;
-const MainLogoStyled = styled(Main_Logo)`
-  position: relative;
-  left: 0;
-  width: ${getWidthPixel(58)};
-  height: ${getHeightPixel(22.23)};
-  margin-left: ${getWidthPixel(24)};
 `;

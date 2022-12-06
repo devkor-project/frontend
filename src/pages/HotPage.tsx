@@ -62,92 +62,40 @@ function HotPage() {
   const goNoticeDetail = (noticeId: number) => {
     navigate(`/notice/${noticeId}`);
   };
-  //검색버튼이 눌렸는데 검색 응답이 없는 경우
-  if (noticeData.length === 0) {
-    return (
-      <PageStyled>
-        <TitleHeaderContainer title="인기" />
-        <HotPageStyled>
-          <NotScrapedContainer />
-        </HotPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
-  } else
-    return (
-      <PageStyled>
-        <div className="w-full flex flex-row items-center justify-center">
-          <LogoPageStyled>
-            <div className="w-70px">
-              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
-            </div>
-            <TitleStyled>
-              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                인기
-              </NotoText>
-            </TitleStyled>
-            <div className="w-70px">
-              <NotificationIconStyled />
-            </div>
-          </LogoPageStyled>
-        </div>
-        <HotPageStyled>
-          <Blank height={getHeightPixel(31)} />
-          <HotNoticeListContainer
-            NoticeList={noticeData}
-            changeBookmark={changeBookmark}
-            goNoticeDetail={goNoticeDetail}
-          />
-        </HotPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
+  return (
+    <PageStyled>
+      <TitleHeaderContainer title="인기" />
+      <HotPageStyled>
+        <Blank height={getHeightPixel(31)} />
+        <HotNoticeListContainer
+          NoticeList={noticeData}
+          changeBookmark={changeBookmark}
+          goNoticeDetail={goNoticeDetail}
+        />
+      </HotPageStyled>
+      <BottomNavigationBar />
+    </PageStyled>
+  );
 }
 
 export default HotPage;
 
 const PageStyled = styled.div`
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: ${palette.crimson};
-`;
-
-const LogoPageStyled = styled.div`
-  width: 100%;
-  height: ${getHeightPixel(59)};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-basis: 100%;
-`;
-
-const TitleStyled = styled.div`
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
+  // flex-direction: column;
+  // align-items: center;
+  // width: 100%;
+  // height: 100%;
+  // background: ${palette.crimson};
 `;
 const HotPageStyled = styled.div`
   display: flex;
   width: 100%;
-  height: ${getHeightPixel(661)};
+  height: ${getHeightPixel(730)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
-`;
-const NotificationIconStyled = styled(Notification_Icon)`
-  width: ${getWidthPixel(16)};
-  height: ${getHeightPixel(21.89)};
-  margin-right: ${getWidthPixel(24)};
-  margin-left: ${getWidthPixel(36.11)};
-`;
-const MainLogoStyled = styled(Main_Logo)`
-  position: relative;
-  left: 0;
-  width: ${getWidthPixel(58)};
-  height: ${getHeightPixel(22.23)};
-  margin-left: ${getWidthPixel(24)};
+  margin-top: ${getHeightPixel(-30)};
+  padding-top: ${getHeightPixel(30)};
 `;

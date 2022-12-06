@@ -9,53 +9,30 @@ import { ReactComponent as Main_Logo } from '../assets/icon/logo.svg';
 import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
 import SearchContainer from '../container/main/SearchContainer';
 import NotoText from '../components/Text/NotoText';
-import CategoryListContainer from '../commons/CategoryListContainer';
 import NoticeListContainer from '../commons/NoticeListContainer';
-import NotSearchedContainer from '../container/main/NotSearchedContainer';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
-import axios from 'axios';
-import { CategoryListProps, NoticeProps, providerListProps } from '../constants/types';
+
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
-import HeaderContainer from '../container/header/HeaderContainer';
-// import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
+import axios from 'axios';
+import { CategoryListProps, NoticeProps } from '../constants/types';
+import SubscribeCategoryListContainer from '../commons/SubscribeCategoryListContainer';
 
 function SubscribeCategoryPage(props: any) {
-  // 공지사항의 provider를 저장하는 state
-  const [providerList, setProviderList] = useState<string[]>([]);
-  // 현재 선택된 provider를 저장하는 state
-  const [selectedProvider, setSelectedProvider] = useState<string>('정보대학');
-  //전체 카테고리 리스트를 저장하는 state
-  const [categoryList, setCategoryList] = useState();
+  // 구독하고 있는 카테고리
+  const [subscribeCategoryList, setsubscribeCategoryList] = useState<CategoryListProps[]>([]);
   // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
   const [category, setCategory] = useState(1);
-  // 현재 선택된 provider에 맞는 카테고리 리스트를 저장하는 state
-  const [categoryListByProvider, setCategoryListByProvider] = useState<CategoryListProps[]>([]);
 
-  const [isSearch, setIsSearch] = useState(false);
-  const [search, setSearch] = useState('');
   // 현재 선택된 카테고리에 맞는 공지사항 리스트를 저장하는 state
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   const token = useSelector((store: any) => store.tokenReducer);
   // TODO 프로바이더를 변경하는 함수
-  // 프로바이더를 변경하면, 하위 카테고리 리스트를 변경해야함
-  const changeNoticeProvider = (provider: string) => {
-    console.log(provider);
-    console.log(categoryList?.['정보대학']);
-
-    setSelectedProvider(provider);
-    if (categoryList) {
-      setCategoryListByProvider(categoryList[provider]);
-      setCategory(categoryListByProvider[0].categoryId);
-    }
-  };
-  // TODO
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getNoticeList = async (category: number) => {
     console.log(token.payload.accessToken);
     isExpired(token);
-    console.log(category);
 
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}notices`, {
@@ -70,24 +47,9 @@ function SubscribeCategoryPage(props: any) {
   const getCategoryList = async () => {
     isExpired(token);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const categoryL = await axios.get(`${BASE__URL}category/provider`);
-    // console.log(categoryL.data.data[0]);
-    const providers = Object.keys(categoryL.data.data);
-    const categoryListJson = categoryL.data.data;
-    // const p = providers[0];
-    // console.log(categoryL.data.data?.[p]);
-    // console.log(categoryL.data.data?.['정보대학']);
-    // 프로바이더 리스트 갱신
-    // 카테고리 전체 리스트 갱신
-    // 현재 선택된 프로바이더에 맞는 카테고리 리스트 갱신
-    if (providers.length !== 0 && categoryListJson) {
-      setProviderList(providers);
-      // setSelectedProvider(providers[0]);
-      setCategoryList(categoryListJson);
-      // console.log(categoryListJson);
-      setCategoryListByProvider(categoryListJson[selectedProvider]);
-      setCategory(categoryListByProvider[0].categoryId);
-    }
+    const categoryL = await axios.get(`${BASE__URL}category/subscribe`);
+    console.log(categoryL.data.data);
+    setsubscribeCategoryList(categoryL.data.data);
   };
 
   // ! 카테고리 변경 함수
@@ -95,16 +57,6 @@ function SubscribeCategoryPage(props: any) {
     console.log(index);
 
     setCategory(index);
-    setIsSearch(false);
-  };
-
-  // ! 서버에 검색 요청
-  const getSearchedList = () => {
-    // TODO 서버에 검색 요청
-
-    console.log(search);
-    changeCategory(1);
-    setIsSearch(true);
   };
 
   // 카테고리 변경시 getNoticeList 호출
@@ -113,7 +65,7 @@ function SubscribeCategoryPage(props: any) {
   }, [category]);
   useEffect(() => {
     getCategoryList();
-  }, [selectedProvider]);
+  }, []);
   // 공지사항 북마크 변경
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
@@ -142,10 +94,10 @@ function SubscribeCategoryPage(props: any) {
   //검색버튼이 눌렸는데 검색 응답이 없는 경우
   return (
     <PageStyled>
-      <HeaderContainer title="홈" />
+      <TitleHeaderContainer title="구독" />
       <MainPageStyled>
-        <CategoryListContainer
-          CategoryList={categoryListByProvider}
+        <SubscribeCategoryListContainer
+          CategoryList={subscribeCategoryList}
           changeCategory={changeCategory}
           selectedCategory={category}
         />
@@ -174,4 +126,6 @@ const MainPageStyled = styled.div`
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
+  margin-top: ${getHeightPixel(-30)};
+  padding-top: ${getHeightPixel(30)};
 `;
