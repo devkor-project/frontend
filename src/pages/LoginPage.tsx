@@ -134,7 +134,9 @@ function LoginPage() {
           <ErrContainer>
             <Blank height={getHeightPixel(8)} />
             <div className="flex flex-row">
-              <Info_Icon className="mt-[6px] mr-[8px]" />
+              <InfoIconStyled className="mt-[6px] mr-[8px]">
+                <Info_Icon />
+              </InfoIconStyled>
               <NotoTextBordered
                 fontColor={palette.crimson}
                 fontSize={getPixelToPixel(11)}
