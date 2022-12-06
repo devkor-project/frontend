@@ -5,7 +5,7 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/respons
 import { ReactComponent as DoCancel_Icon } from '../assets/icon/doCancel.svg';
 import { ReactComponent as DoScrap_Icon } from '../assets/icon/doScrap.svg';
 import { ReactComponent as DoShare_Icon } from '../assets/icon/doShare.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { log } from 'console';
 
 const OptionBar = () => {
@@ -21,7 +21,7 @@ const OptionBar = () => {
   };
   const onClickShare = () => {
     // 링크 생성
-    const url = 'sample.com';
+    const url = window.location.href;
     navigator.clipboard.writeText(url);
     alert('링크가 복사되었습니다.');
   };
