@@ -63,7 +63,7 @@ function MainPage(props: any) {
         categoryId: category,
       },
     });
-    console.log(response.data.data);
+    // console.log(response.data.data);
     setNoticeData(response.data.data);
   };
   // 카테고리 리스트 가져오는 api
@@ -84,7 +84,7 @@ function MainPage(props: any) {
       setProviderList(providers);
       // setSelectedProvider(providers[0]);
       setCategoryList(categoryListJson);
-      console.log(categoryListJson);
+      // console.log(categoryListJson);
       setCategoryListByProvider(categoryListJson[selectedProvider]);
       setCategory(categoryListByProvider[0].categoryId);
     }
@@ -120,28 +120,19 @@ function MainPage(props: any) {
     console.log(token.payload.accessToken);
     isExpired(token);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const noticeIdx = noticeData.map(data => {
+    let i = false;
+    noticeData.map(data => {
       if (data.noticeId === idx) {
-        return data.isScraped === 'Y'; // scrap 여부를 저장
+        if (data.isScraped === 'Y') i = true; // scrap 여부를 저장
       }
     });
-    console.log(noticeIdx);
+    // console.log(i);
     const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
-      whetherScrap: noticeIdx ? 'Y' : 'N',
+      whetherScrap: !i,
     });
     console.log(res);
 
-    const newNoticeData = noticeData.map(data => {
-      console.log(data.isScraped);
-      if (data.noticeId === idx) {
-        return {
-          ...data,
-          isScraped: noticeIdx ? 'Y' : 'N',
-        };
-      }
-      return data;
-    });
-    setNoticeData(newNoticeData);
+    getNoticeList(category);
   };
 
   const navigate = useNavigate();
