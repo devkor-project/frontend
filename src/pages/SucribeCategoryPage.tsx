@@ -19,10 +19,9 @@ import axios from 'axios';
 import { CategoryListProps, NoticeProps, providerListProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import HeaderContainer from '../container/header/HeaderContainer';
-import ProviderListContainer from '../commons/ProviderListContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
-function MainPage(props: any) {
+function SubscribeCategoryPage(props: any) {
   // 공지사항의 provider를 저장하는 state
   const [providerList, setProviderList] = useState<string[]>([]);
   // 현재 선택된 provider를 저장하는 state
@@ -141,66 +140,23 @@ function MainPage(props: any) {
     navigate(`/notice/${noticeId}`);
   };
   //검색버튼이 눌렸는데 검색 응답이 없는 경우
-  if (isSearch) {
-    return (
-      <PageStyled>
-        <TitleHeaderContainer title="홈" />
-        <MainPageStyled>
-          <SearchContainer
-            width={getWidthPixel(357)}
-            height={getHeightPixel(40)}
-            fontSize={getHeightPixel(14)}
-            placeHolder="검색어를 입력하세요"
-            setFunc={setSearch}
-            icon={<SearchIconStyled />}
-            searchFunc={getSearchedList}
-          />
-          {/* <CategoryListContainer
-            CategoryList={categoryList}
-            changeCategory={changeCategory}
-            selectedCategory={category}
-          /> */}
-          <NotSearchedContainer />
-        </MainPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
-  } else
-    return (
-      <PageStyled>
-        <HeaderContainer title="홈" />
-        <MainPageStyled>
-          <SearchContainer
-            width={getWidthPixel(357)}
-            height={getHeightPixel(40)}
-            fontSize={getHeightPixel(14)}
-            placeHolder="검색어를 입력하세요"
-            setFunc={setSearch}
-            icon={<SearchIconStyled />}
-            searchFunc={getSearchedList}
-          />
-          <ProviderListContainer
-            ProviderList={providerList}
-            changeSelectedProvider={changeNoticeProvider}
-            selectedProvider={selectedProvider}
-          />
-          <CategoryListContainer
-            CategoryList={categoryListByProvider}
-            changeCategory={changeCategory}
-            selectedCategory={category}
-          />
-          <NoticeListContainer
-            NoticeList={noticeData}
-            changeBookmark={changeBookmark}
-            goNoticeDetail={goNoticeDetail}
-          />
-        </MainPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
+  return (
+    <PageStyled>
+      <HeaderContainer title="홈" />
+      <MainPageStyled>
+        <CategoryListContainer
+          CategoryList={categoryListByProvider}
+          changeCategory={changeCategory}
+          selectedCategory={category}
+        />
+        <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} goNoticeDetail={goNoticeDetail} />
+      </MainPageStyled>
+      <BottomNavigationBar />
+    </PageStyled>
+  );
 }
 
-export default MainPage;
+export default SubscribeCategoryPage;
 
 const PageStyled = styled.div`
   flex-direction: column;
@@ -208,21 +164,6 @@ const PageStyled = styled.div`
   width: 100%;
   height: 100%;
   background: ${palette.crimson};
-`;
-
-const LogoPageStyled = styled.div`
-  width: 100%;
-  height: ${getHeightPixel(59)};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-basis: 100%;
-`;
-
-const TitleStyled = styled.div`
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
 `;
 const MainPageStyled = styled.div`
   display: flex;
@@ -233,21 +174,4 @@ const MainPageStyled = styled.div`
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
-`;
-const NotificationIconStyled = styled(Notification_Icon)`
-  width: ${getWidthPixel(16)};
-  height: ${getHeightPixel(21.89)};
-  margin-right: ${getWidthPixel(24)};
-  margin-left: ${getWidthPixel(36.11)};
-`;
-const SearchIconStyled = styled(Search_Icon)`
-  width: ${getWidthPixel(21)};
-  height: ${getHeightPixel(21)};
-`;
-const MainLogoStyled = styled(Main_Logo)`
-  position: relative;
-  left: 0;
-  width: ${getWidthPixel(58)};
-  height: ${getHeightPixel(22.23)};
-  margin-left: ${getWidthPixel(24)};
 `;

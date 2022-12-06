@@ -28,7 +28,7 @@ function BottomNavigationBar() {
           <div className="mx-auto my-auto">
             <Reservation1
               onClick={() => {
-                navigate('/mail');
+                navigate('/subscribeCategory');
               }}
             />
           </div>

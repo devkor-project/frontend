@@ -19,6 +19,8 @@ import HotPage from './pages/HotPage';
 import FindPasswordPage from './pages/FindPasswordPage';
 import ErrorPage from './pages/ErrorPage';
 import SubscribePage from './pages/SubscribePage';
+import { element } from 'prop-types';
+import SubscribeCategoryPage from './pages/SucribeCategoryPage';
 
 const router = createBrowserRouter([
   {
@@ -74,6 +76,11 @@ const router = createBrowserRouter([
   {
     path: '/subscribe',
     element: <SubscribePage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/subscribeCategory',
+    element: <SubscribeCategoryPage />,
     errorElement: <ErrorPage />,
   },
   {
