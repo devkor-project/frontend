@@ -18,22 +18,8 @@ import { isExpired } from '../utils/refresh';
 import axios from 'axios';
 import { CategoryListProps, NoticeProps, providerListProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
+import HeaderContainer from '../container/header/HeaderContainer';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
-
-const mockupCategory = [
-  {
-    id: 'hi',
-    title: 'KUPID 전체',
-  },
-  {
-    id: 'hello',
-    title: '학사일정',
-  },
-  {
-    id: '333',
-    title: '일반 공지',
-  },
-];
 
 function MainPage(props: any) {
   // 공지사항의 provider를 저장하는 state
@@ -136,9 +122,10 @@ function MainPage(props: any) {
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const noticeIdx = noticeData.map(data => {
       if (data.noticeId === idx) {
-        return data.isScraped === 'Y';
+        return data.isScraped === 'Y'; // scrap 여부를 저장
       }
     });
+    console.log(noticeIdx);
     const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
       whetherScrap: noticeIdx ? 'Y' : 'N',
     });
@@ -189,21 +176,7 @@ function MainPage(props: any) {
   } else
     return (
       <PageStyled>
-        <div className="w-full flex flex-row items-center justify-center">
-          <LogoPageStyled>
-            <div className="w-70px">
-              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
-            </div>
-            <TitleStyled>
-              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                홈
-              </NotoText>
-            </TitleStyled>
-            <div className="w-70px">
-              <NotificationIconStyled />
-            </div>
-          </LogoPageStyled>
-        </div>
+        <HeaderContainer title="홈" />
         <MainPageStyled>
           <SearchContainer
             width={getWidthPixel(357)}
