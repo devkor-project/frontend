@@ -66,7 +66,7 @@ export interface NoticeDetailHeaderProps {
   provider: number;
   viewCount: number;
   categoryName: string;
-  isScraped: boolean;
+  isScraped: string;
   scraps: number;
 }
 export interface NoticeDetailProps extends NoticeDetailHeaderProps {

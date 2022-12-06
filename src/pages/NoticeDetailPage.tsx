@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { isNull } from 'util';
 import OptionBar from '../commons/OptionBar';
 import NotoText from '../components/Text/NotoText';
 import NotoTextBordered from '../components/Text/NotoTextBordered';
@@ -25,6 +24,7 @@ function NoticeDetailPage() {
     isExpired(token);
     const response = await axios.get(`${BASE__URL}notices/details/${params.noticeId}`);
     response.data.data.date = translateDatetime(response.data.data.date);
+    console.log(response.data.data);
 
     setNoticeData({
       ...response.data.data,
@@ -57,10 +57,10 @@ function NoticeDetailPage() {
             borderColor={palette.gray_04}
             borderWidth={getPixelToPixel(0.2)}
           >
-            {noticeData?.content}
+            <div dangerouslySetInnerHTML={{ __html: noticeData.content }}></div>
           </NotoTextBordered>
         </ContentContainer>
-        <OptionBar />
+        <OptionBar isScraped={noticeData.isScraped} idx={noticeData.noticeId} />
       </PageStyled>
     );
 }
@@ -79,7 +79,7 @@ const ContentContainer = styled.div`
   white-space: pre-wrap;
   width: 100%;
   margin-bottom: ${getHeightPixel(66)};
-  margin-top: ${getHeightPixel(203)};
+  margin-top: ${getHeightPixel(233)};
   padding-left: ${getPixelToPixel(20)};
   padding-right: ${getPixelToPixel(20)};
 `;
