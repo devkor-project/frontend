@@ -39,18 +39,24 @@ function HotPage() {
     getHotNoticeList();
   }, []);
   // 공지사항 북마크 변경
-  const changeBookmark = (idx: number) => {
+  const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
-    const newNoticeData = noticeData.map(data => {
+    console.log(token.payload.accessToken);
+    isExpired(token);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    let i = false;
+    noticeData.map(data => {
       if (data.noticeId === idx) {
-        return {
-          ...data,
-          isScraped: data.isScraped === 'Y' ? 'N' : 'Y',
-        };
+        if (data.isScraped === 'Y') i = true; // scrap 여부를 저장
       }
-      return data;
     });
-    setNoticeData(newNoticeData);
+    // console.log(i);
+    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+      whetherScrap: !i,
+    });
+    console.log(res);
+
+    getHotNoticeList();
   };
   const navigate = useNavigate();
   const goNoticeDetail = (noticeId: number) => {
