@@ -66,6 +66,8 @@ const ChildrenStyled = styled.div`
   position: relative;
   margin-left: -${getWidthPixel(60)};
   margin-right: ${getWidthPixel(24)};
+  display: flex;
+  align-items: center;
 `;
 
 export default TextInput;
