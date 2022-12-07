@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { BASE__URL } from '../constants';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import { palette } from '../constants/palette';
@@ -8,39 +9,64 @@ import { ReactComponent as Main_Logo } from '../assets/icon/logo.svg';
 import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
 import SearchContainer from '../container/main/SearchContainer';
 import NotoText from '../components/Text/NotoText';
-import CategoryListContainer from '../commons/CategoryListContainer';
 import NoticeListContainer from '../commons/NoticeListContainer';
-import NotSearchedContainer from '../container/main/NotSearchedContainer';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
-import axios from 'axios';
-import { NoticeProps } from '../constants/types';
-import NotScrapedContainer from '../container/scrap/NotScrapedContainer';
-import Blank from '../components/Blank';
-import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
-import { BASE__URL } from '../constants';
-import { useCookies } from 'react-cookie';
-// import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
-function ScrapPage() {
+import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
+import axios from 'axios';
+import { CategoryListProps, NoticeProps } from '../constants/types';
+import SubscribeCategoryListContainer from '../commons/SubscribeCategoryListContainer';
+import { useCookies } from 'react-cookie';
+
+function SubscribeCategoryPage(props: any) {
+  // 구독하고 있는 카테고리
+  const [subscribeCategoryList, setsubscribeCategoryList] = useState<CategoryListProps[]>([]);
+  // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
+  const [category, setCategory] = useState(1);
+
+  // 현재 선택된 카테고리에 맞는 공지사항 리스트를 저장하는 state
+  const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   const token = useSelector((store: any) => store.tokenReducer);
   const [, , removeCookie] = useCookies(['refreshToken']);
-  // TODO server에서 받아온 데이터를 저장하는 state
-  // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
-
-  const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
+  // TODO 프로바이더를 변경하는 함수
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
-  const getScrapNoticeList = async () => {
+  const getNoticeList = async (category: number) => {
+    console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
+
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(`${BASE__URL}scraps`);
-    console.log(response.data.data);
+    const response = await axios.get(`${BASE__URL}notices`, {
+      params: {
+        categoryId: category,
+      },
+    });
+    // console.log(response.data.data);
     setNoticeData(response.data.data);
   };
+  // 카테고리 리스트 가져오는 api
+  const getCategoryList = async () => {
+    isExpired(token, removeCookie);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    const categoryL = await axios.get(`${BASE__URL}category/subscribe`);
+    console.log(categoryL.data.data);
+    setsubscribeCategoryList(categoryL.data.data);
+  };
 
+  // ! 카테고리 변경 함수
+  const changeCategory = (index: number) => {
+    console.log(index);
+
+    setCategory(index);
+  };
+
+  // 카테고리 변경시 getNoticeList 호출
   useEffect(() => {
-    getScrapNoticeList();
+    getNoticeList(category);
+  }, [category]);
+  useEffect(() => {
+    getCategoryList();
   }, []);
   // 공지사항 북마크 변경
   const changeBookmark = async (idx: number) => {
@@ -60,8 +86,9 @@ function ScrapPage() {
     });
     console.log(res);
 
-    getScrapNoticeList();
+    getNoticeList(category);
   };
+
   const navigate = useNavigate();
   const goNoticeDetail = (noticeId: number) => {
     navigate(`/notice/${noticeId}`);
@@ -69,17 +96,21 @@ function ScrapPage() {
   //검색버튼이 눌렸는데 검색 응답이 없는 경우
   return (
     <PageStyled>
-      <TitleHeaderContainer title="스크랩" />
-      <ScrapPageStyled>
-        <Blank height={getHeightPixel(31)} />
+      <TitleHeaderContainer title="구독" />
+      <MainPageStyled>
+        <SubscribeCategoryListContainer
+          CategoryList={subscribeCategoryList}
+          changeCategory={changeCategory}
+          selectedCategory={category}
+        />
         <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} goNoticeDetail={goNoticeDetail} />
-      </ScrapPageStyled>
+      </MainPageStyled>
       <BottomNavigationBar />
     </PageStyled>
   );
 }
 
-export default ScrapPage;
+export default SubscribeCategoryPage;
 
 const PageStyled = styled.div`
   flex-direction: column;
@@ -88,12 +119,10 @@ const PageStyled = styled.div`
   height: 100%;
   background: ${palette.crimson};
 `;
-
-const ScrapPageStyled = styled.div`
+const MainPageStyled = styled.div`
   display: flex;
   width: 100%;
   height: ${getHeightPixel(661)};
-  padding-top: ${getHeightPixel(31)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
