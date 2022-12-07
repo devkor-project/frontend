@@ -29,7 +29,7 @@ const OptionBar = ({ isScraped, idx }: { isScraped: string; idx: number }) => {
     console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+    const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: isScrapedd === 'Y' ? false : true,
     });
     console.log(res);

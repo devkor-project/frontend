@@ -59,7 +59,7 @@ function MainPage() {
       console.log(token);
 
       axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-      const response = await axios.get(`${BASE__URL}notices`, {
+      const response = await axios.get(`notices`, {
         params: {
           categoryId: category,
         },
@@ -73,7 +73,7 @@ function MainPage() {
 
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const categoryL = await axios.get(`${BASE__URL}category/provider`);
+    const categoryL = await axios.get(`category/provider`);
     // console.log(categoryL.data.data[0]);
     const providers = Object.keys(categoryL.data.data);
     const categoryListJson = categoryL.data.data;
@@ -103,7 +103,7 @@ function MainPage() {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(
-      `${BASE__URL}notices/search/${categoryListByProvider[category]}/${selectedProvider}`,
+      `notices/search/${categoryListByProvider[category]}/${selectedProvider}`,
       {
         params: {
           keyword: search,
@@ -133,7 +133,7 @@ function MainPage() {
       }
     });
     // console.log(i);
-    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+    const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
     console.log(res);

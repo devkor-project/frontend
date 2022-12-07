@@ -37,7 +37,7 @@ function SubscribeCategoryPage(props: any) {
     isExpired(token, removeCookie);
 
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(`${BASE__URL}notices`, {
+    const response = await axios.get(`notices`, {
       params: {
         categoryId: category,
       },
@@ -49,7 +49,7 @@ function SubscribeCategoryPage(props: any) {
   const getCategoryList = async () => {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const categoryL = await axios.get(`${BASE__URL}category/subscribe`);
+    const categoryL = await axios.get(`category/subscribe`);
     console.log(categoryL.data.data);
     setsubscribeCategoryList(categoryL.data.data);
   };
@@ -81,7 +81,7 @@ function SubscribeCategoryPage(props: any) {
       }
     });
     // console.log(i);
-    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+    const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
     console.log(res);

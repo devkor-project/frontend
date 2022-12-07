@@ -34,7 +34,7 @@ function ScrapPage() {
   const getScrapNoticeList = async () => {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(`${BASE__URL}scraps`);
+    const response = await axios.get(`scraps`);
     console.log(response.data.data);
     setNoticeData(response.data.data);
   };
@@ -55,7 +55,7 @@ function ScrapPage() {
       }
     });
     // console.log(i);
-    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+    const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
     console.log(res);

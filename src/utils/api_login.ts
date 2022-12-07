@@ -5,7 +5,7 @@ const { sign, decode, verify } = jsonwebtoken;
 
 export async function postLoginAPI({ email, password }: { email: string; password: string }) {
   console.log(email, password);
-  const { data } = await axios.post(`${BASE__URL}auth/login`, {
+  const { data } = await axios.post(`auth/login`, {
     email: email,
     password: password,
   });

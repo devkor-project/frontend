@@ -24,7 +24,7 @@ function NoticeDetailPage() {
   const getNoticeData = async () => {
     console.log(params.noticeId);
     isExpired(token, removeCookie);
-    const response = await axios.get(`${BASE__URL}notices/details/${params.noticeId}`);
+    const response = await axios.get(`notices/details/${params.noticeId}`);
     response.data.data.date = translateDatetime(response.data.data.date);
     console.log(response.data.data);
 

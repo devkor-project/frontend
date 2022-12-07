@@ -33,7 +33,7 @@ function HotPage() {
   const getHotNoticeList = async () => {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(`${BASE__URL}notices/hot`);
+    const response = await axios.get(`notices/hot`);
     console.log(response.data.data);
     setNoticeData(response.data.data);
   };
@@ -54,7 +54,7 @@ function HotPage() {
       }
     });
     // console.log(i);
-    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+    const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
     console.log(res);
