@@ -99,7 +99,7 @@ const DetailHeaderContainerStyled = styled.div`
   display: flex;
   flex-direction: column;
   width: ${getWidthPixel(405)};
-  height: ${getHeightPixel(203)};
+  height: ${getHeightPixel(227)};
   padding-left: ${getPixelToPixel(20)};
   padding-right: ${getPixelToPixel(20)};
   background-color: ${palette.white};
