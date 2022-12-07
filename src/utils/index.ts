@@ -7,10 +7,13 @@ export function getButtonWidthList(list: CategoryDataProps[], width: number) {
   let totalLength = 0;
   const widthArr: string[] = [];
   list.forEach(category => {
-    totalLength += category.categoryName.length + 2;
+    totalLength += category.categoryName.length + category.provider.length + 2;
   });
   list.forEach(category => {
-    widthArr.push(getWidthPixel(totalWidth * ((category.categoryName.length + 2) / totalLength)));
+    widthArr.push(
+      //getWidthPixel(totalWidth * ((category.categoryName.length + category.provider.length + 2) / totalLength))
+      getWidthPixel((category.categoryName.length + category.provider.length + 2) * 14)
+    );
   });
   return widthArr;
 }
@@ -20,11 +23,11 @@ export function getButtonList(list: CategoryDataProps[], width: number) {
   const resultArr: CategoryDataProps[][] = [[]];
   let lengthSum = 0;
   list.forEach(category => {
-    if (lengthSum + (category.categoryName.length + 2) * UNIT <= width) {
-      lengthSum += (category.categoryName.length + 2) * UNIT;
+    if (lengthSum + (category.categoryName.length + category.provider.length + 2) * UNIT <= width) {
+      lengthSum += (category.categoryName.length + category.provider.length + 2) * UNIT;
       resultArr[resultArr.length - 1].push(category);
     } else {
-      lengthSum = (category.categoryName.length + 2) * UNIT;
+      lengthSum = (category.categoryName.length + category.provider.length + 2) * UNIT;
       resultArr.push([]);
       resultArr[resultArr.length - 1].push(category);
     }
@@ -36,11 +39,13 @@ export function getRegisterWarningCode(
   email: string,
   password: string,
   repeatPassword: string,
-  errorCode: RegisterWarningProps
+  errorCode: RegisterWarningProps,
+  subscribeEmail: string
 ) {
-  const emailRegex = new RegExp('.*@korea.ac.kr$');
+  const schoolEmailRegex = new RegExp('.*@korea.ac.kr$');
+  const emailRegex = new RegExp('.*@.*');
   const modifiedErrorCode = { ...errorCode };
-  if (email !== '' && !emailRegex.test(email)) {
+  if (email !== '' && !schoolEmailRegex.test(email)) {
     modifiedErrorCode.emailWarningCode = 'univEmail';
   } else {
     modifiedErrorCode.emailWarningCode = '';
@@ -49,6 +54,16 @@ export function getRegisterWarningCode(
     modifiedErrorCode.repeatWarningCode = 'wrongPassword';
   } else {
     modifiedErrorCode.repeatWarningCode = '';
+  }
+  if (!checkPasswordPattern(password)) {
+    modifiedErrorCode.formatWarningCode = 'wrongFormat';
+  } else {
+    modifiedErrorCode.formatWarningCode = '';
+  }
+  if (subscribeEmail != '' && !emailRegex.test(subscribeEmail)) {
+    modifiedErrorCode.receiveEmailWarningCode = 'wrongReceiveEmail';
+  } else {
+    modifiedErrorCode.receiveEmailWarningCode = '';
   }
   return modifiedErrorCode;
 }
@@ -72,4 +87,16 @@ export function getParseTimer(time: number) {
   }
 
   return result;
+}
+
+function checkPasswordPattern(str: string) {
+  const pattern1 = /[0-9]/;
+  const pattern2 = /[a-zA-Z]/;
+  const pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;
+
+  if (!pattern1.test(str) || !pattern2.test(str) || !pattern3.test(str) || str.length < 8) {
+    return false;
+  } else {
+    return true;
+  }
 }

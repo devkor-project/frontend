@@ -4,11 +4,9 @@ export const GRADE__LIST = [1, 2, 3, 4];
 
 export const MAJOR__LIST = ['컴퓨터학과', '디자인조형학부', '사이버국방학과'];
 
-export const STUDENT__ID__LIST = [19, 20, 21, 22];
+export const STUDENT__ID__LIST = [17, 18, 19, 20, 21, 22];
 
 export const MIN__STUDENT__ID = 19;
-
-export const MY__PAGE__BUTTON__LIST = ['서비스 소개', 'FAQ', '문의하기', '로그아웃'];
 
 export const ROUTER__URI = {
   mainPage: '/',
@@ -37,4 +35,5 @@ export const DEFAULT__REGISTER__WARNING__CODE = {
   codeWarningCode: '',
   formatWarningCode: '',
   repeatWarningCode: '',
+  receiveEmailWarningCode: '',
 };

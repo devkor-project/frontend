@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 import Blank from '../../components/Blank';
@@ -11,9 +11,9 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/resp
 import { postMailAPI, postMailReqAPI } from '../../utils/api_register';
 
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
+import { ReactComponent as Accept_Icon } from '../../assets/icon/acceptCheck.svg';
 import IconTextInput from '../../components/Input/IconTextInput';
 import WarningTextContainer from './WarningTextContainer';
-import Modal from '../../components/Modal';
 import { RegisterWarningProps } from '../../constants/types';
 import Timer from '../../components/Timer';
 
@@ -82,11 +82,14 @@ function EmailInputContainer({
                 height={getHeightPixel(47)}
                 setFunc={setCode}
                 fontSize={getPixelToPixel(13)}
-                type="number"
               >
-                <TimerContainerStyled>
-                  <Timer second={600} />
-                </TimerContainerStyled>
+                {warningCode.codeWarningCode === 'acceptCode' ? (
+                  <AcceptIconStyled />
+                ) : (
+                  <TimerContainerStyled>
+                    <Timer second={600} />
+                  </TimerContainerStyled>
+                )}
               </TextInput>
               <Blank width={getWidthPixel(8)} />
               <TextButton
@@ -109,7 +112,7 @@ function EmailInputContainer({
                 }}
               />
             </InnerContainerStyled>
-            {warningCode.codeWarningCode ? (
+            {warningCode.codeWarningCode === 'wrongCode' ? (
               <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.codeWarningCode][0]} />
             ) : null}
           </>
@@ -150,8 +153,12 @@ const IconStyled = styled(Info_Icon)`
   height: ${getHeightPixel(14)};
 `;
 
-const TimerContainerStyled = styled.div`
-  margin-left: ${getWidthPixel(180)};
+const AcceptIconStyled = styled(Accept_Icon)`
+  width: ${getWidthPixel(14)};
+  height: ${getHeightPixel(14)};
+  margin-left: ${getWidthPixel(20)};
 `;
+
+const TimerContainerStyled = styled.div``;
 
 export default EmailInputContainer;

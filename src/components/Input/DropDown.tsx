@@ -24,8 +24,8 @@ function DropDown({
   suffix?: string;
 }) {
   return (
-    <PaddingStyled height={(getPixelToNumber(height) * (list.length - 0.9)).toString() + 'px'}>
-      <ContainerStyled width={width} onMouseDown={event => event.preventDefault()}>
+    <PaddingStyled height={getHeightPixel(145 - getPixelToNumber(height))}>
+      <ContainerStyled width={width} height={getHeightPixel(145)} onMouseDown={event => event.preventDefault()}>
         {list.map((content, index) => {
           return (
             <div key={content}>
@@ -59,16 +59,17 @@ const PaddingStyled = styled.div<{ height: string }>`
   `}
 `;
 
-const ContainerStyled = styled.div<{ width: string }>`
-  ${({ width = getWidthPixel(174) }) => css`
+const ContainerStyled = styled.div<{ width: string; height: string }>`
+  ${({ width = getWidthPixel(174), height }) => css`
     width: ${width};
     margin-left: -${width};
+    height: ${height};
   `}
   position: relative;
   border: ${getPixelToPixel(2)} solid ${palette.gray};
   border-radius: ${getPixelToPixel(24)};
   background-color: ${palette.white};
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const InnerContainerStyled = styled.div`

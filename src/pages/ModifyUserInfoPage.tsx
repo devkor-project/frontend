@@ -43,8 +43,8 @@ export default function ModifyUserInfoPage() {
   const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
   const navigate = useNavigate();
   useEffect(() => {
-    setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode));
-  }, [email, password, repeatPassword]);
+    setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode, subscribeEmail));
+  }, [email, password, repeatPassword, subscribeEmail]);
   useEffect(() => {
     refreshAccessToken(accessToken, refreshToken);
     getUserDataAPI({ setData: setData });
@@ -66,15 +66,10 @@ export default function ModifyUserInfoPage() {
       <Blank height={getHeightPixel(20)} />
       <ModifyEmailContainer setEmail={setEmail} email={email} />
       <Blank height={getHeightPixel(20)} />
-      <SubscribeEmailInputContainer subscribeEmail={subscribeEmail} setSubscribeEmail={setSubscribeEmail} />
-      <Blank height={getHeightPixel(20)} />
-      <PasswordInputContainer
-        password={password}
-        repeatPassword={repeatPassword}
-        setPassword={setPassword}
-        setRepeatPassword={setRepeatPassword}
-        warningCode={warningCode.formatWarningCode}
-        secondWarningCode={warningCode.repeatWarningCode}
+      <SubscribeEmailInputContainer
+        subscribeEmail={subscribeEmail}
+        setSubscribeEmail={setSubscribeEmail}
+        warningCode={warningCode}
       />
       <Blank height={getHeightPixel(20)} />
       <MajorInputContainer
