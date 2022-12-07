@@ -21,7 +21,7 @@ export async function postSignupAPI({
   major: string;
   submitFunc: () => void;
 }) {
-  const { data } = await axios.post(`${BASE__URL}auth/signup`, {
+  const { data } = await axios.post(`auth/signup`, {
     user: {
       name: userName,
       email: email,
@@ -47,7 +47,7 @@ export async function postMailReqAPI({
   warningCode: RegisterWarningProps;
 }) {
   try {
-    const { data } = await axios.post(`${BASE__URL}auth/mail/req`, {
+    const { data } = await axios.post(`auth/mail/req`, {
       email: email,
     });
     if (data) {
@@ -77,17 +77,20 @@ export async function postMailAPI({
   warningCode: RegisterWarningProps;
 }) {
   try {
-    const { data } = await axios.post(`${BASE__URL}auth/mail`, {
+    const { data } = await axios.post(`auth/mail`, {
       email: email,
       code: code,
     });
-    if (data) {
+    if (data.success) {
       warningCode.codeWarningCode = 'acceptCode';
+      setWarningCode({ ...warningCode });
+    } else {
+      warningCode.codeWarningCode = 'wrongCode';
       setWarningCode({ ...warningCode });
     }
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error) {
+    if (axios.isAxiosError(error)) {
       warningCode.codeWarningCode = 'wrongCode';
       setWarningCode({ ...warningCode });
     }
