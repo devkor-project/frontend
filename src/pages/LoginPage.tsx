@@ -3,7 +3,6 @@ import { ReactComponent as LogoIcon } from '../assets/logo.svg';
 import axios from 'axios';
 import { palette } from '../constants/palette';
 import { useNavigate } from 'react-router-dom';
-import { postLoginAPI } from '../utils/api_login';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 import styled from 'styled-components';
 import Blank from '../components/Blank';
@@ -134,7 +133,9 @@ function LoginPage() {
           <ErrContainer>
             <Blank height={getHeightPixel(8)} />
             <div className="flex flex-row">
-              <Info_Icon className="mt-[6px] mr-[8px]" />
+              <InfoIconStyled className="mt-[6px] mr-[8px]">
+                <Info_Icon />
+              </InfoIconStyled>
               <NotoTextBordered
                 fontColor={palette.crimson}
                 fontSize={getPixelToPixel(11)}

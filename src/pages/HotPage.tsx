@@ -18,6 +18,7 @@ import Blank from '../components/Blank';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import { BASE__URL } from '../constants';
 import HotNoticeListContainer from '../commons/HotNoticeListContainer';
+import { useCookies } from 'react-cookie';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 function HotPage() {
@@ -26,9 +27,11 @@ function HotPage() {
   // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
 
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
+
+  const [, , removeCookie] = useCookies(['refreshToken']);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getHotNoticeList = async () => {
-    isExpired(token);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}notices/hot`);
     console.log(response.data.data);
@@ -39,109 +42,63 @@ function HotPage() {
     getHotNoticeList();
   }, []);
   // 공지사항 북마크 변경
-  const changeBookmark = (idx: number) => {
+  const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
-    const newNoticeData = noticeData.map(data => {
+    console.log(token.payload.accessToken);
+    isExpired(token, removeCookie);
+    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    let i = false;
+    noticeData.map(data => {
       if (data.noticeId === idx) {
-        return {
-          ...data,
-          isScraped: data.isScraped === 'Y' ? 'N' : 'Y',
-        };
+        if (data.isScraped === 'Y') i = true; // scrap 여부를 저장
       }
-      return data;
     });
-    setNoticeData(newNoticeData);
+    // console.log(i);
+    const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
+      whetherScrap: !i,
+    });
+    console.log(res);
+
+    getHotNoticeList();
   };
   const navigate = useNavigate();
   const goNoticeDetail = (noticeId: number) => {
     navigate(`/notice/${noticeId}`);
   };
-  //검색버튼이 눌렸는데 검색 응답이 없는 경우
-  if (noticeData.length === 0) {
-    return (
-      <PageStyled>
-        <TitleHeaderContainer title="인기" />
-        <HotPageStyled>
-          <NotScrapedContainer />
-        </HotPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
-  } else
-    return (
-      <PageStyled>
-        <div className="w-full flex flex-row items-center justify-center">
-          <LogoPageStyled>
-            <div className="w-70px">
-              <MainLogoStyled width={getWidthPixel(58)} height={getHeightPixel(22.3)} />
-            </div>
-            <TitleStyled>
-              <NotoText fontSize={getWidthPixel(19)} fontColor={palette.white}>
-                인기
-              </NotoText>
-            </TitleStyled>
-            <div className="w-70px">
-              <NotificationIconStyled />
-            </div>
-          </LogoPageStyled>
-        </div>
-        <HotPageStyled>
-          <Blank height={getHeightPixel(31)} />
-          <HotNoticeListContainer
-            NoticeList={noticeData}
-            changeBookmark={changeBookmark}
-            goNoticeDetail={goNoticeDetail}
-          />
-        </HotPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
+  return (
+    <PageStyled>
+      <TitleHeaderContainer title="인기" />
+      <HotPageStyled>
+        <Blank height={getHeightPixel(31)} />
+        <HotNoticeListContainer
+          NoticeList={noticeData}
+          changeBookmark={changeBookmark}
+          goNoticeDetail={goNoticeDetail}
+        />
+      </HotPageStyled>
+      <BottomNavigationBar />
+    </PageStyled>
+  );
 }
 
 export default HotPage;
 
 const PageStyled = styled.div`
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: ${palette.crimson};
-`;
-
-const LogoPageStyled = styled.div`
-  width: 100%;
-  height: ${getHeightPixel(59)};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-basis: 100%;
-`;
-
-const TitleStyled = styled.div`
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
+  // flex-direction: column;
+  // align-items: center;
+  // width: 100%;
+  // height: 100%;
+  // background: ${palette.crimson};
 `;
 const HotPageStyled = styled.div`
   display: flex;
   width: 100%;
-  height: ${getHeightPixel(661)};
+  height: ${getHeightPixel(730)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
-`;
-const NotificationIconStyled = styled(Notification_Icon)`
-  width: ${getWidthPixel(16)};
-  height: ${getHeightPixel(21.89)};
-  margin-right: ${getWidthPixel(24)};
-  margin-left: ${getWidthPixel(36.11)};
-`;
-const MainLogoStyled = styled(Main_Logo)`
-  position: relative;
-  left: 0;
-  width: ${getWidthPixel(58)};
-  height: ${getHeightPixel(22.23)};
-  margin-left: ${getWidthPixel(24)};
+  margin-top: ${getHeightPixel(-30)};
+  padding-top: ${getHeightPixel(30)};
 `;

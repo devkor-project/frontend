@@ -20,7 +20,7 @@ function BottomNavigationBar() {
   return (
     <BottomNavigationBarPageStyled>
       <BottomNavigationBarStyled>
-        {location.pathname === '/mail' ? (
+        {location.pathname === '/subscribeCategory' ? (
           <div className="mx-auto my-auto">
             <ActivateReservation1 />
           </div>
@@ -28,7 +28,7 @@ function BottomNavigationBar() {
           <div className="mx-auto my-auto">
             <Reservation1
               onClick={() => {
-                navigate('/mail');
+                navigate('/subscribeCategory');
               }}
             />
           </div>
