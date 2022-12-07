@@ -21,6 +21,6 @@ const PageStyled = styled.div`
 `;
 
 const ImageStyled = styled(LogoIcon)`
-  width: ${getWidthPixel(382)};
-  height: ${getWidthPixel(471)};
+  width: ${getWidthPixel(313)};
+  height: ${getWidthPixel(477)};
 `;
