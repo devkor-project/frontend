@@ -42,4 +42,6 @@ const ContainerStyled = styled.button<{
   `}
   height: ${getHeightPixel(44)};
   border-radius: ${getHeightPixel(30)};
+  margin-left: ${getWidthPixel(4)};
+  margin-right: ${getWidthPixel(4)};
 `;
