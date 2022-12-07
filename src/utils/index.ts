@@ -11,7 +11,8 @@ export function getButtonWidthList(list: CategoryDataProps[], width: number) {
   });
   list.forEach(category => {
     widthArr.push(
-      getWidthPixel(totalWidth * ((category.categoryName.length + category.provider.length + 2) / totalLength))
+      //getWidthPixel(totalWidth * ((category.categoryName.length + category.provider.length + 2) / totalLength))
+      getWidthPixel((category.categoryName.length + category.provider.length + 2) * 14)
     );
   });
   return widthArr;
