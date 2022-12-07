@@ -60,7 +60,7 @@ function LoginPage() {
     try {
       const res = await axios({
         method: 'POST',
-        url: `${BASE__URL}auth/login`,
+        url: `auth/login`,
         data: {
           email: email,
           password: password,

@@ -15,7 +15,7 @@ export async function isExpired(state: any, removeCookie: any) {
   console.log('diffTime', diffTime);
 
   if (diffTime < 6000 || !payload.accessToken) {
-    const res = await axios.post(`${BASE__URL}auth/token`);
+    const res = await axios.post(`auth/token`);
     // refreshToken 인증에 실패하면 refreshToken(cookie), accessToken(redux store) 삭제 후 로그인 페이지로 이동
     if (res.status !== 200) {
       console.log('bye');
@@ -36,7 +36,7 @@ export async function refreshAccessToken(accessToken: any, refreshToken: any) {
 
   if (diffTime < 10000000 || !accessToken.payload.accessToken) {
     axios.defaults.headers.common['x-auth-token'] = refreshToken;
-    const newAccessToken = await axios.post(`${BASE__URL}auth/token`);
+    const newAccessToken = await axios.post(`auth/token`);
 
     const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
     store.dispatch({ type: SetToken, payload: { newAccessToken, expiredTime } });
