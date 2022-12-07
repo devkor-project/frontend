@@ -61,7 +61,7 @@ const ContainerStyled = styled.div<{ height?: string }>`
 const RowStyled = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   width: ${getWidthPixel(345)};
   margin-bottom: ${getHeightPixel(10)};
 `;
