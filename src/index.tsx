@@ -8,11 +8,8 @@ import './index.css';
 // import { rootReducer } from './reducers';
 import './styles/global.css';
 import { PersistGate } from 'redux-persist/integration/react';
-import axios from 'axios';
-import { BASE__URL } from './constants';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-axios.defaults.baseURL = BASE__URL;
 
 root.render(
   <React.StrictMode>
