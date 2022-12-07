@@ -10,9 +10,6 @@ function ProviderListContainer({
   selectedProvider: string;
   changeSelectedProvider: any;
 }) {
-  console.log(ProviderList);
-  // console.log(CategoryList[0]?.categoryId);
-
   return (
     <div className="w-full">
       <div className="w-full flex flex-row justify-center mb-[13px]">
