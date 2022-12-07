@@ -1,4 +1,4 @@
-export const BASE__URL = 'https:/www.api.kudog.email/';
+export const BASE__URL = 'https://www.api.kudog.email/';
 
 export const GRADE__LIST = [1, 2, 3, 4];
 
