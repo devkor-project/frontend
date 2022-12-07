@@ -54,7 +54,7 @@ function MainPage() {
       getSearchedList();
     } else if (search === '') {
       isExpired(token);
-      console.log(category);
+      console.log(token);
 
       axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
       const response = await axios.get(`${BASE__URL}notices`, {
@@ -67,6 +67,8 @@ function MainPage() {
   };
   // 카테고리 리스트 가져오는 api
   const getCategoryList = async () => {
+    console.log(token.payload.accessToken);
+
     isExpired(token);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const categoryL = await axios.get(`${BASE__URL}category/provider`);
@@ -91,8 +93,6 @@ function MainPage() {
 
   // ! 카테고리 변경 함수
   const changeCategory = (index: number) => {
-    // console.log(index);
-
     setCategory(index);
   };
 
