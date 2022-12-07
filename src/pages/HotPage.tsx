@@ -28,7 +28,7 @@ function HotPage() {
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getHotNoticeList = async () => {
-    isExpired(token);
+    isExpired(token, null);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}notices/hot`);
     console.log(response.data.data);
@@ -42,7 +42,7 @@ function HotPage() {
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token);
+    isExpired(token, null);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {

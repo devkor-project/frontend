@@ -5,7 +5,7 @@ import { SetToken } from '../reducers/auth';
 import { store } from '../store';
 
 // Use this when you call api
-export async function isExpired(state: any) {
+export async function isExpired(state: any, removeCookie: any) {
   const { payload } = state;
   const { expiredTime } = payload;
   console.log('expiredTime', expiredTime);
@@ -13,12 +13,21 @@ export async function isExpired(state: any) {
   const diffTime = new Date(expiredTime).getTime() - new Date(Date.now()).getTime();
   console.log('diffTime', diffTime);
 
-  if (diffTime < 6000 || !payload.accessToken) {
+  // if (diffTime < 6000 || !payload.accessToken) {
+  if (true) {
     const res = await axios.post(`${BASE__URL}auth/token`);
-    console.log('newAccessToken', res.data.data);
-    const accessToken = res.data.data;
-    // const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
-    store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
+    // refreshToken 인증에 실패하면 refreshToken(cookie), accessToken(redux store) 삭제 후 로그인 페이지로 이동
+    if (res.status !== 200) {
+      console.log('bye');
+
+      removeCookie('refreshToken', { path: '/' });
+      store.dispatch({ type: SetToken, payload: { accessToken: null, expiredTime: null } });
+    } else {
+      const accessToken = res.data.data;
+      const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
+      store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
+    }
+    // console.log('newAccessToken', res.data.data);
   }
 }
 

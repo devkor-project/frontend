@@ -16,6 +16,7 @@ import axios from 'axios';
 import { CategoryListProps, NoticeProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import ProviderListContainer from '../commons/ProviderListContainer';
+import { useCookies } from 'react-cookie';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 function MainPage() {
@@ -34,6 +35,7 @@ function MainPage() {
   // 현재 선택된 카테고리에 맞는 공지사항 리스트를 저장하는 state
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   const token = useSelector((store: any) => store.tokenReducer);
+  const [, , removeCookie] = useCookies(['refreshToken']);
   // TODO 프로바이더를 변경하는 함수
   // 프로바이더를 변경하면, 하위 카테고리 리스트를 변경해야함
   const changeNoticeProvider = (provider: string) => {
@@ -53,7 +55,7 @@ function MainPage() {
     if (search !== '') {
       getSearchedList();
     } else if (search === '') {
-      isExpired(token);
+      isExpired(token, removeCookie);
       console.log(token);
 
       axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
@@ -69,7 +71,7 @@ function MainPage() {
   const getCategoryList = async () => {
     console.log(token.payload.accessToken);
 
-    isExpired(token);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const categoryL = await axios.get(`${BASE__URL}category/provider`);
     // console.log(categoryL.data.data[0]);
@@ -98,7 +100,7 @@ function MainPage() {
 
   // ! 서버에 검색 요청
   const getSearchedList = async () => {
-    isExpired(token);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(
       `${BASE__URL}notices/search/${categoryListByProvider[category]}/${selectedProvider}`,
@@ -122,7 +124,7 @@ function MainPage() {
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token);
+    isExpired(token, null);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {

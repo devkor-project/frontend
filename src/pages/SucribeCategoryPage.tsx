@@ -32,7 +32,7 @@ function SubscribeCategoryPage(props: any) {
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getNoticeList = async (category: number) => {
     console.log(token.payload.accessToken);
-    isExpired(token);
+    isExpired(token, null);
 
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}notices`, {
@@ -45,7 +45,7 @@ function SubscribeCategoryPage(props: any) {
   };
   // 카테고리 리스트 가져오는 api
   const getCategoryList = async () => {
-    isExpired(token);
+    isExpired(token, null);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const categoryL = await axios.get(`${BASE__URL}category/subscribe`);
     console.log(categoryL.data.data);
@@ -70,7 +70,7 @@ function SubscribeCategoryPage(props: any) {
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token);
+    isExpired(token, null);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {

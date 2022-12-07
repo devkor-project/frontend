@@ -3,7 +3,6 @@ import { ReactComponent as LogoIcon } from '../assets/logo.svg';
 import axios from 'axios';
 import { palette } from '../constants/palette';
 import { useNavigate } from 'react-router-dom';
-import { postLoginAPI } from '../utils/api_login';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 import styled from 'styled-components';
 import Blank from '../components/Blank';

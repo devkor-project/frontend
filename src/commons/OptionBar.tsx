@@ -25,7 +25,7 @@ const OptionBar = ({ isScraped, idx }: { isScraped: string; idx: number }) => {
   const onClickScrap = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token);
+    isExpired(token, null);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
       whetherScrap: isScrapedd === 'Y' ? false : true,

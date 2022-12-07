@@ -19,7 +19,6 @@ import HotPage from './pages/HotPage';
 import FindPasswordPage from './pages/FindPasswordPage';
 import ErrorPage from './pages/ErrorPage';
 import SubscribePage from './pages/SubscribePage';
-import { element } from 'prop-types';
 import SubscribeCategoryPage from './pages/SucribeCategoryPage';
 
 const router = createBrowserRouter([
@@ -99,6 +98,7 @@ function App() {
     window.addEventListener('resize', handleResize);
 
     if (token.payload.accessToken === null) {
+      console.log('token이 없습니다.');
       router.navigate('/login');
     }
     return () => window.removeEventListener('resize', handleResize);

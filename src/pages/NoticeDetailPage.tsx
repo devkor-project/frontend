@@ -21,7 +21,7 @@ function NoticeDetailPage() {
   // id 에 맞는 공지사항 데이터를 가져오는 함수
   const getNoticeData = async () => {
     console.log(params.noticeId);
-    isExpired(token);
+    isExpired(token, null);
     const response = await axios.get(`${BASE__URL}notices/details/${params.noticeId}`);
     response.data.data.date = translateDatetime(response.data.data.date);
     console.log(response.data.data);
