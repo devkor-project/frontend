@@ -156,6 +156,7 @@ const IconStyled = styled(Info_Icon)`
 const AcceptIconStyled = styled(Accept_Icon)`
   width: ${getWidthPixel(14)};
   height: ${getHeightPixel(14)};
+  margin-left: ${getWidthPixel(20)};
 `;
 
 const TimerContainerStyled = styled.div``;
