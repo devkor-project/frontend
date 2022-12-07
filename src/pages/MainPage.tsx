@@ -124,7 +124,7 @@ function MainPage() {
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {

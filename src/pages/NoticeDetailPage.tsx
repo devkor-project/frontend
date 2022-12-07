@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -18,10 +19,11 @@ function NoticeDetailPage() {
   const params = useParams();
   const [noticeData, setNoticeData] = useState<NoticeDetailProps | null>(null);
   const token = useSelector((store: any) => store.tokenReducer);
+  const [, , removeCookie] = useCookies(['refreshToken']);
   // id 에 맞는 공지사항 데이터를 가져오는 함수
   const getNoticeData = async () => {
     console.log(params.noticeId);
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     const response = await axios.get(`${BASE__URL}notices/details/${params.noticeId}`);
     response.data.data.date = translateDatetime(response.data.data.date);
     console.log(response.data.data);

@@ -18,6 +18,7 @@ import Blank from '../components/Blank';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import { BASE__URL } from '../constants';
 import HotNoticeListContainer from '../commons/HotNoticeListContainer';
+import { useCookies } from 'react-cookie';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 function HotPage() {
@@ -26,9 +27,11 @@ function HotPage() {
   // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
 
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
+
+  const [, , removeCookie] = useCookies(['refreshToken']);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getHotNoticeList = async () => {
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}notices/hot`);
     console.log(response.data.data);
@@ -42,7 +45,7 @@ function HotPage() {
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {

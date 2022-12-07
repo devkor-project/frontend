@@ -12,11 +12,13 @@ import { isExpired } from '../utils/refresh';
 import { BASE__URL } from '../constants';
 import { useSelector } from 'react-redux';
 import { number } from 'yargs';
+import { useCookies } from 'react-cookie';
 
 const OptionBar = ({ isScraped, idx }: { isScraped: string; idx: number }) => {
   const [isScrapedd, setIsScrapedd] = useState(isScraped);
   const token = useSelector((store: any) => store.tokenReducer);
   const navigate = useNavigate();
+  const [, , removeCookie] = useCookies(['refreshToken']);
   const onClickCancel = () => {
     // 취소 버튼 누르면 이전 페이지로 이동
     navigate(-1);
@@ -25,7 +27,7 @@ const OptionBar = ({ isScraped, idx }: { isScraped: string; idx: number }) => {
   const onClickScrap = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const res = await axios.put(`${BASE__URL}scraps/${idx}`, {
       whetherScrap: isScrapedd === 'Y' ? false : true,

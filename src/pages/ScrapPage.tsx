@@ -20,17 +20,19 @@ import NotScrapedContainer from '../container/scrap/NotScrapedContainer';
 import Blank from '../components/Blank';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import { BASE__URL } from '../constants';
+import { useCookies } from 'react-cookie';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 function ScrapPage() {
   const token = useSelector((store: any) => store.tokenReducer);
+  const [, , removeCookie] = useCookies(['refreshToken']);
   // TODO server에서 받아온 데이터를 저장하는 state
   // TODO 한번에 가져오지 말고 infinite scroll로 가져오기
 
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getScrapNoticeList = async () => {
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}scraps`);
     console.log(response.data.data);
@@ -44,7 +46,7 @@ function ScrapPage() {
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {

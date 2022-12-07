@@ -5,6 +5,7 @@ import { SetToken } from '../reducers/auth';
 import { store } from '../store';
 
 // Use this when you call api
+// removeCookie is react useCookies hook
 export async function isExpired(state: any, removeCookie: any) {
   const { payload } = state;
   const { expiredTime } = payload;

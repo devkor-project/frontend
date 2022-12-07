@@ -18,6 +18,7 @@ import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import axios from 'axios';
 import { CategoryListProps, NoticeProps } from '../constants/types';
 import SubscribeCategoryListContainer from '../commons/SubscribeCategoryListContainer';
+import { useCookies } from 'react-cookie';
 
 function SubscribeCategoryPage(props: any) {
   // 구독하고 있는 카테고리
@@ -28,11 +29,12 @@ function SubscribeCategoryPage(props: any) {
   // 현재 선택된 카테고리에 맞는 공지사항 리스트를 저장하는 state
   const [noticeData, setNoticeData] = useState<NoticeProps[]>([]);
   const token = useSelector((store: any) => store.tokenReducer);
+  const [, , removeCookie] = useCookies(['refreshToken']);
   // TODO 프로바이더를 변경하는 함수
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getNoticeList = async (category: number) => {
     console.log(token.payload.accessToken);
-    isExpired(token, null);
+    isExpired(token, removeCookie);
 
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`${BASE__URL}notices`, {
@@ -45,7 +47,7 @@ function SubscribeCategoryPage(props: any) {
   };
   // 카테고리 리스트 가져오는 api
   const getCategoryList = async () => {
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const categoryL = await axios.get(`${BASE__URL}category/subscribe`);
     console.log(categoryL.data.data);
@@ -70,7 +72,7 @@ function SubscribeCategoryPage(props: any) {
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
     console.log(token.payload.accessToken);
-    isExpired(token, null);
+    isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {
