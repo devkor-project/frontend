@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import Blank from '../components/Blank';
 import TextButton from '../components/Button/TextButton';
+import { DEFAULT__REGISTER__WARNING__CODE } from '../constants';
 import { palette } from '../constants/palette';
 import { SUBSCRIBE__PAGE__TEXT } from '../constants/text';
 import { CategoryDataProps } from '../constants/types';
@@ -31,7 +32,11 @@ export default function SubscribePage() {
     <PageStyled>
       <TitleHeaderContainer title={SUBSCRIBE__PAGE__TEXT.header.title[0]} />
       <ContainerStyled>
-        <SubscribeEmailInputContainer subscribeEmail={email} setSubscribeEmail={setEmail} />
+        <SubscribeEmailInputContainer
+          subscribeEmail={email}
+          setSubscribeEmail={setEmail}
+          warningCode={DEFAULT__REGISTER__WARNING__CODE}
+        />
         <Blank height={getHeightPixel(21)} />
         <InnerContainerStyled>
           <CategoryButtonContainer

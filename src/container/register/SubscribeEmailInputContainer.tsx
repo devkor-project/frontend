@@ -8,33 +8,42 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/resp
 
 import { ReactComponent as Info_Icon } from '../../assets/icon/info.svg';
 import IconTextInput from '../../components/Input/IconTextInput';
+import { RegisterWarningProps } from '../../constants/types';
+import WarningTextContainer from './WarningTextContainer';
 
 export default function SubscribeEmailInputContainer({
   subscribeEmail,
   setSubscribeEmail,
+  warningCode,
 }: {
   subscribeEmail: string;
   setSubscribeEmail: Dispatch<SetStateAction<string>>;
+  warningCode: RegisterWarningProps;
 }) {
   return (
     <CenterStyled>
       <ContainerStyled>
-        <TitleStyled>
-          <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
-            {REGISTER__PAGE__TEXT.title.subscribeEmail[0]}
-          </NotoText>
-        </TitleStyled>
-        <IconTextInput
-          width={getWidthPixel(357)}
-          height={getHeightPixel(47)}
-          setFunc={setSubscribeEmail}
-          fontSize={getPixelToPixel(13)}
-          placeHolder={REGISTER__PAGE__TEXT.placeholder.subscribeEmail[0]}
-          icon={<IconStyled />}
-          type={'email'}
-          text={subscribeEmail}
-          defaultValue={subscribeEmail}
-        />
+        <InnerContainerStyled>
+          <TitleStyled>
+            <NotoText fontSize={getPixelToPixel(15)} fontWeight={'Medium'} fontColor={palette.gray_02}>
+              {REGISTER__PAGE__TEXT.title.subscribeEmail[0]}
+            </NotoText>
+          </TitleStyled>
+          <IconTextInput
+            width={getWidthPixel(357)}
+            height={getHeightPixel(47)}
+            setFunc={setSubscribeEmail}
+            fontSize={getPixelToPixel(13)}
+            placeHolder={REGISTER__PAGE__TEXT.placeholder.subscribeEmail[0]}
+            icon={<IconStyled />}
+            type={'email'}
+            text={subscribeEmail}
+            defaultValue={subscribeEmail}
+          />
+        </InnerContainerStyled>
+        {warningCode.receiveEmailWarningCode ? (
+          <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.receiveEmailWarningCode][0]} />
+        ) : null}
       </ContainerStyled>
     </CenterStyled>
   );
@@ -44,6 +53,13 @@ const CenterStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const InnerContainerStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: ${getWidthPixel(357)};
+  justify-content: center;
 `;
 
 const ContainerStyled = styled.div`

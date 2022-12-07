@@ -38,8 +38,8 @@ function RegisterPage() {
   const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
   const navigate = useNavigate();
   useEffect(() => {
-    setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode));
-  }, [email, password, repeatPassword]);
+    setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode, subscribeEmail));
+  }, [email, password, repeatPassword, subscribeEmail]);
   return (
     <PageStyled>
       <HeaderContainer title={REGISTER__PAGE__TEXT.header.title[0]} />
@@ -55,7 +55,11 @@ function RegisterPage() {
         setWarningCode={setWarningCode}
       />
       <Blank height={getHeightPixel(20)} />
-      <SubscribeEmailInputContainer subscribeEmail={subscribeEmail} setSubscribeEmail={setSubscribeEmail} />
+      <SubscribeEmailInputContainer
+        subscribeEmail={subscribeEmail}
+        setSubscribeEmail={setSubscribeEmail}
+        warningCode={warningCode}
+      />
       <Blank height={getHeightPixel(20)} />
       <PasswordInputContainer
         password={password}

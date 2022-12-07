@@ -61,7 +61,13 @@ const InputStyled = styled.input<{ width: string; height: string; fontSize: stri
 `;
 
 const ChildrenStyled = styled.div`
-  position: absolute;
+  width: ${getWidthPixel(38)};
+  height: ${getWidthPixel(20)};
+  position: relative;
+  margin-left: -${getWidthPixel(60)};
+  margin-right: ${getWidthPixel(24)};
+  display: flex;
+  align-items: center;
 `;
 
 export default TextInput;

@@ -82,6 +82,7 @@ export interface RegisterWarningProps {
   codeWarningCode: string;
   formatWarningCode: string;
   repeatWarningCode: string;
+  receiveEmailWarningCode: string;
 }
 
 export interface providerListProps {

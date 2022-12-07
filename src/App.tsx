@@ -20,6 +20,8 @@ import FindPasswordPage from './pages/FindPasswordPage';
 import ErrorPage from './pages/ErrorPage';
 import SubscribePage from './pages/SubscribePage';
 import SubscribeCategoryPage from './pages/SucribeCategoryPage';
+import axios from 'axios';
+import { BASE__URL } from './constants';
 
 const router = createBrowserRouter([
   {
@@ -90,6 +92,8 @@ const router = createBrowserRouter([
 function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
   const token = useSelector((store: any) => store.tokenReducer);
+  axios.defaults.baseURL = BASE__URL;
+  axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
   // token이 없으면 로그인 화면으로 이동
   useEffect(() => {

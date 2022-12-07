@@ -19,8 +19,8 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
   placeholder: {
     email: ['학교 이메일을 입력해주세요'],
     subscribeEmail: ['수신 받을 이메일을 입력해주세요'],
-    password: ['6-16자 / 영문 소문자, 숫자 사용가능'],
-    repeatPassword: ['한번 더 입려해 주세요'],
+    password: ['8-20자 / 특수문자 포함'],
+    repeatPassword: ['한번 더 입력해 주세요'],
   },
   button: {
     email: ['인증번호 받기'],
@@ -34,9 +34,10 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
     duplicateEmail: ['이미 사용중인 이메일입니다.'],
     univEmail: ['학교 이메일로 입력해주세요.'],
     wrongCode: ['잘못된 인증번호입니다.'],
-    wrongFormat: ['6-16자 영문 소문자, 숫자를 사용하세요.'],
+    wrongFormat: ['8-20자 영문, 숫자, 특수문자를 사용하세요.'],
     wrongPassword: ['비밀번호가 일치하지 않습니다.'],
     emailAccept: ['인증번호를 발송했습니다.'],
+    wrongReceiveEmail: ['잘못된 형식의 이메일입니다.'],
   },
 };
 
@@ -61,6 +62,10 @@ export const MY__PAGE__TEXT = {
   },
   button: {
     edit: ['편집'],
+    introduction: ['서비스 소개'],
+    faq: ['FAQ'],
+    contact: ['문의하기'],
+    logout: ['로그아웃'],
   },
 };
 

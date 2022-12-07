@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Blank from '../components/Blank';
 import TextButton from '../components/Button/TextButton';
+import { DEFAULT__REGISTER__WARNING__CODE } from '../constants';
 import { palette } from '../constants/palette';
 import { FIND__PASSWORD__PAGE__TEXT } from '../constants/text';
 import { RegisterWarningProps } from '../constants/types';
@@ -18,15 +19,10 @@ export default function FindPasswordPage() {
   const [code, setCode] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [repeatPassword, setRepeatPassword] = useState<string>('');
-  const [warningCode, setWarningCode] = useState<RegisterWarningProps>({
-    emailWarningCode: '',
-    codeWarningCode: '',
-    formatWarningCode: '',
-    repeatWarningCode: '',
-  });
+  const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
 
   useEffect(() => {
-    setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode));
+    setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode, '@'));
   }, [email, password, repeatPassword]);
 
   return (
