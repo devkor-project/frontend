@@ -20,12 +20,12 @@ import {
 import { RegisterWarningProps, UserDataProps } from '../constants/types';
 import { getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
-import { refreshAccessToken } from '../utils/refresh';
 import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { getUserDataAPI, modifyUserDataAPI } from '../utils/api_user';
 import ModifyEmailContainer from '../container/register/ModifyEmailContainer';
 import { useNavigate } from 'react-router-dom';
+import { isExpired } from '../utils/refresh';
 
 export default function ModifyUserInfoPage() {
   const [userData, setData] = useState<UserDataProps>(DEFAULT__USER__DATA);
@@ -41,12 +41,13 @@ export default function ModifyUserInfoPage() {
   const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
   const accessToken = useSelector((store: any) => store.tokenReducer);
   const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
+  const [, , removeCookie] = useCookies(['refreshToken']);
   const navigate = useNavigate();
   useEffect(() => {
     setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode, subscribeEmail));
   }, [email, password, repeatPassword, subscribeEmail]);
   useEffect(() => {
-    refreshAccessToken(accessToken, refreshToken);
+    isExpired(accessToken, removeCookie);
     getUserDataAPI({ setData: setData });
   }, []);
   useEffect(() => {
@@ -90,7 +91,7 @@ export default function ModifyUserInfoPage() {
           height={getHeightPixel(47)}
           borderColor={palette.crimson}
           onClick={() => {
-            refreshAccessToken(accessToken, refreshToken);
+            isExpired(accessToken, removeCookie);
             modifyUserDataAPI({
               name: userName,
               email: email,
