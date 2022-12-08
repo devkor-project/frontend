@@ -70,7 +70,9 @@ function EmailInputContainer({
         {warningCode.emailWarningCode ? (
           <WarningTextContainer
             text={REGISTER__PAGE__TEXT.warning[warningCode.emailWarningCode][0]}
-            acceptType={warningCode.emailWarningCode === 'emailAccept'}
+            acceptType={
+              warningCode.emailWarningCode === 'emailAccept' || warningCode.emailWarningCode === 'authenticatedEmail'
+            }
           />
         ) : null}
         {warningCode.emailWarningCode === 'emailAccept' ? (
