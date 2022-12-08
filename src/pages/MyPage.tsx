@@ -12,16 +12,16 @@ import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import MyPageListContainer from '../container/mypage/MyPageListContainer';
 import UserNameContainer from '../container/mypage/UserNameContainer';
 import { getUserDataAPI, modifyUserDataAPI } from '../utils/api_user';
-import { refreshAccessToken } from '../utils/refresh';
+import { isExpired } from '../utils/refresh';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 
 export default function MyPage() {
   const [isToggle, setToggle] = useState(false);
   const [userData, setData] = useState<UserDataProps>(DEFAULT__USER__DATA);
   const accessToken = useSelector((store: any) => store.tokenReducer);
-  const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
+  const [, , removeCookie] = useCookies(['refreshToken']);
   useEffect(() => {
-    refreshAccessToken(accessToken, refreshToken);
+    isExpired(accessToken, removeCookie);
     getUserDataAPI({ setData: setData });
   }, []);
   useEffect(() => {
@@ -42,6 +42,7 @@ export default function MyPage() {
             <ToggleButton
               isToggle={isToggle}
               onClick={() => {
+                isExpired(accessToken, removeCookie);
                 modifyUserDataAPI({
                   submitFunc: () => {
                     return 0;
