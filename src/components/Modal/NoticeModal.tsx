@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import ReactModal from 'react-modal';
 import { getWidthPixel, getHeightPixel, getPixelToPixel } from '../../utils/responsive';
@@ -8,6 +8,10 @@ import { ReactComponent as BellIcon } from '../../assets/icon/notification_crims
 import { ReactComponent as ExitIcon } from '../../assets/button/exit.svg';
 import NotoText from '../Text/NotoText';
 import { NOTICE__MODAL__TEXT } from '../../constants/text';
+import { AdminNoticeProps } from '../../constants/types';
+import { getAdminNotice } from '../../utils/api_user';
+import NoticeDetailContainer from '../../container/Detail/NoticeDetailContainer';
+import Blank from '../Blank';
 
 export default function NoticeModal({
   isVisible,
@@ -20,6 +24,10 @@ export default function NoticeModal({
   locX: number;
   locY: number;
 }) {
+  const [noticeList, setList] = useState<AdminNoticeProps[]>([]);
+  useEffect(() => {
+    getAdminNotice({ setData: setList });
+  }, []);
   return (
     <ModalStyled
       isOpen={isVisible}
@@ -38,6 +46,10 @@ export default function NoticeModal({
           {NOTICE__MODAL__TEXT.header.title[0]}
         </NotoText>
       </TitleContainerStyled>
+      {noticeList.map(notice => {
+        return <NoticeDetailContainer key={notice.title} {...notice} />;
+      })}
+      <Blank height={getHeightPixel(10)} />
     </ModalStyled>
   );
 }
