@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
 import { getErrorCode } from '.';
 import { BASE__URL } from '../constants';
-import { UserDataAPIProps, UserDataProps } from '../constants/types';
+import { AdminNoticeProps, UserDataAPIProps, UserDataProps } from '../constants/types';
 
 export async function getUserDataAPI({ setData }: { setData: Dispatch<SetStateAction<UserDataProps>> }) {
   const { data } = await axios.get(`user/mypage`);
@@ -18,6 +18,14 @@ export async function modifyUserDataAPI({ submitFunc, ...userData }: UserDataAPI
   });
   if (data) {
     submitFunc();
+  }
+  return data;
+}
+
+export async function getAdminNotice({ setData }: { setData: Dispatch<SetStateAction<AdminNoticeProps[]>> }) {
+  const { data } = await axios.get(`notices/admin`);
+  if (data) {
+    setData(data.data);
   }
   return data;
 }
