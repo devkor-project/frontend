@@ -5,11 +5,12 @@ import styled from 'styled-components';
 import ListButton from '../../components/Button/ListButton';
 import { ROUTER__URI } from '../../constants';
 import { MY__PAGE__TEXT } from '../../constants/text';
+import { logoutUser } from '../../utils';
 
 export default function MyPageListContainer() {
   const [, , removeCookie] = useCookies(['refreshToken']);
   const handleLogout = () => {
-    removeCookie('refreshToken', { path: '/' });
+    logoutUser(() => removeCookie('refreshToken', { path: '/' }));
     navigate(ROUTER__URI.loginPage);
   };
   const navigate = useNavigate();
