@@ -1,3 +1,5 @@
+import { RegisterWarningProps } from './types';
+
 export const BASE__URL = 'https://www.api.kudog.email/';
 
 export const GRADE__LIST = [1, 2, 3, 4];
@@ -18,6 +20,8 @@ export const ROUTER__URI = {
   modifyUserInfoPage: '/mypage/modify',
   scrapPage: '/scrap',
   findPassword: '/findpassword',
+  subscribePage: '/subscribe',
+  categoryPage: '/subscribeCategory',
 };
 
 export const DEFAULT__USER__DATA = {
@@ -30,7 +34,7 @@ export const DEFAULT__USER__DATA = {
   status: '',
 };
 
-export const DEFAULT__REGISTER__WARNING__CODE = {
+export const DEFAULT__REGISTER__WARNING__CODE: RegisterWarningProps = {
   emailWarningCode: '',
   codeWarningCode: '',
   formatWarningCode: '',
