@@ -30,15 +30,3 @@ export async function isExpired(state: any, removeCookie: any) {
     // console.log('newAccessToken', res.data.data);
   }
 }
-
-export async function refreshAccessToken(accessToken: any, refreshToken: any) {
-  const diffTime = new Date(Date.now()).getTime() - new Date(accessToken.expiredTime).getTime();
-
-  if (diffTime < 10000000 || !accessToken.payload.accessToken) {
-    axios.defaults.headers.common['x-auth-token'] = refreshToken;
-    const newAccessToken = await axios.post(`auth/token`);
-
-    const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
-    store.dispatch({ type: SetToken, payload: { newAccessToken, expiredTime } });
-  }
-}

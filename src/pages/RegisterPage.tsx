@@ -16,7 +16,6 @@ import {
   DEFAULT__REGISTER__WARNING__CODE,
   GRADE__LIST,
   MAJOR__LIST,
-  MIN__STUDENT__ID,
   ROUTER__URI,
   STUDENT__ID__LIST,
 } from '../constants';
@@ -24,8 +23,10 @@ import { RegisterWarningProps } from '../constants/types';
 import { getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 function RegisterPage() {
+  const [cookies, setCookie] = useCookies(['refreshToken']);
   const [userName, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [code, setCode] = useState<string>('');
@@ -92,10 +93,19 @@ function RegisterPage() {
               userName: userName,
               email: email,
               password: password,
+              receivingMail: subscribeEmail,
               studentID: STUDENT__ID__LIST[studentID],
               major: MAJOR__LIST[major],
               grade: GRADE__LIST[grade],
               submitFunc: () => navigate(ROUTER__URI.registerSubscribePage),
+              setCookie: (refreshToken: any) => {
+                setCookie('refreshToken', refreshToken, {
+                  path: '/',
+                  secure: true,
+                  httpOnly: true,
+                  expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+                });
+              },
             });
           }}
         />

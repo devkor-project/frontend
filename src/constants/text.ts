@@ -38,6 +38,7 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
     wrongPassword: ['비밀번호가 일치하지 않습니다.'],
     emailAccept: ['인증번호를 발송했습니다.'],
     wrongReceiveEmail: ['잘못된 형식의 이메일입니다.'],
+    authenticatedEmail: ['인증 완료된 메일입니다.'],
   },
 };
 

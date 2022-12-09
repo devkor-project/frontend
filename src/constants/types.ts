@@ -78,11 +78,11 @@ export interface NoticeProps {
 }
 
 export interface RegisterWarningProps {
-  emailWarningCode: string;
-  codeWarningCode: string;
-  formatWarningCode: string;
-  repeatWarningCode: string;
-  receiveEmailWarningCode: string;
+  emailWarningCode: 'wrongEmail' | 'duplicateEmail' | 'univEmail' | 'emailAccept' | 'authenticatedEmail' | '';
+  codeWarningCode: 'wrongCode' | 'acceptCode' | '';
+  formatWarningCode: 'wrongFormat' | '';
+  repeatWarningCode: 'wrongPassword' | '';
+  receiveEmailWarningCode: 'wrongReceiveEmail' | '';
 }
 
 export interface providerListProps {
@@ -117,4 +117,12 @@ export interface CategoryDataProps {
   categoryId: number;
   categoryName: string;
   provider: string;
+}
+
+export interface AdminNoticeProps {
+  adminNoticeId: number;
+  title: string;
+  content: string;
+  writer: string;
+  createdAt: string;
 }

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import Blank from '../components/Blank';
 import TextButton from '../components/Button/TextButton';
-import { DEFAULT__REGISTER__WARNING__CODE } from '../constants';
+import { DEFAULT__REGISTER__WARNING__CODE, ROUTER__URI } from '../constants';
 import { palette } from '../constants/palette';
 import { SUBSCRIBE__PAGE__TEXT } from '../constants/text';
 import { CategoryDataProps } from '../constants/types';
@@ -13,20 +14,24 @@ import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import CategoryButtonContainer from '../container/register/CategoryButtonContainer';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 import { RootState } from '../reducers';
-import { getCategoryAPI, getSubscribeCategoryAPI } from '../utils/api_category';
-import { refreshAccessToken } from '../utils/refresh';
+import { getCategoryDiff } from '../utils';
+import { getCategoryAPI, getSubscribeCategoryAPI, modifySubscribeCategoryAPI } from '../utils/api_category';
+import { isExpired } from '../utils/refresh';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 
 export default function SubscribePage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
+  const [initialList, setInitialList] = useState<CategoryDataProps[]>([]);
   const [selectedList, setSelectedList] = useState<CategoryDataProps[]>([]);
   const [categoryList, setCategoryList] = useState<CategoryDataProps[]>([]);
   const accessToken = useSelector((store: RootState) => store.tokenReducer);
-  const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
+  const [, , removeCookie] = useCookies(['refreshToken']);
   useEffect(() => {
-    refreshAccessToken(accessToken, refreshToken);
+    isExpired(accessToken, removeCookie);
     getCategoryAPI({ setList: setCategoryList });
     getSubscribeCategoryAPI({ setList: setSelectedList });
+    getSubscribeCategoryAPI({ setList: setInitialList });
   }, []);
   return (
     <PageStyled>
@@ -54,7 +59,13 @@ export default function SubscribePage() {
             height={getHeightPixel(47)}
             borderColor={palette.crimson}
             onClick={() => {
-              return 0;
+              const categoryDiffObj = getCategoryDiff(initialList, selectedList);
+              isExpired(accessToken, removeCookie);
+              modifySubscribeCategoryAPI({
+                subscribeCatIds: categoryDiffObj.subscribeCatIds,
+                removeCatIds: categoryDiffObj.removeCatIds,
+                submitFunc: () => navigate(ROUTER__URI.categoryPage),
+              });
             }}
             fontSize={getPixelToPixel(14)}
           />

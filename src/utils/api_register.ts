@@ -3,6 +3,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { getErrorCode } from '.';
 import { BASE__URL } from '../constants';
 import { RegisterWarningProps } from '../constants/types';
+import { SetToken } from '../reducers/auth';
+import { store } from '../store';
 
 export async function postSignupAPI({
   userName,
@@ -11,7 +13,9 @@ export async function postSignupAPI({
   studentID,
   grade,
   major,
+  receivingMail,
   submitFunc,
+  setCookie,
 }: {
   userName: string;
   email: string;
@@ -19,7 +23,9 @@ export async function postSignupAPI({
   studentID: number;
   grade: number;
   major: string;
+  receivingMail: string;
   submitFunc: () => void;
+  setCookie: (refreshToken: any) => void;
 }) {
   const { data } = await axios.post(`auth/signup`, {
     user: {
@@ -29,9 +35,16 @@ export async function postSignupAPI({
       studentID: studentID,
       grade: grade,
       major: major,
+      receivingEmail: receivingMail,
     },
   });
   if (data) {
+    const accessToken = data.data.accessToken;
+    const refreshToken = data.data.refreshToken;
+    setCookie(refreshToken);
+    console.log('success');
+    const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
+    store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
     submitFunc();
   }
   return data;
@@ -51,7 +64,11 @@ export async function postMailReqAPI({
       email: email,
     });
     if (data) {
-      warningCode.emailWarningCode = 'emailAccept';
+      if (data.data === 'already authenticated') {
+        warningCode.emailWarningCode = 'authenticatedEmail';
+      } else {
+        warningCode.emailWarningCode = 'emailAccept';
+      }
       setWarningCode({ ...warningCode });
     }
     return data;

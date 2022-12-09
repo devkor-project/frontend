@@ -102,14 +102,11 @@ function MainPage() {
   const getSearchedList = async () => {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(
-      `notices/search/${categoryListByProvider[category]}/${selectedProvider}`,
-      {
-        params: {
-          keyword: search,
-        },
-      }
-    );
+    const response = await axios.get(`notices/search/${categoryListByProvider[category]}/${selectedProvider}`, {
+      params: {
+        keyword: search,
+      },
+    });
     setNoticeData(response.data.data);
   };
 
