@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { REGISTER__SUBSCRIBE__PAGE__TEXT } from '../constants/text';
 import HeaderContainer from '../container/header/HeaderContainer';
@@ -8,7 +8,6 @@ import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 import TextButton from '../components/Button/TextButton';
 import { palette } from '../constants/palette';
-import { useState } from 'react';
 import { ROUTER__URI } from '../constants';
 import { CategoryDataProps } from '../constants/types';
 import { useSelector } from 'react-redux';
