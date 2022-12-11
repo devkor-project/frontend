@@ -36,7 +36,7 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
     wrongCode: ['잘못된 인증번호입니다.'],
     wrongFormat: ['8-20자 영문, 숫자, 특수문자를 사용하세요.'],
     wrongPassword: ['비밀번호가 일치하지 않습니다.'],
-    emailAccept: ['인증번호를 발송했습니다.'],
+    accept: ['인증번호를 발송했습니다.'],
     wrongReceiveEmail: ['잘못된 형식의 이메일입니다.'],
     authenticatedEmail: ['인증 완료된 메일입니다.'],
   },
@@ -72,7 +72,7 @@ export const MY__PAGE__TEXT = {
 
 export const FIND__PASSWORD__PAGE__TEXT = {
   header: {
-    title_find: ['비밀번호 찾기'],
+    title_find: ['비밀번호 변경'],
     title_modify: ['비밀번호 변경'],
   },
   button: {
