@@ -50,22 +50,38 @@ export function getRegisterWarningCode(
   if (email !== '' && !schoolEmailRegex.test(email)) {
     modifiedErrorCode.emailWarningCode = 'univEmail';
   } else {
-    modifiedErrorCode.emailWarningCode = '';
+    if (email !== '') {
+      modifiedErrorCode.emailWarningCode = 'accept';
+    } else {
+      modifiedErrorCode.emailWarningCode = '';
+    }
   }
   if (password !== '' && repeatPassword !== '' && password !== repeatPassword) {
     modifiedErrorCode.repeatWarningCode = 'wrongPassword';
   } else {
-    modifiedErrorCode.repeatWarningCode = '';
+    if (password !== '' && repeatPassword !== '') {
+      modifiedErrorCode.repeatWarningCode = 'accept';
+    } else {
+      modifiedErrorCode.repeatWarningCode = '';
+    }
   }
   if (!checkPasswordPattern(password)) {
     modifiedErrorCode.formatWarningCode = 'wrongFormat';
   } else {
-    modifiedErrorCode.formatWarningCode = '';
+    if (password !== '') {
+      modifiedErrorCode.formatWarningCode = 'accept';
+    } else {
+      modifiedErrorCode.formatWarningCode = '';
+    }
   }
   if (subscribeEmail != '' && !emailRegex.test(subscribeEmail)) {
     modifiedErrorCode.receiveEmailWarningCode = 'wrongReceiveEmail';
   } else {
-    modifiedErrorCode.receiveEmailWarningCode = '';
+    if (subscribeEmail !== '') {
+      modifiedErrorCode.receiveEmailWarningCode = 'accept';
+    } else {
+      modifiedErrorCode.receiveEmailWarningCode = '';
+    }
   }
   return modifiedErrorCode;
 }
@@ -146,4 +162,17 @@ export function isSameCategory(firstCategory: CategoryDataProps, secondCategory:
 export function logoutUser(removeCookie: () => void) {
   removeCookie();
   store.dispatch({ type: SetToken, payload: { accessToken: null, expiredTime: null } });
+}
+
+export function isRegisterAble(warningCode: RegisterWarningProps) {
+  if (
+    warningCode.codeWarningCode === 'accept' &&
+    warningCode.emailWarningCode === 'accept' &&
+    warningCode.formatWarningCode === 'accept' &&
+    warningCode.receiveEmailWarningCode === 'accept' &&
+    warningCode.repeatWarningCode === 'accept'
+  ) {
+    return true;
+  }
+  return false;
 }
