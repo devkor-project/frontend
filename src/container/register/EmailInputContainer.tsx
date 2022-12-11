@@ -24,6 +24,7 @@ function EmailInputContainer({
   setCode,
   warningCode,
   setWarningCode,
+  type = 'signup',
 }: {
   email: string;
   code: string;
@@ -31,6 +32,7 @@ function EmailInputContainer({
   setCode: Dispatch<SetStateAction<string>>;
   warningCode: RegisterWarningProps;
   setWarningCode: Dispatch<SetStateAction<RegisterWarningProps>>;
+  type?: 'signup' | 'findPwd';
 }) {
   return (
     <CenterStyled>
@@ -63,7 +65,7 @@ function EmailInputContainer({
             hoverBackgroundColor={palette.crimson}
             hoverFontColor={palette.white}
             onClick={() => {
-              postMailReqAPI({ email: email, setWarningCode: setWarningCode, warningCode: warningCode });
+              postMailReqAPI({ email: email, setWarningCode: setWarningCode, warningCode: warningCode, type: type });
             }}
           />
         </InnerContainerStyled>
@@ -71,11 +73,11 @@ function EmailInputContainer({
           <WarningTextContainer
             text={REGISTER__PAGE__TEXT.warning[warningCode.emailWarningCode][0]}
             acceptType={
-              warningCode.emailWarningCode === 'emailAccept' || warningCode.emailWarningCode === 'authenticatedEmail'
+              warningCode.emailWarningCode === 'accept' || warningCode.emailWarningCode === 'authenticatedEmail'
             }
           />
         ) : null}
-        {warningCode.emailWarningCode === 'emailAccept' ? (
+        {warningCode.emailWarningCode === 'accept' ? (
           <>
             <Blank height={getHeightPixel(10)} />
             <InnerContainerStyled>
@@ -85,7 +87,7 @@ function EmailInputContainer({
                 setFunc={setCode}
                 fontSize={getPixelToPixel(13)}
               >
-                {warningCode.codeWarningCode === 'acceptCode' ? (
+                {warningCode.codeWarningCode === 'accept' ? (
                   <AcceptIconStyled />
                 ) : (
                   <TimerContainerStyled>
