@@ -24,7 +24,7 @@ function DropDown({
   suffix?: string;
 }) {
   return (
-    <PaddingStyled height={getHeightPixel(145 - getPixelToNumber(height))}>
+    <PaddingStyled height={getHeightPixel(145 - 47)}>
       <ContainerStyled width={width} height={getHeightPixel(145)} onMouseDown={event => event.preventDefault()}>
         {list.map((content, index) => {
           return (
