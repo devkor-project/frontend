@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Blank from '../components/Blank';
 import TextButton from '../components/Button/TextButton';
-import { DEFAULT__REGISTER__WARNING__CODE } from '../constants';
+import { DEFAULT__REGISTER__WARNING__CODE, ROUTER__URI } from '../constants';
 import { palette } from '../constants/palette';
 import { FIND__PASSWORD__PAGE__TEXT } from '../constants/text';
 import { RegisterWarningProps } from '../constants/types';
@@ -11,10 +12,11 @@ import EmailInputContainer from '../container/register/EmailInputContainer';
 import PasswordInputContainer from '../container/register/PasswordInputContainer';
 import { PageStyled } from '../styles';
 import { getRegisterWarningCode } from '../utils';
+import { modifyPasswordAPI } from '../utils/api_user';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 
 export default function FindPasswordPage() {
-  const [pageIdx, setPage] = useState(1);
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [code, setCode] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -29,13 +31,13 @@ export default function FindPasswordPage() {
     <PageStyled>
       <HeaderContainer
         title={
-          pageIdx === 0
+          warningCode.codeWarningCode !== 'accept'
             ? FIND__PASSWORD__PAGE__TEXT.header.title_find[0]
             : FIND__PASSWORD__PAGE__TEXT.header.title_modify[0]
         }
       />
       <Blank height={getHeightPixel(26)} />
-      {pageIdx === 0 ? (
+      {warningCode.codeWarningCode !== 'accept' ? (
         <EmailInputContainer
           setEmail={setEmail}
           setCode={setCode}
@@ -43,6 +45,7 @@ export default function FindPasswordPage() {
           code={code}
           warningCode={warningCode}
           setWarningCode={setWarningCode}
+          type={'findPwd'}
         />
       ) : (
         <ContainerStyled>
@@ -63,7 +66,13 @@ export default function FindPasswordPage() {
             height={getHeightPixel(47)}
             borderColor={palette.crimson}
             onClick={() => {
-              return 0;
+              if (warningCode.formatWarningCode === 'accept' && warningCode.repeatWarningCode === 'accept') {
+                modifyPasswordAPI({
+                  email: email,
+                  password: password,
+                  submitFunc: () => navigate(ROUTER__URI.loginPage),
+                });
+              }
             }}
           />
         </ContainerStyled>
