@@ -6,16 +6,17 @@ import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import Blank from '../components/Blank';
 import TextButton from '../components/Button/TextButton';
-import { DEFAULT__REGISTER__WARNING__CODE, ROUTER__URI } from '../constants';
+import { DEFAULT__REGISTER__WARNING__CODE, DEFAULT__USER__DATA, ROUTER__URI } from '../constants';
 import { palette } from '../constants/palette';
 import { SUBSCRIBE__PAGE__TEXT } from '../constants/text';
-import { CategoryDataProps } from '../constants/types';
+import { CategoryDataProps, UserDataProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import CategoryButtonContainer from '../container/register/CategoryButtonContainer';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 import { RootState } from '../reducers';
 import { getCategoryDiff } from '../utils';
 import { getCategoryAPI, getSubscribeCategoryAPI, modifySubscribeCategoryAPI } from '../utils/api_category';
+import { getUserDataAPI } from '../utils/api_user';
 import { isExpired } from '../utils/refresh';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 
@@ -26,13 +27,18 @@ export default function SubscribePage() {
   const [selectedList, setSelectedList] = useState<CategoryDataProps[]>([]);
   const [categoryList, setCategoryList] = useState<CategoryDataProps[]>([]);
   const accessToken = useSelector((store: RootState) => store.tokenReducer);
+  const [userData, setUserData] = useState<UserDataProps>(DEFAULT__USER__DATA);
   const [, , removeCookie] = useCookies(['refreshToken']);
   useEffect(() => {
     isExpired(accessToken, removeCookie);
     getCategoryAPI({ setList: setCategoryList });
     getSubscribeCategoryAPI({ setList: setSelectedList });
     getSubscribeCategoryAPI({ setList: setInitialList });
+    getUserDataAPI({ setData: setUserData });
   }, []);
+  useEffect(() => {
+    setEmail(userData.receiveEmail);
+  }, [userData]);
   return (
     <PageStyled>
       <TitleHeaderContainer title={SUBSCRIBE__PAGE__TEXT.header.title[0]} />
@@ -41,6 +47,7 @@ export default function SubscribePage() {
           subscribeEmail={email}
           setSubscribeEmail={setEmail}
           warningCode={DEFAULT__REGISTER__WARNING__CODE}
+          disabled={true}
         />
         <Blank height={getHeightPixel(21)} />
         <InnerContainerStyled>
