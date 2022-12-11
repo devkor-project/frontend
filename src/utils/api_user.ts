@@ -29,3 +29,22 @@ export async function getAdminNotice({ setData }: { setData: Dispatch<SetStateAc
   }
   return data;
 }
+
+export async function modifyPasswordAPI({
+  submitFunc,
+  email,
+  password,
+}: {
+  submitFunc: () => void;
+  email: string;
+  password: string;
+}) {
+  const { data } = await axios.post(`auth/password`, {
+    email: email,
+    password: password,
+  });
+  if (data) {
+    submitFunc();
+  }
+  return data;
+}
