@@ -20,7 +20,7 @@ import {
   STUDENT__ID__LIST,
 } from '../constants';
 import { RegisterWarningProps } from '../constants/types';
-import { getRegisterWarningCode } from '../utils';
+import { getRegisterWarningCode, isRegisterAble } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -83,11 +83,12 @@ function RegisterPage() {
       <ButtonContainer>
         <TextButton
           text={REGISTER__PAGE__TEXT.button.submit[0]}
-          backgroundColor={palette.crimson}
+          backgroundColor={isRegisterAble(warningCode) ? palette.crimson : palette.gray_03}
           fontColor={palette.white}
           width={getWidthPixel(357)}
           height={getHeightPixel(47)}
-          borderColor={palette.crimson}
+          borderColor={isRegisterAble(warningCode) ? palette.crimson : palette.gray_03}
+          disabled={!isRegisterAble(warningCode)}
           onClick={() => {
             postSignupAPI({
               userName: userName,
