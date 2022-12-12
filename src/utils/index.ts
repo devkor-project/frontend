@@ -50,11 +50,7 @@ export function getRegisterWarningCode(
   if (email !== '' && !schoolEmailRegex.test(email)) {
     modifiedErrorCode.emailWarningCode = 'univEmail';
   } else {
-    if (email !== '') {
-      modifiedErrorCode.emailWarningCode = 'accept';
-    } else {
-      modifiedErrorCode.emailWarningCode = '';
-    }
+    modifiedErrorCode.emailWarningCode = '';
   }
   if (password !== '' && repeatPassword !== '' && password !== repeatPassword) {
     modifiedErrorCode.repeatWarningCode = 'wrongPassword';
@@ -167,7 +163,7 @@ export function logoutUser(removeCookie: () => void) {
 export function isRegisterAble(warningCode: RegisterWarningProps) {
   if (
     warningCode.codeWarningCode === 'accept' &&
-    warningCode.emailWarningCode === 'accept' &&
+    (warningCode.emailWarningCode === 'emailSent' || warningCode.emailWarningCode === 'authenticatedEmail') &&
     warningCode.formatWarningCode === 'accept' &&
     warningCode.receiveEmailWarningCode === 'accept' &&
     warningCode.repeatWarningCode === 'accept'
