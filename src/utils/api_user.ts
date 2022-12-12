@@ -41,7 +41,7 @@ export async function modifyPasswordAPI({
 }) {
   const { data } = await axios.post(`auth/password`, {
     email: email,
-    password: password,
+    pwd: password,
   });
   if (data) {
     submitFunc();
