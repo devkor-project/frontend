@@ -92,7 +92,7 @@ const PageStyled = styled.div`
 const HotPageStyled = styled.div`
   display: flex;
   width: 100%;
-  height: ${getHeightPixel(730)};
+  height: ${getHeightPixel(633)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
@@ -100,4 +100,5 @@ const HotPageStyled = styled.div`
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
   margin-top: ${getHeightPixel(-30)};
   padding-top: ${getHeightPixel(30)};
+  padding-bottom: ${getPixelToPixel(44)};
 `;
