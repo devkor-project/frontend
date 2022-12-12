@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { BASE__URL } from '../constants';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import { palette } from '../constants/palette';
@@ -45,7 +44,6 @@ function MainPage() {
       setCategory(categoryListByProvider[0].categoryId);
     }
   };
-  // TODO
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   // 만약 검색어가 있으면 검색어에 맞는 데이터를 받아옴
   const getNoticeList = async (category: number) => {
@@ -130,7 +128,7 @@ function MainPage() {
       }
     });
     console.log(i);
-    const res = await axios.put(`scraps/${idx}`, {
+    await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
     // console.log(res);
