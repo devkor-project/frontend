@@ -47,6 +47,6 @@ const NoticeListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
-  margin-bottom: ${getPixelToPixel(44)};
+  // margin-bottom: ${getPixelToPixel(44)};
   shadow: 0px, 0px, -4px, 8px, rgba(105, 56, 56, 0.15);
 `;

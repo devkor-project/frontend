@@ -227,6 +227,7 @@ const MainPageStyled = styled.div`
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
   margin-top: ${getHeightPixel(-30)};
   padding-top: ${getHeightPixel(30)};
+  padding-bottom: ${getHeightPixel(66)};
 `;
 const SearchIconStyled = styled(Search_Icon)`
   width: ${getWidthPixel(21)};
