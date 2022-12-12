@@ -42,7 +42,6 @@ export async function postSignupAPI({
     const accessToken = data.data.accessToken;
     const refreshToken = data.data.refreshToken;
     setCookie(refreshToken);
-    console.log('success');
     const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
     store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
     submitFunc();
@@ -70,7 +69,7 @@ export async function postMailReqAPI({
       if (data.data === 'already authenticated') {
         warningCode.emailWarningCode = 'authenticatedEmail';
       } else {
-        warningCode.emailWarningCode = 'accept';
+        warningCode.emailWarningCode = 'emailSent';
       }
       setWarningCode({ ...warningCode });
     }
