@@ -12,7 +12,7 @@ function ProviderListContainer({
 }) {
   return (
     <div className="w-full">
-      <div className="w-full flex flex-row justify-center mb-[13px]">
+      <div className="w-full flex flex-row overflow-x-scroll px-10px mb-[13px]">
         {ProviderList.map((provider, index) => {
           return (
             <ProvidersButton
