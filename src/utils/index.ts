@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { CategoryDataProps, RegisterWarningProps } from '../constants/types';
+import { CategoryDataProps, MajorProps, RegisterWarningProps } from '../constants/types';
 import { SetToken } from '../reducers/auth';
 import { store } from '../store';
 import { getWidthPixel } from './responsive';
@@ -171,4 +171,10 @@ export function isRegisterAble(warningCode: RegisterWarningProps) {
     return true;
   }
   return false;
+}
+
+export function getMajorStringList(list: MajorProps[]) {
+  const stringList: string[] = [];
+  list.forEach(major => stringList.push(major.majorName));
+  return stringList;
 }

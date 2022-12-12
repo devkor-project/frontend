@@ -127,3 +127,8 @@ export interface AdminNoticeProps {
   writer: string;
   createdAt: string;
 }
+
+export interface MajorProps {
+  majorId: number;
+  majorName: string;
+}

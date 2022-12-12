@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Blank from '../../components/Blank';
 import DropDownInput from '../../components/Input/DropDownInput';
@@ -6,6 +6,9 @@ import NotoText from '../../components/Text/NotoText';
 import { GRADE__LIST, MAJOR__LIST, STUDENT__ID__LIST } from '../../constants';
 import { palette } from '../../constants/palette';
 import { REGISTER__PAGE__TEXT } from '../../constants/text';
+import { MajorProps } from '../../constants/types';
+import { getMajorStringList } from '../../utils';
+import { getMajorListAPI } from '../../utils/api_register';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../../utils/responsive';
 
 function MajorInputContainer({
@@ -23,6 +26,14 @@ function MajorInputContainer({
   grade: number;
   studentID: number;
 }) {
+  const [majorList, setList] = useState<MajorProps[]>([]);
+  const [majorStringList, setStringList] = useState<string[]>([]);
+  useEffect(() => {
+    getMajorListAPI({ setList: setList });
+  }, []);
+  useEffect(() => {
+    setStringList(getMajorStringList(majorList));
+  }, [majorList]);
   return (
     <ContainerStyled>
       <TitleStyled>
@@ -32,7 +43,7 @@ function MajorInputContainer({
       </TitleStyled>
       <InnerContainerStyled>
         <DropDownInput
-          list={MAJOR__LIST}
+          list={majorStringList}
           selected={major}
           width={getWidthPixel(357)}
           height={getHeightPixel(47)}
