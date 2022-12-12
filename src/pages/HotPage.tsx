@@ -34,7 +34,6 @@ function HotPage() {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`notices/hot`);
-    console.log(response.data.data);
     setNoticeData(response.data.data);
   };
 
@@ -44,7 +43,6 @@ function HotPage() {
   // 공지사항 북마크 변경
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
-    console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
@@ -57,7 +55,7 @@ function HotPage() {
     const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
-    console.log(res);
+    // console.log(res);
 
     getHotNoticeList();
   };
@@ -69,7 +67,6 @@ function HotPage() {
     <PageStyled>
       <TitleHeaderContainer title="인기" />
       <HotPageStyled>
-        <Blank height={getHeightPixel(31)} />
         <HotNoticeListContainer
           NoticeList={noticeData}
           changeBookmark={changeBookmark}
@@ -93,7 +90,7 @@ const PageStyled = styled.div`
 const HotPageStyled = styled.div`
   display: flex;
   width: 100%;
-  height: ${getHeightPixel(730)};
+  height: ${getHeightPixel(633)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
@@ -101,4 +98,5 @@ const HotPageStyled = styled.div`
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
   margin-top: ${getHeightPixel(-30)};
   padding-top: ${getHeightPixel(30)};
+  padding-bottom: ${getPixelToPixel(44)};
 `;

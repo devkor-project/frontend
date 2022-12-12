@@ -93,6 +93,8 @@ function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
   const token = useSelector((store: any) => store.tokenReducer);
   axios.defaults.baseURL = BASE__URL;
+  axios.defaults.withCredentials = true;
+  axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
   axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
   // token이 없으면 로그인 화면으로 이동
@@ -102,7 +104,7 @@ function App() {
     window.addEventListener('resize', handleResize);
 
     if (token.payload.accessToken === null) {
-      console.log('token이 없습니다.');
+      // console.log('token이 없습니다.');
       router.navigate('/login');
     }
     return () => window.removeEventListener('resize', handleResize);

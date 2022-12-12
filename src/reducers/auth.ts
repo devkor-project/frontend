@@ -16,7 +16,7 @@ const initialState = {
 export const tokenReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SetToken:
-      console.log('set token');
+      // console.log('set token');
 
       return {
         ...state,

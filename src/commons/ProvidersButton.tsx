@@ -14,7 +14,7 @@ const CategoriesButton = ({
   if (isSelected) {
     return (
       <button
-        className="h-[47px] w-max whitespace-nowrap mx-[17px] pb-[11px]
+        className="h-[47px] w-max whitespace-nowrap px-[17px] pb-[11px]
         border-[#CE4040]
         border-b-[2.5px]"
         onClick={changeSelectedProvider}
@@ -27,7 +27,7 @@ const CategoriesButton = ({
   } else {
     return (
       <button
-        className="h-[47px] w-max whitespace-nowrap mx-[17px] pb-[11px]
+        className="h-[47px] w-max whitespace-nowrap px-[17px] pb-[11px]
         border-[#CDCDCD]
         border-b-[0.5px]"
         onClick={changeSelectedProvider}
