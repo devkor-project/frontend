@@ -34,7 +34,6 @@ function HotPage() {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`notices/hot`);
-    console.log(response.data.data);
     setNoticeData(response.data.data);
   };
 
@@ -44,7 +43,6 @@ function HotPage() {
   // 공지사항 북마크 변경
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
-    console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
@@ -57,7 +55,7 @@ function HotPage() {
     const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
-    console.log(res);
+    // console.log(res);
 
     getHotNoticeList();
   };

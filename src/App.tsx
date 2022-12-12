@@ -104,7 +104,7 @@ function App() {
     window.addEventListener('resize', handleResize);
 
     if (token.payload.accessToken === null) {
-      console.log('token이 없습니다.');
+      // console.log('token이 없습니다.');
       router.navigate('/login');
     }
     return () => window.removeEventListener('resize', handleResize);

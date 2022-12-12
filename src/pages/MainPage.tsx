@@ -133,7 +133,7 @@ function MainPage() {
     const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
-    console.log(res);
+    // console.log(res);
 
     getNoticeList(category);
   };

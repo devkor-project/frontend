@@ -27,7 +27,6 @@ function NoticeListContainer({
                 changeBookmark(notice.noticeId);
               }}
               goNoticeDetail={() => {
-                console.log(notice.noticeId);
                 goNoticeDetail(notice.noticeId);
               }}
             />

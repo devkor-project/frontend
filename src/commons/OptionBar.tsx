@@ -22,17 +22,17 @@ const OptionBar = ({ isScraped, idx }: { isScraped: string; idx: number }) => {
   const onClickCancel = () => {
     // 취소 버튼 누르면 이전 페이지로 이동
     navigate(-1);
-    console.log('이전 페이지로 이동');
+    // console.log('이전 페이지로 이동');
   };
   const onClickScrap = async (idx: number) => {
     // TODO 서버에 저장 get request
-    console.log(token.payload.accessToken);
+    // console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: isScrapedd === 'Y' ? false : true,
     });
-    console.log(res);
+    // console.log(res);
     if (res.data.success) {
       setIsScrapedd(isScrapedd === 'Y' ? 'N' : 'Y');
     }

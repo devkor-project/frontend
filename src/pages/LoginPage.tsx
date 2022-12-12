@@ -49,7 +49,7 @@ function LoginPage() {
   // enter 입력시 login 함수 실행
   const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      console.log('ddfd');
+      // console.log('ddfd');
       postLoginRequest({ email, password });
     }
   };
@@ -78,14 +78,14 @@ function LoginPage() {
           // httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
         });
-        console.log('success');
+        // console.log('success');
         const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
         store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
 
         navigate('../');
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setIsInputValid(false);
     }
   };

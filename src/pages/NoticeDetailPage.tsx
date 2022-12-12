@@ -21,11 +21,11 @@ function NoticeDetailPage() {
   const [, , removeCookie] = useCookies(['refreshToken']);
   // id 에 맞는 공지사항 데이터를 가져오는 함수
   const getNoticeData = async () => {
-    console.log(params.noticeId);
+    // console.log(params.noticeId);
     isExpired(token, removeCookie);
     const response = await axios.get(`notices/details/${params.noticeId}`);
     response.data.data.date = translateDatetime(response.data.data.date);
-    console.log(response.data.data);
+    // console.log(response.data.data);
 
     setNoticeData({
       ...response.data.data,

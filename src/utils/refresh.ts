@@ -15,7 +15,7 @@ export async function isExpired(state: any, removeCookie: any) {
   // console.log('is diffTime less then 6000', diffTime < 6000);
 
   if (diffTime < 6000 || !payload.accessToken) {
-    console.log('refresh');
+    // console.log('refresh');
     try {
       // const refreshToken = cookies.refreshToken;
       const res = await axios.post('auth/token');
@@ -25,7 +25,7 @@ export async function isExpired(state: any, removeCookie: any) {
       const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
       store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
 
       removeCookie('refreshToken', { path: '/' });
       store.dispatch({ type: SetToken, payload: { accessToken: null, expiredTime: null } });

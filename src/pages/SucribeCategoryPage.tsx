@@ -33,7 +33,6 @@ function SubscribeCategoryPage(props: any) {
   // TODO 프로바이더를 변경하는 함수
   // 카테고리에 따라 서버에 요청해서 데이터를 받아오는 함수
   const getNoticeList = async (category: number) => {
-    console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
 
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
@@ -50,13 +49,12 @@ function SubscribeCategoryPage(props: any) {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const categoryL = await axios.get(`category/subscribe`);
-    console.log(categoryL.data.data);
     setsubscribeCategoryList(categoryL.data.data);
   };
 
   // ! 카테고리 변경 함수
   const changeCategory = (index: number) => {
-    console.log(index);
+    // console.log(index);
 
     setCategory(index);
   };
