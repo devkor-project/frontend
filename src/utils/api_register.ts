@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
 import { getErrorCode } from '.';
 import { BASE__URL } from '../constants';
-import { RegisterWarningProps } from '../constants/types';
+import { MajorProps, RegisterWarningProps } from '../constants/types';
 import { SetToken } from '../reducers/auth';
 import { store } from '../store';
 
@@ -113,5 +113,12 @@ export async function postMailAPI({
       warningCode.codeWarningCode = 'wrongCode';
       setWarningCode({ ...warningCode });
     }
+  }
+}
+
+export async function getMajorListAPI({ setList }: { setList: Dispatch<SetStateAction<MajorProps[]>> }) {
+  const { data } = await axios.get(`major`);
+  if (data) {
+    setList(data.data);
   }
 }
