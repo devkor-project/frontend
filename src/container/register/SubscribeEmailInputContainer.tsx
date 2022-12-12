@@ -15,10 +15,12 @@ export default function SubscribeEmailInputContainer({
   subscribeEmail,
   setSubscribeEmail,
   warningCode,
+  disabled = false,
 }: {
   subscribeEmail: string;
   setSubscribeEmail: Dispatch<SetStateAction<string>>;
   warningCode: RegisterWarningProps;
+  disabled?: boolean;
 }) {
   return (
     <CenterStyled>
@@ -39,9 +41,10 @@ export default function SubscribeEmailInputContainer({
             type={'email'}
             text={subscribeEmail}
             defaultValue={subscribeEmail}
+            disabled={disabled}
           />
         </InnerContainerStyled>
-        {warningCode.receiveEmailWarningCode ? (
+        {warningCode.receiveEmailWarningCode && warningCode.receiveEmailWarningCode !== 'accept' ? (
           <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode.receiveEmailWarningCode][0]} />
         ) : null}
       </ContainerStyled>

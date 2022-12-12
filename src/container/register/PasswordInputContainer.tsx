@@ -45,7 +45,9 @@ function PasswordInputContainer({
           text={password}
           defaultValue={password}
         />
-        {warningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode][0]} /> : null}
+        {warningCode && warningCode !== 'accept' ? (
+          <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[warningCode][0]} />
+        ) : null}
         <Blank height={getHeightPixel(10)} />
         <IconTextInput
           width={getWidthPixel(357)}
@@ -57,7 +59,9 @@ function PasswordInputContainer({
           type={'password'}
           text={repeatPassword}
         />
-        {secondWarningCode ? <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[secondWarningCode][0]} /> : null}
+        {secondWarningCode && secondWarningCode !== 'accept' ? (
+          <WarningTextContainer text={REGISTER__PAGE__TEXT.warning[secondWarningCode][0]} />
+        ) : null}
       </ContainerStyled>
     </CenterStyled>
   );

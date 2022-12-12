@@ -16,6 +16,7 @@ function TextButton({
   onClick,
   hoverBackgroundColor,
   hoverFontColor,
+  disabled = false,
 }: ButtonProps) {
   return (
     <ButtonStyled
@@ -29,6 +30,7 @@ function TextButton({
       onClick={onClick}
       hoverBackgroundColor={hoverBackgroundColor}
       hoverFontColor={hoverFontColor}
+      disabled={disabled}
     >
       {text}
     </ButtonStyled>

@@ -6,6 +6,7 @@ import { palette } from '../../constants/palette';
 
 import { ReactComponent as BellIcon } from '../../assets/icon/notification_crimson.svg';
 import { ReactComponent as ExitIcon } from '../../assets/button/exit.svg';
+import ImageIcon from '../../assets/image/notice_warning.png';
 import NotoText from '../Text/NotoText';
 import { NOTICE__MODAL__TEXT } from '../../constants/text';
 import { AdminNoticeProps } from '../../constants/types';
@@ -46,6 +47,7 @@ export default function NoticeModal({
           {NOTICE__MODAL__TEXT.header.title[0]}
         </NotoText>
       </TitleContainerStyled>
+      {noticeList.length === 0 ? <ImageStyled src={ImageIcon} /> : null}
       {noticeList.map(notice => {
         return <NoticeDetailContainer key={notice.title} {...notice} />;
       })}
@@ -99,4 +101,10 @@ const ExitIconStyled = styled(ExitIcon)`
 const ButtonStyled = styled.button`
   position: absolute;
   margin-left: -${getWidthPixel(150)};
+`;
+
+const ImageStyled = styled.img`
+  width: ${getWidthPixel(180)};
+  height: ${getWidthPixel(144)};
+  padding-bottom: ${getHeightPixel(20)};
 `;

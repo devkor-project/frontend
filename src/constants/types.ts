@@ -59,6 +59,7 @@ export interface ButtonStyle extends ContainerProps {
 
 export interface ButtonProps extends ButtonStyle {
   text: string;
+  disabled?: boolean;
   onClick: () => void;
 }
 
@@ -78,11 +79,11 @@ export interface NoticeProps {
 }
 
 export interface RegisterWarningProps {
-  emailWarningCode: 'wrongEmail' | 'duplicateEmail' | 'univEmail' | 'emailAccept' | 'authenticatedEmail' | '';
-  codeWarningCode: 'wrongCode' | 'acceptCode' | '';
-  formatWarningCode: 'wrongFormat' | '';
-  repeatWarningCode: 'wrongPassword' | '';
-  receiveEmailWarningCode: 'wrongReceiveEmail' | '';
+  emailWarningCode: 'wrongEmail' | 'duplicateEmail' | 'univEmail' | 'accept' | 'authenticatedEmail' | 'emailSent' | '';
+  codeWarningCode: 'wrongCode' | 'accept' | '';
+  formatWarningCode: 'wrongFormat' | 'accept' | '';
+  repeatWarningCode: 'wrongPassword' | 'accept' | '';
+  receiveEmailWarningCode: 'wrongReceiveEmail' | 'accept' | '';
 }
 
 export interface providerListProps {

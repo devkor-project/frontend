@@ -42,7 +42,6 @@ export async function postSignupAPI({
     const accessToken = data.data.accessToken;
     const refreshToken = data.data.refreshToken;
     setCookie(refreshToken);
-    console.log('success');
     const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
     store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
     submitFunc();
@@ -54,20 +53,23 @@ export async function postMailReqAPI({
   email,
   setWarningCode,
   warningCode,
+  type = 'signup',
 }: {
   email: string;
   setWarningCode: Dispatch<SetStateAction<RegisterWarningProps>>;
   warningCode: RegisterWarningProps;
+  type?: 'signup' | 'findPwd';
 }) {
   try {
     const { data } = await axios.post(`auth/mail/req`, {
       email: email,
+      type: type,
     });
     if (data) {
       if (data.data === 'already authenticated') {
         warningCode.emailWarningCode = 'authenticatedEmail';
       } else {
-        warningCode.emailWarningCode = 'emailAccept';
+        warningCode.emailWarningCode = 'emailSent';
       }
       setWarningCode({ ...warningCode });
     }
@@ -99,7 +101,7 @@ export async function postMailAPI({
       code: code,
     });
     if (data.success) {
-      warningCode.codeWarningCode = 'acceptCode';
+      warningCode.codeWarningCode = 'accept';
       setWarningCode({ ...warningCode });
     } else {
       warningCode.codeWarningCode = 'wrongCode';
