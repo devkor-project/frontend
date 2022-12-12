@@ -15,7 +15,7 @@ function CategoryListContainer({
 
   return (
     <div className="w-full">
-      <div className="w-full flex flex-row pb-[29px] overflow-x-scroll px-[10px]">
+      <div className="w-full flex flex-row pb-[15px] overflow-x-scroll px-[10px]">
         {CategoryList.map((category, index) => {
           return (
             <CategoriesButton

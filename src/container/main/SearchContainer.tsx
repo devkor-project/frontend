@@ -34,11 +34,11 @@ const SearchContainer = ({ width, height, setFunc, fontSize, icon, placeHolder, 
 export default SearchContainer;
 
 const ContainerStyled = styled.div`
-  margin-top: ${getHeightPixel(24)};
+  // margin-top: ${getHeightPixel(24)};
   display: flex;
   flex-direction: row;
   position: relative;
-  margin-bottom: ${getHeightPixel(11)};
+  // margin-bottom: ${getHeightPixel(11)};
 `;
 const SearchTextStyled = styled.input<{ width: string; height: string; fontSize: string }>`
   ${({ width = getWidthPixel(357), height = getHeightPixel(47), fontSize = getPixelToPixel(14) }) => css`

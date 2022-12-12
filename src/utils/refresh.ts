@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { withCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import { SetToken } from '../reducers/auth';
 import { store } from '../store';
 
@@ -8,27 +8,27 @@ import { store } from '../store';
 export async function isExpired(state: any, removeCookie: any) {
   const { payload } = state;
   const { expiredTime } = payload;
-  console.log('expiredTime', expiredTime);
+  // console.log('expiredTime', expiredTime);
 
   const diffTime = new Date(expiredTime).getTime() - new Date(Date.now()).getTime();
-  console.log('diffTime', diffTime);
-  console.log('is diffTime less then 6000', diffTime < 6000);
+  // console.log('diffTime', diffTime);
+  // console.log('is diffTime less then 6000', diffTime < 6000);
 
-  // if (diffTime < 6000 || !payload.accessToken) {
-  if (true) {
+  if (diffTime < 6000 || !payload.accessToken) {
     console.log('refresh');
     try {
-      // axios.defaults.withCredentials = true;
+      // const refreshToken = cookies.refreshToken;
       const res = await axios.post('auth/token');
-      console.log(res.status);
-      // const accessToken = res.data.data;
-      // const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
-      // store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
+      // console.log(res.status);
+
+      const accessToken = res.data.data;
+      const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
+      store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
     } catch (err) {
       console.log(err);
 
-      // removeCookie('refreshToken', { path: '/' });
-      // store.dispatch({ type: SetToken, payload: { accessToken: null, expiredTime: null } });
+      removeCookie('refreshToken', { path: '/' });
+      store.dispatch({ type: SetToken, payload: { accessToken: null, expiredTime: null } });
     }
     // console.log(res.status);
 

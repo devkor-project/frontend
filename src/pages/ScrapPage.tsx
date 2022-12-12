@@ -71,7 +71,6 @@ function ScrapPage() {
     <PageStyled>
       <TitleHeaderContainer title="스크랩" />
       <ScrapPageStyled>
-        <Blank height={getHeightPixel(31)} />
         <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} goNoticeDetail={goNoticeDetail} />
       </ScrapPageStyled>
       <BottomNavigationBar />

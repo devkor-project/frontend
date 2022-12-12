@@ -7,13 +7,12 @@ import styled from 'styled-components';
 import OptionBar from '../commons/OptionBar';
 import NotoText from '../components/Text/NotoText';
 import NotoTextBordered from '../components/Text/NotoTextBordered';
-import { BASE__URL } from '../constants';
 import { palette } from '../constants/palette';
 import { NoticeDetailProps } from '../constants/types1';
 import DetailHeaderContainer from '../container/Detail/DetailHeaderContainer';
 import { translateDatetime } from '../utils/datetime';
 import { isExpired } from '../utils/refresh';
-import { getHeightPixel, getPixelToPixel } from '../utils/responsive';
+import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 
 function NoticeDetailPage() {
   const params = useParams();
@@ -76,6 +75,8 @@ const PageStyled = styled.div`
   height: 100%;
   overflow-y: scroll;
   background: ${palette.white};
+  border-radius: ${getWidthPixel(30)} ${getWidthPixel(30)} 0 0;
+  margin-top: ${getHeightPixel(80)};
 `;
 const ContentContainer = styled.div`
   white-space: pre-wrap;

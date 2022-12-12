@@ -69,7 +69,6 @@ function HotPage() {
     <PageStyled>
       <TitleHeaderContainer title="인기" />
       <HotPageStyled>
-        <Blank height={getHeightPixel(31)} />
         <HotNoticeListContainer
           NoticeList={noticeData}
           changeBookmark={changeBookmark}

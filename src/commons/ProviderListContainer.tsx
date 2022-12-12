@@ -14,8 +14,8 @@ function ProviderListContainer({
   changeSelectedProvider: any;
 }) {
   return (
-    <div className="w-full">
-      <div className="w-full flex flex-row px-[10px] items-center mb-[13px]">
+    <div className="w-full pt-[5px]">
+      <div className="w-full flex flex-row px-[10px] items-center pb-[11px]">
         <LeftScrollButton>
           <LeftScrollIcon />
         </LeftScrollButton>

@@ -56,9 +56,9 @@ function MainPage() {
       getSearchedList();
     } else if (search === '') {
       isExpired(token, removeCookie);
-      console.log(token);
+      // console.log(token);
 
-      axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+      // axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
       const response = await axios.get(`notices`, {
         params: {
           categoryId: category,
@@ -69,10 +69,10 @@ function MainPage() {
   };
   // 카테고리 리스트 가져오는 api
   const getCategoryList = async () => {
-    console.log(token.payload.accessToken);
+    // console.log(token.payload.accessToken);
 
     isExpired(token, removeCookie);
-    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    // axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const categoryL = await axios.get(`category/provider`);
     // console.log(categoryL.data.data[0]);
     const providers = Object.keys(categoryL.data.data);
@@ -101,7 +101,7 @@ function MainPage() {
   // ! 서버에 검색 요청
   const getSearchedList = async () => {
     isExpired(token, removeCookie);
-    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    // axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`notices/search/${categoryListByProvider[category]}/${selectedProvider}`, {
       params: {
         keyword: search,
@@ -120,16 +120,16 @@ function MainPage() {
   // 공지사항 북마크 변경
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
-    console.log(token.payload.accessToken);
+    // console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
-    axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
+    // axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
     noticeData.map(data => {
       if (data.noticeId === idx) {
         if (data.isScraped === 'Y') i = true; // scrap 여부를 저장
       }
     });
-    // console.log(i);
+    console.log(i);
     const res = await axios.put(`scraps/${idx}`, {
       whetherScrap: !i,
     });
