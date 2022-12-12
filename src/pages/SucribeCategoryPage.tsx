@@ -122,7 +122,7 @@ const PageStyled = styled.div`
 const MainPageStyled = styled.div`
   display: flex;
   width: 100%;
-  height: ${getHeightPixel(661)};
+  height: ${getHeightPixel(593)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
