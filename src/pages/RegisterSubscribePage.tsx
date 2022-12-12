@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { REGISTER__SUBSCRIBE__PAGE__TEXT } from '../constants/text';
 import HeaderContainer from '../container/header/HeaderContainer';
@@ -8,23 +8,24 @@ import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
 import TextButton from '../components/Button/TextButton';
 import { palette } from '../constants/palette';
-import { useState } from 'react';
 import { ROUTER__URI } from '../constants';
 import { CategoryDataProps } from '../constants/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers';
-import { getCategoryAPI } from '../utils/api_category';
-import { isExpired, refreshAccessToken } from '../utils/refresh';
+import { getCategoryAPI, modifySubscribeCategoryAPI } from '../utils/api_category';
+import { isExpired } from '../utils/refresh';
 import { useCookies } from 'react-cookie';
+import { getCategoryIdList } from '../utils';
+import { useNavigate } from 'react-router-dom';
 
 export default function RegisterSubscribePage() {
+  const navigate = useNavigate();
   const [keyword, setKeyword] = useState<string>('');
   const [selectedList, setSelectedList] = useState<CategoryDataProps[]>([]);
   const [categoryList, setCategoryList] = useState<CategoryDataProps[]>([]);
   const accessToken = useSelector((store: RootState) => store.tokenReducer);
   const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
   useEffect(() => {
-    refreshAccessToken(accessToken, refreshToken);
     getCategoryAPI({ setList: setCategoryList });
   }, []);
   useEffect(() => {
@@ -55,7 +56,11 @@ export default function RegisterSubscribePage() {
           height={getHeightPixel(47)}
           borderColor={palette.crimson}
           onClick={() => {
-            return 0;
+            modifySubscribeCategoryAPI({
+              removeCatIds: [],
+              subscribeCatIds: getCategoryIdList(selectedList),
+              submitFunc: () => navigate(ROUTER__URI.mainPage),
+            });
           }}
         />
       </ButtonContainer>

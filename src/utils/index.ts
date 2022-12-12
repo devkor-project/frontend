@@ -1,5 +1,7 @@
 import { AxiosError } from 'axios';
 import { CategoryDataProps, RegisterWarningProps } from '../constants/types';
+import { SetToken } from '../reducers/auth';
+import { store } from '../store';
 import { getWidthPixel } from './responsive';
 
 export function getButtonWidthList(list: CategoryDataProps[], width: number) {
@@ -99,4 +101,49 @@ function checkPasswordPattern(str: string) {
   } else {
     return true;
   }
+}
+
+export function getCategoryIdList(list: CategoryDataProps[]) {
+  const idList: number[] = [];
+  list.forEach(category => idList.push(category.categoryId));
+  return idList;
+}
+
+export function getCategoryDiff(initialList: CategoryDataProps[], selectedList: CategoryDataProps[]) {
+  const removeCatIds: number[] = [];
+  const subscribeCatIds: number[] = [];
+  selectedList.forEach(category => {
+    if (!initialList.includes(category)) {
+      subscribeCatIds.push(category.categoryId);
+    }
+  });
+  initialList.forEach(category => {
+    if (!selectedList.includes(category)) {
+      removeCatIds.push(category.categoryId);
+    }
+  });
+  return { removeCatIds: removeCatIds, subscribeCatIds: subscribeCatIds };
+}
+
+export function isSelectedCategory(category: CategoryDataProps, selectedList: CategoryDataProps[]) {
+  let result = false;
+  selectedList.forEach(cat => {
+    if (isSameCategory(cat, category)) {
+      result = true;
+    }
+  });
+  return result;
+}
+
+export function isSameCategory(firstCategory: CategoryDataProps, secondCategory: CategoryDataProps) {
+  return (
+    firstCategory.categoryId === secondCategory.categoryId &&
+    firstCategory.categoryName === secondCategory.categoryName &&
+    firstCategory.provider === secondCategory.provider
+  );
+}
+
+export function logoutUser(removeCookie: () => void) {
+  removeCookie();
+  store.dispatch({ type: SetToken, payload: { accessToken: null, expiredTime: null } });
 }

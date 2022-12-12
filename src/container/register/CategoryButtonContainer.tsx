@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styled, { css } from 'styled-components';
 import CategoryButton from '../../components/Button/CategoryButton';
 import { CategoryDataProps } from '../../constants/types';
-import { getButtonList, getButtonWidthList } from '../../utils';
+import { getButtonList, getButtonWidthList, isSameCategory, isSelectedCategory } from '../../utils';
 import { getHeightPixel, getWidthPixel } from '../../utils/responsive';
 
 export default function CategoryButtonContainer({
@@ -28,11 +28,11 @@ export default function CategoryButtonContainer({
                 <CategoryButton
                   text={category.provider + ' ' + category.categoryName}
                   width={widthArr[idx]}
-                  isSelected={selectedList.includes(category)}
+                  isSelected={isSelectedCategory(category, selectedList)}
                   key={'layer' + index.toString() + '/' + idx.toString()}
                   onClick={() => {
-                    if (selectedList.includes(category)) {
-                      setList(selectedList.filter(element => element !== category));
+                    if (isSelectedCategory(category, selectedList)) {
+                      setList(selectedList.filter(element => !isSameCategory(element, category)));
                     } else {
                       setList([...selectedList, category]);
                     }
