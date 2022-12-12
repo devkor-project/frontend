@@ -36,9 +36,10 @@ export const REGISTER__PAGE__TEXT: TextConstantType = {
     wrongCode: ['잘못된 인증번호입니다.'],
     wrongFormat: ['8-20자 영문, 숫자, 특수문자를 사용하세요.'],
     wrongPassword: ['비밀번호가 일치하지 않습니다.'],
-    accept: ['인증번호를 발송했습니다.'],
+    emailSent: ['인증번호를 발송했습니다.'],
     wrongReceiveEmail: ['잘못된 형식의 이메일입니다.'],
     authenticatedEmail: ['인증 완료된 메일입니다.'],
+    accept: ['승인'],
   },
 };
 
