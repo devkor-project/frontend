@@ -79,7 +79,7 @@ export interface NoticeProps {
 }
 
 export interface RegisterWarningProps {
-  emailWarningCode: 'wrongEmail' | 'duplicateEmail' | 'univEmail' | 'accept' | 'authenticatedEmail' | '';
+  emailWarningCode: 'wrongEmail' | 'duplicateEmail' | 'univEmail' | 'accept' | 'authenticatedEmail' | 'emailSent' | '';
   codeWarningCode: 'wrongCode' | 'accept' | '';
   formatWarningCode: 'wrongFormat' | 'accept' | '';
   repeatWarningCode: 'wrongPassword' | 'accept' | '';
