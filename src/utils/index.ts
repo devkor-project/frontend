@@ -166,7 +166,9 @@ export function logoutUser(removeCookie: () => void) {
 export function isRegisterAble(warningCode: RegisterWarningProps) {
   if (
     warningCode.codeWarningCode === 'accept' &&
-    (warningCode.emailWarningCode === 'emailSent' || warningCode.emailWarningCode === 'authenticatedEmail') &&
+    (warningCode.emailWarningCode === 'emailSent' ||
+      warningCode.emailWarningCode === 'authenticatedEmail' ||
+      warningCode.emailWarningCode === 'accept') &&
     warningCode.formatWarningCode === 'accept' &&
     warningCode.receiveEmailWarningCode === 'accept' &&
     warningCode.repeatWarningCode === 'accept'
