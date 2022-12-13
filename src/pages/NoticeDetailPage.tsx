@@ -7,13 +7,12 @@ import styled from 'styled-components';
 import OptionBar from '../commons/OptionBar';
 import NotoText from '../components/Text/NotoText';
 import NotoTextBordered from '../components/Text/NotoTextBordered';
-import { BASE__URL } from '../constants';
 import { palette } from '../constants/palette';
 import { NoticeDetailProps } from '../constants/types1';
 import DetailHeaderContainer from '../container/Detail/DetailHeaderContainer';
 import { translateDatetime } from '../utils/datetime';
 import { isExpired } from '../utils/refresh';
-import { getHeightPixel, getPixelToPixel } from '../utils/responsive';
+import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
 
 function NoticeDetailPage() {
   const params = useParams();
@@ -22,11 +21,11 @@ function NoticeDetailPage() {
   const [, , removeCookie] = useCookies(['refreshToken']);
   // id 에 맞는 공지사항 데이터를 가져오는 함수
   const getNoticeData = async () => {
-    console.log(params.noticeId);
+    // console.log(params.noticeId);
     isExpired(token, removeCookie);
     const response = await axios.get(`notices/details/${params.noticeId}`);
     response.data.data.date = translateDatetime(response.data.data.date);
-    console.log(response.data.data);
+    // console.log(response.data.data);
 
     setNoticeData({
       ...response.data.data,
@@ -76,6 +75,8 @@ const PageStyled = styled.div`
   height: 100%;
   overflow-y: scroll;
   background: ${palette.white};
+  border-radius: ${getWidthPixel(30)} ${getWidthPixel(30)} 0 0;
+  margin-top: ${getHeightPixel(80)};
 `;
 const ContentContainer = styled.div`
   white-space: pre-wrap;

@@ -20,7 +20,7 @@ function SubscribeCategoryListContainer({
   const navigate = useNavigate();
   return (
     <div className="w-full">
-      <div className="w-full flex flex-row justify-center pb-[29px] overflow-x-scroll">
+      <div className="w-full flex flex-row pb-[29px] overflow-x-scroll px-[10px]">
         <SubscribeAddButton onClick={() => navigate('/subscribe')}>
           <SubscribeAdd />
         </SubscribeAddButton>
@@ -47,6 +47,6 @@ const SubscribeAddButton = styled.div`
   align-items: center;
   width: ${getWidthPixel(40)};
   height: ${getHeightPixel(40)};
-  border-radius: ${getWidthPixel(20)};
+  border-radius: ${getWidthPixel(30)};
   border: 1px solid ${palette.gray_03};
 `;

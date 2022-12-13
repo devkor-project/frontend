@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as LogoIcon } from '../assets/logo.svg';
 import axios from 'axios';
 import { palette } from '../constants/palette';
@@ -18,6 +18,8 @@ import { ReactComponent as Info_Icon } from '../assets/icon/info1.svg';
 import { useCookies } from 'react-cookie';
 import { SetToken } from '../reducers/auth';
 import { store } from '../store';
+import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
+import { useSelector } from 'react-redux';
 
 function LoginPage() {
   // TODO email, password를 한개의 객체로 state처리하기.
@@ -25,6 +27,7 @@ function LoginPage() {
   const [password, setPassword] = useState<string>('');
   const [isInputValid, setIsInputValid] = useState<boolean>(true);
   const [cookies, setCookie] = useCookies(['refreshToken']);
+  const token = useSelector((store: any) => store.tokenReducer);
   // focus 변화에 따라 border 색상 변경
   const [borderColor, setBorderColor] = useState({
     emailBorderColor: palette.gray,
@@ -48,7 +51,7 @@ function LoginPage() {
   // enter 입력시 login 함수 실행
   const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      console.log('ddfd');
+      // console.log('ddfd');
       postLoginRequest({ email, password });
     }
   };
@@ -74,31 +77,30 @@ function LoginPage() {
         setCookie('refreshToken', refreshToken, {
           path: '/',
           secure: true,
-          httpOnly: true,
+          // httpOnly: true,
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
         });
-        console.log('success');
+        // console.log('success');
         const expiredTime = await new Date(Date.now() + 1000 * 60 * 30);
         store.dispatch({ type: SetToken, payload: { accessToken, expiredTime } });
 
         navigate('../');
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setIsInputValid(false);
     }
   };
+  useEffect(() => {
+    if (token.payload.accessToken !== null) {
+      // console.log('token이 없습니다.');
+      navigate('/');
+    }
+  }, []);
 
   return (
     <PageStyled>
-      <LogoPageStyled>
-        <Blank height={getPixelToPixel(31)} />
-        <LogoStyled
-          onClick={() => {
-            navigate('../');
-          }}
-        />
-      </LogoPageStyled>
+      <TitleHeaderContainer title=""></TitleHeaderContainer>
       <InputPageStyled>
         <LoginHeaderContainer title={'로그인'} subtitle={'공지사항 구독 시작하기'}></LoginHeaderContainer>
         <Blank height={getHeightPixel(20)} />
@@ -212,12 +214,14 @@ const LogoPageStyled = styled.div`
 const InputPageStyled = styled.div`
   display: flex;
   width: 100%;
-  height: ${getHeightPixel(636)};
+  height: ${getHeightPixel(661)};
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
   background: ${palette.white};
   border-radius: ${getPixelToPixel(30)} ${getPixelToPixel(30)} 0px 0px;
+  margin-top: ${getHeightPixel(-30)};
+  padding-top: ${getHeightPixel(30)};
 `;
 
 const ErrContainer = styled.div`

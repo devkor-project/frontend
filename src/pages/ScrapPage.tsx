@@ -3,23 +3,23 @@ import styled from 'styled-components';
 import BottomNavigationBar from '../commons/BottomNavigationBar';
 import { palette } from '../constants/palette';
 import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/responsive';
-import { ReactComponent as Notification_Icon } from '../assets/icon/notification.svg';
-import { ReactComponent as Main_Logo } from '../assets/icon/logo.svg';
-import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
-import SearchContainer from '../container/main/SearchContainer';
-import NotoText from '../components/Text/NotoText';
-import CategoryListContainer from '../commons/CategoryListContainer';
+// import { ReactComponent as Notification_Icon } from '../assets/icon/notification.svg';
+// import { ReactComponent as Main_Logo } from '../assets/icon/logo.svg';
+// import { ReactComponent as Search_Icon } from '../assets/icon/search.svg';
+// import SearchContainer from '../container/main/SearchContainer';
+// import NotoText from '../components/Text/NotoText';
+// import CategoryListContainer from '../commons/CategoryListContainer';
 import NoticeListContainer from '../commons/NoticeListContainer';
-import NotSearchedContainer from '../container/main/NotSearchedContainer';
+// import NotSearchedContainer from '../container/main/NotSearchedContainer';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isExpired } from '../utils/refresh';
 import axios from 'axios';
 import { NoticeProps } from '../constants/types';
 import NotScrapedContainer from '../container/scrap/NotScrapedContainer';
-import Blank from '../components/Blank';
+// import Blank from '../components/Blank';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
-import { BASE__URL } from '../constants';
+// import { BASE__URL } from '../constants';
 import { useCookies } from 'react-cookie';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
@@ -35,7 +35,6 @@ function ScrapPage() {
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const response = await axios.get(`scraps`);
-    console.log(response.data.data);
     setNoticeData(response.data.data);
   };
 
@@ -45,7 +44,6 @@ function ScrapPage() {
   // 공지사항 북마크 변경
   const changeBookmark = async (idx: number) => {
     // TODO 서버에 저장 get request
-    console.log(token.payload.accessToken);
     isExpired(token, removeCookie);
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     let i = false;
@@ -66,17 +64,21 @@ function ScrapPage() {
   const goNoticeDetail = (noticeId: number) => {
     navigate(`/notice/${noticeId}`);
   };
-  //검색버튼이 눌렸는데 검색 응답이 없는 경우
-  return (
-    <PageStyled>
-      <TitleHeaderContainer title="스크랩" />
-      <ScrapPageStyled>
-        <Blank height={getHeightPixel(31)} />
-        <NoticeListContainer NoticeList={noticeData} changeBookmark={changeBookmark} goNoticeDetail={goNoticeDetail} />
-      </ScrapPageStyled>
-      <BottomNavigationBar />
-    </PageStyled>
-  );
+  if (noticeData.length === 0) return <NotScrapedContainer />;
+  else
+    return (
+      <PageStyled>
+        <TitleHeaderContainer title="스크랩" />
+        <ScrapPageStyled>
+          <NoticeListContainer
+            NoticeList={noticeData}
+            changeBookmark={changeBookmark}
+            goNoticeDetail={goNoticeDetail}
+          />
+        </ScrapPageStyled>
+        <BottomNavigationBar />
+      </PageStyled>
+    );
 }
 
 export default ScrapPage;
@@ -92,7 +94,7 @@ const PageStyled = styled.div`
 const ScrapPageStyled = styled.div`
   display: flex;
   width: 100%;
-  height: ${getHeightPixel(661)};
+  height: ${getHeightPixel(596)};
   padding-top: ${getHeightPixel(31)};
   flex-direction: column;
   align-items: center;

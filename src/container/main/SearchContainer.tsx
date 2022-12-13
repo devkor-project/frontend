@@ -8,6 +8,14 @@ const SearchContainer = ({ width, height, setFunc, fontSize, icon, placeHolder, 
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setFunc(e.currentTarget.value);
   }
+
+  // enter 입력시 login 함수 실행
+  const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      // console.log('ddfd');
+      searchFunc();
+    }
+  };
   // rounded text input with search icon
   return (
     <ContainerStyled>
@@ -17,12 +25,12 @@ const SearchContainer = ({ width, height, setFunc, fontSize, icon, placeHolder, 
         fontSize={fontSize}
         onChange={handleChange}
         placeholder={placeHolder}
+        onKeyDown={handleOnKeyPress}
       />
       <IconStyled
         height={height}
         onClick={() => {
           searchFunc();
-          console.log('search');
         }}
       >
         {icon}
@@ -34,11 +42,11 @@ const SearchContainer = ({ width, height, setFunc, fontSize, icon, placeHolder, 
 export default SearchContainer;
 
 const ContainerStyled = styled.div`
-  margin-top: ${getHeightPixel(24)};
+  // margin-top: ${getHeightPixel(24)};
   display: flex;
   flex-direction: row;
   position: relative;
-  margin-bottom: ${getHeightPixel(11)};
+  // margin-bottom: ${getHeightPixel(11)};
 `;
 const SearchTextStyled = styled.input<{ width: string; height: string; fontSize: string }>`
   ${({ width = getWidthPixel(357), height = getHeightPixel(47), fontSize = getPixelToPixel(14) }) => css`
