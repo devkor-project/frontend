@@ -35,7 +35,7 @@ export async function postSignupAPI({
       studentID: studentID,
       grade: grade,
       major: major,
-      receivingEmail: receivingMail,
+      receivingMail: receivingMail,
     },
   });
   if (data) {
