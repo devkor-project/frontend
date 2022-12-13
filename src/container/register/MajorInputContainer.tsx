@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Blank from '../../components/Blank';
 import DropDownInput from '../../components/Input/DropDownInput';
 import NotoText from '../../components/Text/NotoText';
-import { GRADE__LIST, MAJOR__LIST, STUDENT__ID__LIST } from '../../constants';
+import { GRADE__LIST, STUDENT__ID__LIST } from '../../constants';
 import { palette } from '../../constants/palette';
 import { REGISTER__PAGE__TEXT } from '../../constants/text';
 import { MajorProps } from '../../constants/types';
