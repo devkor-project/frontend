@@ -27,7 +27,7 @@ function ProviderListContainer({
                 title={provider}
                 changeSelectedProvider={() => {
                   changeSelectedProvider(provider);
-                  console.log(provider);
+                  // console.log(provider);
                 }}
                 isSelected={selectedProvider === provider}
               />
