@@ -10,15 +10,9 @@ import MajorInputContainer from '../container/register/MajorInputContainer';
 import NameInputContainer from '../container/register/NameInputContainer';
 import PasswordInputContainer from '../container/register/PasswordInputContainer';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
-import {
-  DEFAULT__REGISTER__WARNING__CODE,
-  DEFAULT__USER__DATA,
-  GRADE__LIST,
-  MAJOR__LIST,
-  STUDENT__ID__LIST,
-} from '../constants';
-import { RegisterWarningProps, UserDataProps } from '../constants/types';
-import { getRegisterWarningCode } from '../utils';
+import { DEFAULT__REGISTER__WARNING__CODE, DEFAULT__USER__DATA, GRADE__LIST, STUDENT__ID__LIST } from '../constants';
+import { MajorProps, RegisterWarningProps, UserDataProps } from '../constants/types';
+import { getMajorStringList, getRegisterWarningCode } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
@@ -26,6 +20,7 @@ import { getUserDataAPI, modifyUserDataAPI } from '../utils/api_user';
 import ModifyEmailContainer from '../container/register/ModifyEmailContainer';
 import { useNavigate } from 'react-router-dom';
 import { isExpired } from '../utils/refresh';
+import { getMajorListAPI } from '../utils/api_register';
 
 export default function ModifyUserInfoPage() {
   const [userData, setData] = useState<UserDataProps>(DEFAULT__USER__DATA);
@@ -43,6 +38,14 @@ export default function ModifyUserInfoPage() {
   const refreshToken = useCookies(['refreshToken'])[0].refreshToken;
   const [, , removeCookie] = useCookies(['refreshToken']);
   const navigate = useNavigate();
+  const [majorList, setList] = useState<MajorProps[]>([]);
+  const [majorStringList, setStringList] = useState<string[]>([]);
+  useEffect(() => {
+    getMajorListAPI({ setList: setList });
+  }, []);
+  useEffect(() => {
+    setStringList(getMajorStringList(majorList));
+  }, [majorList]);
   useEffect(() => {
     setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode, subscribeEmail));
   }, [email, password, repeatPassword, subscribeEmail]);
@@ -54,7 +57,7 @@ export default function ModifyUserInfoPage() {
     setName(userData.name);
     setEmail(userData.email);
     setSubscribeEmail(userData.receiveEmail);
-    setMajor(MAJOR__LIST.indexOf(userData.major));
+    setMajor(majorStringList.indexOf(userData.major));
     setStudentID(STUDENT__ID__LIST.indexOf(userData.studentID));
     setGrade(GRADE__LIST.indexOf(userData.grade));
     setStatus(userData.status);
@@ -98,7 +101,7 @@ export default function ModifyUserInfoPage() {
               receiveEmail: subscribeEmail,
               studentID: STUDENT__ID__LIST[studentID],
               grade: GRADE__LIST[grade],
-              major: MAJOR__LIST[major],
+              major: majorStringList[major],
               status: status,
               submitFunc: () => navigate(-1),
             });

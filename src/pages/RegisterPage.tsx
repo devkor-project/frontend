@@ -11,16 +11,10 @@ import MajorInputContainer from '../container/register/MajorInputContainer';
 import NameInputContainer from '../container/register/NameInputContainer';
 import PasswordInputContainer from '../container/register/PasswordInputContainer';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
-import { postSignupAPI } from '../utils/api_register';
-import {
-  DEFAULT__REGISTER__WARNING__CODE,
-  GRADE__LIST,
-  MAJOR__LIST,
-  ROUTER__URI,
-  STUDENT__ID__LIST,
-} from '../constants';
-import { RegisterWarningProps } from '../constants/types';
-import { getRegisterWarningCode, isRegisterAble } from '../utils';
+import { getMajorListAPI, postSignupAPI } from '../utils/api_register';
+import { DEFAULT__REGISTER__WARNING__CODE, GRADE__LIST, ROUTER__URI, STUDENT__ID__LIST } from '../constants';
+import { MajorProps, RegisterWarningProps } from '../constants/types';
+import { getMajorStringList, getRegisterWarningCode, isRegisterAble } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -40,6 +34,14 @@ function RegisterPage() {
   const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
   const navigate = useNavigate();
   const token = useSelector((store: any) => store.tokenReducer);
+  const [majorList, setList] = useState<MajorProps[]>([]);
+  const [majorStringList, setStringList] = useState<string[]>([]);
+  useEffect(() => {
+    getMajorListAPI({ setList: setList });
+  }, []);
+  useEffect(() => {
+    setStringList(getMajorStringList(majorList));
+  }, [majorList]);
   useEffect(() => {
     if (token.payload.accessToken !== null) {
       // console.log('token이 없습니다.');
@@ -102,7 +104,7 @@ function RegisterPage() {
               password: password,
               receivingMail: subscribeEmail,
               studentID: STUDENT__ID__LIST[studentID],
-              major: MAJOR__LIST[major],
+              major: majorStringList[major],
               grade: GRADE__LIST[grade],
               submitFunc: () => navigate(ROUTER__URI.registerSubscribePage),
               setCookie: (refreshToken: any) => {
