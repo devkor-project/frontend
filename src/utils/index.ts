@@ -44,13 +44,16 @@ export function getRegisterWarningCode(
   errorCode: RegisterWarningProps,
   subscribeEmail: string
 ) {
+  console.log(errorCode);
   const schoolEmailRegex = new RegExp('.*@korea.ac.kr$');
   const emailRegex = new RegExp('.*@.*');
   const modifiedErrorCode = { ...errorCode };
   if (email !== '' && !schoolEmailRegex.test(email)) {
     modifiedErrorCode.emailWarningCode = 'univEmail';
   } else {
-    modifiedErrorCode.emailWarningCode = '';
+    if (errorCode.emailWarningCode === 'univEmail') {
+      modifiedErrorCode.emailWarningCode = '';
+    }
   }
   if (password !== '' && repeatPassword !== '' && password !== repeatPassword) {
     modifiedErrorCode.repeatWarningCode = 'wrongPassword';
