@@ -27,7 +27,7 @@ function MainPage() {
   //전체 카테고리 리스트를 저장하는 state
   const [categoryList, setCategoryList] = useState();
   // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
-  const [category, setCategory] = useState(1);
+  const [category, setCategory] = useState(0);
   // 현재 선택된 provider에 맞는 카테고리 리스트를 저장하는 state
   const [categoryListByProvider, setCategoryListByProvider] = useState<CategoryListProps[]>([]);
 
@@ -87,22 +87,17 @@ function MainPage() {
       // console.log(c[0].categoryName);
 
       for (let j = 0; j < c.length; j++) {
-        c[j].categoryName = `${p} ${c[j].categoryName}`; // 카테고리 이름에 provider 이름 추가
-        categoryListJson['KUPID 전체'].push(c[j]);
+        const cc = {
+          categoryName: `${p} ${c[j].categoryName}`, // 카테고리 이름에 provider 이름 추가
+          categoryId: c[j].categoryId,
+        };
+        // console.log(cc);
+
+        categoryListJson['KUPID 전체'].push(cc);
       }
     }
     // provider에 'KUPID 전체' 추가
     providers.unshift('KUPID 전체');
-    // console.log(categoryListJson['KUPID 전체']);
-    // categoryListJson['KUPID 전체'] = [
-    //   {
-    //     categoryId: 0,
-    //     categoryName: 'KUPID 전체',
-    //   },
-    // ];
-    // const p = providers[0];
-    // console.log(categoryL.data.data?.[p]);
-    // console.log(categoryL.data.data?.['정보대학']);
     // 프로바이더 리스트 갱신
     // 카테고리 전체 리스트 갱신
     // 현재 선택된 프로바이더에 맞는 카테고리 리스트 갱신
@@ -112,6 +107,8 @@ function MainPage() {
       setCategoryList(categoryListJson);
       // console.log(categoryListJson);
       setCategoryListByProvider(categoryListJson[selectedProvider]);
+      // console.log(categoryListByProvider);
+
       setCategory(categoryListByProvider[0].categoryId);
     }
   };
@@ -124,13 +121,38 @@ function MainPage() {
   // ! 서버에 검색 요청
   const getSearchedList = async () => {
     isExpired(token, removeCookie);
-    // axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
-    const response = await axios.get(`notices/search/${categoryListByProvider[category]}/${selectedProvider}`, {
-      params: {
-        keyword: search,
-      },
-    });
-    setNoticeData(response.data.data);
+    // 전체 카테고리 리스트에서 현재 선택된 카테고리 아이디로 카테고리 이름 찾기
+    const c = categoryListByProvider.find(c => c.categoryId === category)?.categoryName;
+    // console.log(c);
+
+    const p = selectedProvider;
+    if (p === 'KUPID 전체') {
+      // console.log('KUPID 전체');
+      if (c !== undefined) {
+        const pp = c.split(' ')[0];
+        // 나머지는 전부 카테고리
+        const cc = c.split(' ').slice(1).join(' ');
+        const response = await axios.get(`notices/search/${cc}/${pp}`, {
+          params: {
+            keyword: search,
+          },
+        });
+        setNoticeData(response.data.data);
+        return;
+      }
+      // 나머지는 전부 카테고리
+      // console.log(c);
+
+      // const cc = c.split(' ')[1];
+      // console.log(cc);
+    } else {
+      const response = await axios.get(`notices/search/${c}/${p}`, {
+        params: {
+          keyword: search,
+        },
+      });
+      setNoticeData(response.data.data);
+    }
   };
 
   // 카테고리 변경시 getNoticeList 호출
