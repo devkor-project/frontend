@@ -1,15 +1,26 @@
 import React from 'react';
 import { ReactComponent as NotScrapedText_Icon } from '../../assets/icon/notScrapedItemText.svg';
 import imgNotScraped_Icon from '../../assets/icon/notScrapedItemImage.svg';
-import { getPixelToPixel } from '../../utils/responsive';
+import { getHeightPixel, getPixelToPixel } from '../../utils/responsive';
+import styled from 'styled-components';
+import Blank from '../../components/Blank';
 
 const NotScrapedContainer = () => {
   return (
-    <div className="w-full flex flex-col justify-end items-center mt-[124px]">
+    <ContainerStyled>
       <img src={imgNotScraped_Icon} width={getPixelToPixel(141)} height={getPixelToPixel(137)} />
       <NotScrapedText_Icon />
-    </div>
+      <Blank height={getHeightPixel(100)} />
+    </ContainerStyled>
   );
 };
 
 export default NotScrapedContainer;
+
+const ContainerStyled = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

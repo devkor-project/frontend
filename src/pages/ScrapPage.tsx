@@ -64,21 +64,23 @@ function ScrapPage() {
   const goNoticeDetail = (noticeId: number) => {
     navigate(`/notice/${noticeId}`);
   };
-  if (noticeData.length === 0) return <NotScrapedContainer />;
-  else
-    return (
-      <PageStyled>
-        <TitleHeaderContainer title="스크랩" />
-        <ScrapPageStyled>
+  return (
+    <PageStyled>
+      <TitleHeaderContainer title="스크랩" />
+      <ScrapPageStyled>
+        {noticeData.length === 0 ? (
+          <NotScrapedContainer />
+        ) : (
           <NoticeListContainer
             NoticeList={noticeData}
             changeBookmark={changeBookmark}
             goNoticeDetail={goNoticeDetail}
           />
-        </ScrapPageStyled>
-        <BottomNavigationBar />
-      </PageStyled>
-    );
+        )}
+      </ScrapPageStyled>
+      <BottomNavigationBar />
+    </PageStyled>
+  );
 }
 
 export default ScrapPage;
