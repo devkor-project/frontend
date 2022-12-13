@@ -7,7 +7,7 @@ import { getHeightPixel, getPixelToPixel, getWidthPixel } from '../utils/respons
 import styled from 'styled-components';
 import Blank from '../components/Blank';
 import LoginHeaderContainer from '../container/login/LoginHeaderContainer';
-import { BASE__URL } from '../constants';
+import { BASE__URL, ROUTER__URI } from '../constants';
 import { ReactComponent as Mail_Icon } from '../assets/icon/mail.svg';
 import { ReactComponent as Lock_Icon } from '../assets/icon/lock.svg';
 import NotoText from '../components/Text/NotoText';
@@ -185,7 +185,7 @@ function LoginPage() {
           />
         </div>
         <Blank height={getHeightPixel(9)} />
-        <div onClick={() => navigate('../forget')} className="flex w-[100%] justify-center">
+        <div onClick={() => navigate(ROUTER__URI.findPassword)} className="flex w-[100%] justify-center">
           <NotoText fontColor={palette.crimson} fontSize={getPixelToPixel(13)} fontWeight={'500'}>
             비밀번호 찾기
           </NotoText>
