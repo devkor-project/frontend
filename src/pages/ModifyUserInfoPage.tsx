@@ -61,7 +61,7 @@ export default function ModifyUserInfoPage() {
     setStudentID(STUDENT__ID__LIST.indexOf(userData.studentID));
     setGrade(GRADE__LIST.indexOf(userData.grade));
     setStatus(userData.status);
-  }, [userData, majorList]);
+  }, [userData, majorStringList]);
   return (
     <PageStyled>
       <HeaderContainer title={REGISTER__PAGE__TEXT.header.title_modify[0]} />
