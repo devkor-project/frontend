@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as LogoIcon } from '../assets/logo.svg';
 import axios from 'axios';
 import { palette } from '../constants/palette';
@@ -19,6 +19,7 @@ import { useCookies } from 'react-cookie';
 import { SetToken } from '../reducers/auth';
 import { store } from '../store';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
+import { useSelector } from 'react-redux';
 
 function LoginPage() {
   // TODO email, password를 한개의 객체로 state처리하기.
@@ -26,6 +27,7 @@ function LoginPage() {
   const [password, setPassword] = useState<string>('');
   const [isInputValid, setIsInputValid] = useState<boolean>(true);
   const [cookies, setCookie] = useCookies(['refreshToken']);
+  const token = useSelector((store: any) => store.tokenReducer);
   // focus 변화에 따라 border 색상 변경
   const [borderColor, setBorderColor] = useState({
     emailBorderColor: palette.gray,
@@ -89,6 +91,12 @@ function LoginPage() {
       setIsInputValid(false);
     }
   };
+  useEffect(() => {
+    if (token.payload.accessToken !== null) {
+      // console.log('token이 없습니다.');
+      navigate('/');
+    }
+  }, []);
 
   return (
     <PageStyled>

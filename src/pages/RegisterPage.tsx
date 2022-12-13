@@ -24,6 +24,7 @@ import { getRegisterWarningCode, isRegisterAble } from '../utils';
 import SubscribeEmailInputContainer from '../container/register/SubscribeEmailInputContainer';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 
 function RegisterPage() {
   const [cookies, setCookie] = useCookies(['refreshToken']);
@@ -38,7 +39,12 @@ function RegisterPage() {
   const [grade, setGrade] = useState<number>(0);
   const [warningCode, setWarningCode] = useState<RegisterWarningProps>(DEFAULT__REGISTER__WARNING__CODE);
   const navigate = useNavigate();
+  const token = useSelector((store: any) => store.tokenReducer);
   useEffect(() => {
+    if (token.payload.accessToken !== null) {
+      // console.log('token이 없습니다.');
+      navigate('/');
+    }
     setWarningCode(getRegisterWarningCode(email, password, repeatPassword, warningCode, subscribeEmail));
   }, [email, password, repeatPassword, subscribeEmail]);
   return (
