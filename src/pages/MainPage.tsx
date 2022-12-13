@@ -23,7 +23,7 @@ function MainPage() {
   // 공지사항의 provider를 저장하는 state
   const [providerList, setProviderList] = useState<string[]>([]);
   // 현재 선택된 provider를 저장하는 state
-  const [selectedProvider, setSelectedProvider] = useState<string>('KUPID 전체');
+  const [selectedProvider, setSelectedProvider] = useState<string>('전체');
   //전체 카테고리 리스트를 저장하는 state
   const [categoryList, setCategoryList] = useState();
   // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
@@ -77,8 +77,8 @@ function MainPage() {
     const providers = Object.keys(categoryL.data.data);
     const categoryListJson = categoryL.data.data;
     // console.log(providers);
-    // 카테고리 데이터에 'KUPID 전체' 키 값으로 모든 공지사항 추가
-    categoryListJson['KUPID 전체'] = [];
+    // 카테고리 데이터에 '전체' 키 값으로 모든 공지사항 추가
+    categoryListJson['전체'] = [];
     for (let i = 0; i < providers.length; i++) {
       const p = providers[i];
       // console.log(p);
@@ -93,11 +93,11 @@ function MainPage() {
         };
         // console.log(cc);
 
-        categoryListJson['KUPID 전체'].push(cc);
+        categoryListJson['전체'].push(cc);
       }
     }
-    // provider에 'KUPID 전체' 추가
-    providers.unshift('KUPID 전체');
+    // provider에 '전체' 추가
+    providers.unshift('전체');
     // 프로바이더 리스트 갱신
     // 카테고리 전체 리스트 갱신
     // 현재 선택된 프로바이더에 맞는 카테고리 리스트 갱신
@@ -126,8 +126,8 @@ function MainPage() {
     // console.log(c);
 
     const p = selectedProvider;
-    if (p === 'KUPID 전체') {
-      // console.log('KUPID 전체');
+    if (p === '전체') {
+      // console.log('전체');
       if (c !== undefined) {
         const pp = c.split(' ')[0];
         // 나머지는 전부 카테고리
