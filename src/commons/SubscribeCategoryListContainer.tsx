@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategoryListProps } from '../constants/types';
+import { CategoryDataProps, CategoryListProps } from '../constants/types';
 import CategoriesButton from './CategoriesButton';
 import { ReactComponent as SubscribeAdd } from '../assets/icon/subscribe_add.svg';
 import { getHeightPixel, getWidthPixel } from '../utils/responsive';
@@ -12,7 +12,7 @@ function SubscribeCategoryListContainer({
   selectedCategory,
   changeCategory,
 }: {
-  CategoryList: CategoryListProps[];
+  CategoryList: CategoryDataProps[];
   selectedCategory: number;
   changeCategory: any;
 }) {
@@ -28,7 +28,7 @@ function SubscribeCategoryListContainer({
           return (
             <CategoriesButton
               key={index}
-              title={category.categoryName}
+              title={category.provider + ' ' + category.categoryName}
               isSelected={selectedCategory === category.categoryId}
               changeCategory={() => changeCategory(category.categoryId)}
             />
