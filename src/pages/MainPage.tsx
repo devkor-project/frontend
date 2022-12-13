@@ -16,6 +16,7 @@ import { CategoryListProps, NoticeProps } from '../constants/types';
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import ProviderListContainer from '../commons/ProviderListContainer';
 import { useCookies } from 'react-cookie';
+import { log } from 'console';
 // import { ReactComponent as Reservatio`n } from '../assets/logo.svg';
 
 function MainPage() {
@@ -75,6 +76,30 @@ function MainPage() {
     // console.log(categoryL.data.data[0]);
     const providers = Object.keys(categoryL.data.data);
     const categoryListJson = categoryL.data.data;
+    console.log(providers);
+    // 카테고리 데이터에 'KUPID 전체' 키 값으로 모든 공지사항 추가
+    categoryListJson['KUPID 전체'] = [];
+    for (let i = 0; i < providers.length; i++) {
+      const p = providers[i];
+      console.log(p);
+      const c = categoryListJson[p];
+      console.log(c);
+      // console.log(c[0].categoryName);
+
+      for (let j = 0; j < c.length; j++) {
+        c[j].categoryName = `${p} ${c[j].categoryName}`; // 카테고리 이름에 provider 이름 추가
+        categoryListJson['KUPID 전체'].push(c[j]);
+      }
+    }
+    // provider에 'KUPID 전체' 추가
+    providers.unshift('KUPID 전체');
+    console.log(categoryListJson['KUPID 전체']);
+    // categoryListJson['KUPID 전체'] = [
+    //   {
+    //     categoryId: 0,
+    //     categoryName: 'KUPID 전체',
+    //   },
+    // ];
     // const p = providers[0];
     // console.log(categoryL.data.data?.[p]);
     // console.log(categoryL.data.data?.['정보대학']);
