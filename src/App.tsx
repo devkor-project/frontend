@@ -91,9 +91,9 @@ const router = createBrowserRouter([
 ]);
 function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
-  const token = useSelector((store: any) => store.tokenReducer);
   axios.defaults.baseURL = BASE__URL;
   axios.defaults.withCredentials = true;
+  const token = useSelector((store: any) => store.tokenReducer);
   axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
   axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -103,8 +103,14 @@ function App() {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
 
-    if (token.payload.accessToken === null) {
+    // const token = useSelector((store: any) => store.tokenReducer);
+    if (
+      token.payload.accessToken === null &&
+      window.location.pathname !== '/login' &&
+      window.location.pathname !== '/register'
+    ) {
       // console.log('token이 없습니다.');
+      alert('로그인 정보가 없습니다. 로그인 페이지로 이동합니다.');
       router.navigate('/login');
     }
     return () => window.removeEventListener('resize', handleResize);

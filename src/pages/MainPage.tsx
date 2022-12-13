@@ -76,14 +76,14 @@ function MainPage() {
     // console.log(categoryL.data.data[0]);
     const providers = Object.keys(categoryL.data.data);
     const categoryListJson = categoryL.data.data;
-    console.log(providers);
+    // console.log(providers);
     // 카테고리 데이터에 'KUPID 전체' 키 값으로 모든 공지사항 추가
     categoryListJson['KUPID 전체'] = [];
     for (let i = 0; i < providers.length; i++) {
       const p = providers[i];
-      console.log(p);
+      // console.log(p);
       const c = categoryListJson[p];
-      console.log(c);
+      // console.log(c);
       // console.log(c[0].categoryName);
 
       for (let j = 0; j < c.length; j++) {
@@ -93,7 +93,7 @@ function MainPage() {
     }
     // provider에 'KUPID 전체' 추가
     providers.unshift('KUPID 전체');
-    console.log(categoryListJson['KUPID 전체']);
+    // console.log(categoryListJson['KUPID 전체']);
     // categoryListJson['KUPID 전체'] = [
     //   {
     //     categoryId: 0,
