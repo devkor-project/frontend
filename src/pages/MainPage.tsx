@@ -23,7 +23,7 @@ function MainPage() {
   // 공지사항의 provider를 저장하는 state
   const [providerList, setProviderList] = useState<string[]>([]);
   // 현재 선택된 provider를 저장하는 state
-  const [selectedProvider, setSelectedProvider] = useState<string>('정보대학');
+  const [selectedProvider, setSelectedProvider] = useState<string>('KUPID 전체');
   //전체 카테고리 리스트를 저장하는 state
   const [categoryList, setCategoryList] = useState();
   // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
