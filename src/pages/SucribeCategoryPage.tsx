@@ -16,13 +16,13 @@ import { isExpired } from '../utils/refresh';
 
 import TitleHeaderContainer from '../container/header/TitleHeaderContainer';
 import axios from 'axios';
-import { CategoryListProps, NoticeProps } from '../constants/types';
+import { CategoryDataProps, CategoryListProps, NoticeProps } from '../constants/types';
 import SubscribeCategoryListContainer from '../commons/SubscribeCategoryListContainer';
 import { useCookies } from 'react-cookie';
 
 function SubscribeCategoryPage(props: any) {
   // 구독하고 있는 카테고리
-  const [subscribeCategoryList, setsubscribeCategoryList] = useState<CategoryListProps[]>([]);
+  const [subscribeCategoryList, setsubscribeCategoryList] = useState<CategoryDataProps[]>([]);
   // 카테고리 리스트 중에 선택된 카테고리의 index를 저장
   const [category, setCategory] = useState(1);
 
@@ -50,6 +50,7 @@ function SubscribeCategoryPage(props: any) {
     axios.defaults.headers.common['x-auth-token'] = token.payload.accessToken;
     const categoryL = await axios.get(`category/subscribe`);
     setsubscribeCategoryList(categoryL.data.data);
+    console.log(categoryL);
   };
 
   // ! 카테고리 변경 함수
