@@ -77,7 +77,7 @@ function EmailInputContainer({
             }
           />
         ) : null}
-        {warningCode.emailWarningCode === 'emailSent' ? (
+        {warningCode.emailWarningCode === 'emailSent' || warningCode.emailWarningCode === 'accept' ? (
           <>
             <Blank height={getHeightPixel(10)} />
             <InnerContainerStyled>
